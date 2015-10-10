@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+	<Properties>
+		<Property name="exceptionFilters">org.apache.maven.surefire,org.junit,sun.reflect,java.lang.reflect,org.mockito</Property>
+	</Properties>
+
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{15} - %msg%n%xEx{filters(${exceptionFilters})}" />
+		</Console>
+	</Appenders>
+
+	<Loggers>
+		<Root level="debug">
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+
+</Configuration>

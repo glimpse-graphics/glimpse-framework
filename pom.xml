@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+		xmlns="http://maven.apache.org/POM/4.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.glimpseframework</groupId>
+	<artifactId>glimpse-framework</artifactId>
+	<version>0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>Glimpse Framework</name>
+	<url>http://glimpseframework.org</url>
+
+	<modules>
+		<module>api</module>
+	</modules>
+
+	<properties>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<java.version>1.6</java.version>
+
+		<dependency.slf4j.version>1.7.10</dependency.slf4j.version>
+
+		<test.dependency.junit.version>4.12</test.dependency.junit.version>
+		<test.dependency.mockito.version>1.10.19</test.dependency.mockito.version>
+		<test.dependency.log4j.version>2.1</test.dependency.log4j.version>
+
+		<coverage.haltOnFailure>false</coverage.haltOnFailure>
+		<coverage.class.line.rate>75</coverage.class.line.rate>
+		<coverage.class.branch.rate>60</coverage.class.branch.rate>
+		<coverage.package.line.rate>90</coverage.package.line.rate>
+		<coverage.package.branch.rate>70</coverage.package.branch.rate>
+		<coverage.total.line.rate>95</coverage.total.line.rate>
+		<coverage.total.branch.rate>90</coverage.total.branch.rate>
+
+		<exclude.tests>nothing</exclude.tests>
+
+	</properties>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<configuration>
+						<runOrder>random</runOrder>
+					</configuration>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${dependency.slf4j.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${test.dependency.junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>${test.dependency.mockito.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-slf4j-impl</artifactId>
+				<version>${test.dependency.log4j.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-core</artifactId>
+				<version>${test.dependency.log4j.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+</project>
