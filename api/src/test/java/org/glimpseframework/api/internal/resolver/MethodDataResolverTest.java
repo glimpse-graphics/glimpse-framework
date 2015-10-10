@@ -40,7 +40,7 @@ public class MethodDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		MethodDataResolver resolver = new MethodDataResolver().register(TestClass.class, Uniform.class);
+		AccessibleObjectDataResolver resolver = new MethodDataResolver().register(TestClass.class, Uniform.class);
 		Object actual = resolver.resolve(testObject, "internalInteger");
 		// then:
 		Assert.assertNotNull(actual);
@@ -53,7 +53,7 @@ public class MethodDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		MethodDataResolver resolver = new MethodDataResolver().register(TestClass.class, Uniform.class);
+		AccessibleObjectDataResolver resolver = new MethodDataResolver().register(TestClass.class, Uniform.class);
 		Object actual = resolver.resolve(testObject, "overriddenFloat");
 		// then:
 		Assert.assertNotNull(actual);
@@ -66,7 +66,7 @@ public class MethodDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		MethodDataResolver resolver = new MethodDataResolver().register(TestClass.class, Uniform.class);
+		AccessibleObjectDataResolver resolver = new MethodDataResolver().register(TestClass.class, Uniform.class);
 		Object actual = resolver.resolve(testObject, "internalFloat");
 		// then:
 		Assert.assertNull(actual);
@@ -77,7 +77,7 @@ public class MethodDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		MethodDataResolver resolver = new MethodDataResolver().register(TestClass.class, Uniform.class);
+		AccessibleObjectDataResolver resolver = new MethodDataResolver().register(TestClass.class, Uniform.class);
 		Object actual = resolver.resolve(testObject, "floatValue");
 		// then:
 		Assert.assertNotNull(actual);
@@ -90,7 +90,7 @@ public class MethodDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		MethodDataResolver resolver = new MethodDataResolver().register(TestClass.class, Uniform.class);
+		AccessibleObjectDataResolver resolver = new MethodDataResolver().register(TestClass.class, Uniform.class);
 		Object actual = resolver.resolve(testObject, "notAnnotatedMethod");
 		// then:
 		Assert.assertNull(actual);

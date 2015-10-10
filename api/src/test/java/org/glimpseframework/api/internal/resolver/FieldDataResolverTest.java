@@ -25,7 +25,7 @@ public class FieldDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		FieldDataResolver resolver = new FieldDataResolver().register(TestClass.class, Attrib.class);
+		AccessibleObjectDataResolver resolver = new FieldDataResolver().register(TestClass.class, Attrib.class);
 		Object actual = resolver.resolve(testObject, "intValue");
 		// then:
 		Assert.assertNotNull(actual);
@@ -38,7 +38,7 @@ public class FieldDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		FieldDataResolver resolver = new FieldDataResolver().register(TestClass.class, Attrib.class);
+		AccessibleObjectDataResolver resolver = new FieldDataResolver().register(TestClass.class, Attrib.class);
 		Object actual = resolver.resolve(testObject, "overriddenFloatValue");
 		// then:
 		Assert.assertNotNull(actual);
@@ -51,7 +51,7 @@ public class FieldDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		FieldDataResolver resolver = new FieldDataResolver().register(TestClass.class, Attrib.class);
+		AccessibleObjectDataResolver resolver = new FieldDataResolver().register(TestClass.class, Attrib.class);
 		Object actual = resolver.resolve(testObject, "floatValue");
 		// then:
 		Assert.assertNull(actual);
@@ -62,7 +62,7 @@ public class FieldDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		FieldDataResolver resolver = new FieldDataResolver().register(TestClass.class, Attrib.class);
+		AccessibleObjectDataResolver resolver = new FieldDataResolver().register(TestClass.class, Attrib.class);
 		Object actual = resolver.resolve(testObject, "notAnnotatedField");
 		// then:
 		Assert.assertNull(actual);

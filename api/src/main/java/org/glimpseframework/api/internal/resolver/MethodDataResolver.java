@@ -1,6 +1,5 @@
 package org.glimpseframework.api.internal.resolver;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,19 +7,13 @@ import java.util.Map;
 class MethodDataResolver extends AccessibleObjectDataResolver<Method> {
 
 	@Override
-	public MethodDataResolver register(Class<?> resolvedClass, Class<? extends Annotation> annotation) {
-		for (Method method : resolvedClass.getDeclaredMethods()) {
-			if (method.isAnnotationPresent(annotation)) {
-				registerMethod(method, method.getAnnotation(annotation));
-			}
-		}
-		return this;
+	protected Method[] getAccessibleObjects(Class<?> resolvedClass) {
+		return resolvedClass.getDeclaredMethods();
 	}
 
-	public void registerMethod(Method method, Annotation annotation) {
-		method.setAccessible(true);
-		String name = getNameFromAnnotation(annotation);
-		methods.put(name.isEmpty() ? convertMethodName(method.getName()) : name, method);
+	@Override
+	protected String getName(Method method) {
+		return convertMethodName(method.getName());
 	}
 
 	private String convertMethodName(String name) {
@@ -32,9 +25,8 @@ class MethodDataResolver extends AccessibleObjectDataResolver<Method> {
 	}
 
 	@Override
-	public Object resolve(Object object, String name) throws ReflectiveOperationException {
-		Method method = methods.get(name);
-		return (method == null) ? null : method.invoke(object);
+	protected Object getValue(Method method, Object object) throws ReflectiveOperationException {
+		return method.invoke(object);
 	}
 
 	private static final String GETTER_PREFIX = "get";

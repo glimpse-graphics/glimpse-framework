@@ -17,7 +17,7 @@ public class DataResolverTest {
 		// given:
 		dataResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = dataResolver.findAttrib("aFloatField");
+		Object result = dataResolver.resolveAttrib("aFloatField");
 		// then:
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result instanceof Float);
@@ -29,7 +29,7 @@ public class DataResolverTest {
 		// given:
 		dataResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = dataResolver.findAttrib("aFloatFieldOverridden");
+		Object result = dataResolver.resolveAttrib("aFloatFieldOverridden");
 		// then:
 		Assert.assertNull(result);
 	}
@@ -39,7 +39,7 @@ public class DataResolverTest {
 		// given:
 		dataResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = dataResolver.findAttrib("overriddenFloatAttrib");
+		Object result = dataResolver.resolveAttrib("overriddenFloatAttrib");
 		// then:
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result instanceof Float);
@@ -51,7 +51,7 @@ public class DataResolverTest {
 		// given:
 		dataResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = dataResolver.findUniform("uFloatField");
+		Object result = dataResolver.resolveUniform("uFloatField");
 		// then:
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result instanceof Float);
@@ -63,7 +63,7 @@ public class DataResolverTest {
 		// given:
 		dataResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = dataResolver.findUniform("uFloatFieldOverridden");
+		Object result = dataResolver.resolveUniform("uFloatFieldOverridden");
 		// then:
 		Assert.assertNull(result);
 	}
@@ -73,7 +73,7 @@ public class DataResolverTest {
 		// given:
 		dataResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = dataResolver.findUniform("overriddenFloatUniform");
+		Object result = dataResolver.resolveUniform("overriddenFloatUniform");
 		// then:
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result instanceof Float);
@@ -85,7 +85,7 @@ public class DataResolverTest {
 		// given:
 		dataResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = dataResolver.findAttrib("notAnnotatedField");
+		Object result = dataResolver.resolveAttrib("notAnnotatedField");
 		// then:
 		Assert.assertNull(result);
 	}
@@ -95,7 +95,7 @@ public class DataResolverTest {
 		// given:
 		dataResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = dataResolver.findUniform("notAnnotatedField");
+		Object result = dataResolver.resolveUniform("notAnnotatedField");
 		// then:
 		Assert.assertNull(result);
 	}
@@ -105,7 +105,7 @@ public class DataResolverTest {
 		// given:
 		dataResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = dataResolver.findAttrib("attribInt");
+		Object result = dataResolver.resolveAttrib("attribInt");
 		// then:
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result instanceof Integer);
@@ -117,7 +117,7 @@ public class DataResolverTest {
 		// given:
 		dataResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = dataResolver.findAttrib("attribIntOverridden");
+		Object result = dataResolver.resolveAttrib("attribIntOverridden");
 		// then:
 		Assert.assertNull(result);
 	}
@@ -127,7 +127,7 @@ public class DataResolverTest {
 		// given:
 		dataResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = dataResolver.findAttrib("overriddenIntAttrib");
+		Object result = dataResolver.resolveAttrib("overriddenIntAttrib");
 		// then:
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result instanceof Integer);
@@ -139,7 +139,7 @@ public class DataResolverTest {
 		// given:
 		dataResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = dataResolver.findUniform("uniformInt");
+		Object result = dataResolver.resolveUniform("uniformInt");
 		// then:
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result instanceof Integer);
@@ -151,7 +151,7 @@ public class DataResolverTest {
 		// given:
 		dataResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = dataResolver.findUniform("uniformIntOverridden");
+		Object result = dataResolver.resolveUniform("uniformIntOverridden");
 		// then:
 		Assert.assertNull(result);
 	}
@@ -161,7 +161,7 @@ public class DataResolverTest {
 		// given:
 		dataResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = dataResolver.findUniform("overriddenIntUniform");
+		Object result = dataResolver.resolveUniform("overriddenIntUniform");
 		// then:
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result instanceof Integer);
@@ -173,7 +173,7 @@ public class DataResolverTest {
 		// given:
 		dataResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = dataResolver.findAttrib("notAnnotatedMethod");
+		Object result = dataResolver.resolveAttrib("notAnnotatedMethod");
 		// then:
 		Assert.assertNull(result);
 	}
@@ -183,7 +183,7 @@ public class DataResolverTest {
 		// given:
 		dataResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = dataResolver.findUniform("notAnnotatedMethod");
+		Object result = dataResolver.resolveUniform("notAnnotatedMethod");
 		// then:
 		Assert.assertNull(result);
 	}

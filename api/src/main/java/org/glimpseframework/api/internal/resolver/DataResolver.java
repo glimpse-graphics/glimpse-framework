@@ -39,15 +39,15 @@ public class DataResolver {
 	}
 
 	/**
-	 * Finds {@link org.glimpseframework.api.annotations.Attrib Attrib} data.
+	 * Resolves {@link org.glimpseframework.api.annotations.Attrib Attrib} data.
 	 * @param name data name
 	 * @return data value
 	 */
-	public Object findAttrib(String name) {
-		return find(name, attribResolvers);
+	public Object resolveAttrib(String name) {
+		return resolve(name, attribResolvers);
 	}
 
-	private Object find(String name, Map<Class<?>, ClassDataResolver> resolvers) {
+	private Object resolve(String name, Map<Class<?>, ClassDataResolver> resolvers) {
 		for (Object object : objects) {
 			try {
 				Object result = resolvers.get(object.getClass()).resolve(object, name);
@@ -62,12 +62,12 @@ public class DataResolver {
 	}
 
 	/**
-	 * Finds {@link org.glimpseframework.api.annotations.Uniform Uniform} data.
+	 * Resolves {@link org.glimpseframework.api.annotations.Uniform Uniform} data.
 	 * @param name data name
 	 * @return data value
 	 */
-	public Object findUniform(String name) {
-		return find(name, uniformResolvers);
+	public Object resolveUniform(String name) {
+		return resolve(name, uniformResolvers);
 	}
 
 	private static final Logger LOG = LoggerFactory.getLogger(DataResolver.class);
