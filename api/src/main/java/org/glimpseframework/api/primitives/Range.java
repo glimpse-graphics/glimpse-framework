@@ -41,8 +41,12 @@ public final class Range {
 
 	@Override
 	public boolean equals(Object object) {
-		if (this == object) return true;
-		if (object == null || getClass() != object.getClass()) return false;
+		if (this == object) {
+			return true;
+		}
+		if (object == null || getClass() != object.getClass()) {
+			return false;
+		}
 		Range range = (Range) object;
 		return (Float.compare(range.begin, begin) == 0) && (Float.compare(range.end, end) == 0);
 	}

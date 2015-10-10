@@ -14,8 +14,7 @@ public interface VBO {
 	public enum VBOType {
 		BYTE(1),
 		INT(4),
-		FLOAT(4),
-		;
+		FLOAT(4);
 
 		private VBOType(int elementBytes) {
 			this.elementBytes = elementBytes;

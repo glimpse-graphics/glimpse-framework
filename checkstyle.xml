@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+	"-//Puppy Crawl//DTD Check Configuration 1.3//EN"
+	"http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+
+	<module name="RegexpSingleline">
+		<property name="format" value="\s+$"/>
+		<property name="minimum" value="0"/>
+		<property name="maximum" value="0"/>
+		<property name="message" value="No trailing spaces allowed"/>
+		<property name="fileExtensions" value="java"/>
+	</module>
+
+	<module name="RegexpMultiline">
+		<property name="format" value="System\s*\.(err|out)"/>
+		<property name="message" value="Use Log instead of standard output"/>
+	</module>
+
+	<module name="TreeWalker">
+
+		<property name="tabWidth" value="4"/>
+
+		<module name="ConstantName"/>
+		<module name="LocalFinalVariableName"/>
+		<module name="LocalVariableName"/>
+		<module name="MemberName"/>
+		<module name="MethodName"/>
+		<module name="PackageName"/>
+		<module name="ParameterName"/>
+		<module name="StaticVariableName"/>
+		<module name="TypeName"/>
+
+		<module name="AvoidStarImport"/>
+		<module name="IllegalImport"/>
+		<module name="RedundantImport"/>
+		<module name="UnusedImports"/>
+
+		<module name="ImportOrder">
+			<property name="separated" value="true"/>
+			<property name="option" value="top"/>
+		</module>
+
+		<module name="RegexpSinglelineJava">
+			<property name="format" value="^\t* +\t*\S"/>
+			<property name="message" value="Use tab character for code indentation"/>
+			<property name="ignoreComments" value="true"/>
+		</module>
+
+		<module name="RegexpSinglelineJava">
+			<property name="format" value="^\s*(&quot;([^&quot;])*(?&lt;!\\)&quot;|[^&quot;\t])+(\t|  )"/>
+			<property name="message" value="No tabs or multiple whitespace characters except indentation allowed"/>
+			<property name="ignoreComments" value="true"/>
+		</module>
+
+		<module name="LineLength">
+			<property name="max" value="120"/>
+		</module>
+
+		<module name="ParameterNumber">
+			<property name="max" value="6"/>
+		</module>
+
+		<module name="EmptyForIteratorPad"/>
+		<module name="GenericWhitespace"/>
+		<module name="MethodParamPad"/>
+
+		<module name="NoWhitespaceAfter">
+			<property name="tokens" value="BNOT, DEC, DOT, INC, LNOT, UNARY_MINUS, UNARY_PLUS"/>
+		</module>
+
+		<module name="NoWhitespaceBefore"/>
+		<module name="OperatorWrap"/>
+		<module name="ParenPad"/>
+		<module name="TypecastParenPad"/>
+		<module name="WhitespaceAfter"/>
+
+		<module name="WhitespaceAround">
+			<property name="allowEmptyConstructors" value="true"/>
+			<property name="allowEmptyMethods" value="true"/>
+		</module>
+
+		<module name="ModifierOrder"/>
+		<module name="RedundantModifier"/>
+
+		<module name="EmptyBlock"/>
+
+		<module name="LeftCurly">
+			<property name="option" value="eol"/>
+		</module>
+
+		<module name="NeedBraces"/>
+
+		<module name="RightCurly">
+			<property name="option" value="same"/>
+		</module>
+
+		<module name="EmptyStatement"/>
+		<module name="EqualsHashCode"/>
+		<module name="MissingSwitchDefault"/>
+		<module name="SimplifyBooleanExpression"/>
+		<module name="SimplifyBooleanReturn"/>
+
+		<module name="HideUtilityClassConstructor"/>
+
+		<module name="ArrayTypeStyle"/>
+		<module name="UpperEll"/>
+		<module name="CovariantEquals"/>
+
+	</module>
+
+</module>

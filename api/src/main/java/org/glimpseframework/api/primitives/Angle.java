@@ -62,13 +62,16 @@ public final class Angle implements Comparable<Angle> {
 	 * @return angle coterminal with this angle
 	 */
 	public Angle getCoterminalNextTo(Angle reference, Direction direction) {
-		double turns = 0.0f;
+		double turns;
 		switch (direction) {
 			case CLOCKWISE:
 				turns = -Math.floor((getRadians() - reference.getRadians()) * 0.5 / Math.PI) - 1.0;
 				break;
 			case COUNTER_CLOCKWISE:
 				turns = Math.floor((reference.getRadians() - getRadians()) * 0.5 / Math.PI) + 1.0;
+				break;
+			default:
+				turns = 0.0;
 				break;
 		}
 		return Angle.fromRadians(getRadians() + Double.valueOf((turns) * 2.0 * Math.PI).floatValue());
@@ -81,8 +84,12 @@ public final class Angle implements Comparable<Angle> {
 
 	@Override
 	public boolean equals(Object object) {
-		if (this == object) return true;
-		if (object == null || getClass() != object.getClass()) return false;
+		if (this == object) {
+			return true;
+		}
+		if (object == null || getClass() != object.getClass()) {
+			return false;
+		}
 		return Float.compare(((Angle) object).radians, radians) == 0;
 	}
 

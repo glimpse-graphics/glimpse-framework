@@ -76,7 +76,8 @@ public final class Matrix {
 	 * @param far far clipping plane distance
 	 * @return orthographic projection matrix
 	 */
-	public static Matrix getOrthographicMatrix(float left, float right, float bottom, float top, float near, float far) {
+	public static Matrix getOrthographicMatrix(
+			float left, float right, float bottom, float top, float near, float far) {
 		float[] matrix = IDENTITY_MATRIX.get16f();
 		final float width = right - left;
 		final float height = top - bottom;
@@ -257,7 +258,7 @@ public final class Matrix {
 		result[14] -= buf[10] * m[11] + buf[2] * m[8] + buf[7] * m[9];
 		result[15] = buf[10] * m[10] + buf[4] * m[8] + buf[9] * m[9];
 		result[15] -= buf[8] * m[9] + buf[11] * m[10] + buf[5] * m[8];
-		float det =m[0] * result[0] + m[1] * result[1] + m[2] * result[2] + m[3] * result[3];
+		float det = m[0] * result[0] + m[1] * result[1] + m[2] * result[2] + m[3] * result[3];
 		for (int i = 0; i < 16; i++) {
 			result[i] = result[i] / det;
 		}
@@ -344,10 +345,10 @@ public final class Matrix {
 	@Override
 	public String toString() {
 		return String.format(
-				"\n| %8.2f %8.2f %8.2f %8.2f |" +
-				"\n| %8.2f %8.2f %8.2f %8.2f |" +
-				"\n| %8.2f %8.2f %8.2f %8.2f |" +
-				"\n| %8.2f %8.2f %8.2f %8.2f |\n",
+				"\n| %8.2f %8.2f %8.2f %8.2f |"
+						+ "\n| %8.2f %8.2f %8.2f %8.2f |"
+						+ "\n| %8.2f %8.2f %8.2f %8.2f |"
+						+ "\n| %8.2f %8.2f %8.2f %8.2f |\n",
 				matrix[0], matrix[4], matrix[8], matrix[12],
 				matrix[1], matrix[5], matrix[9], matrix[13],
 				matrix[2], matrix[6], matrix[10], matrix[14],

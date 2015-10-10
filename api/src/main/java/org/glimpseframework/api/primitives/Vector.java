@@ -166,14 +166,24 @@ public final class Vector {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
 
 		Vector vector = (Vector) o;
 
-		if (Float.compare(vector.x, x) != 0) return false;
-		if (Float.compare(vector.y, y) != 0) return false;
-		if (Float.compare(vector.z, z) != 0) return false;
+		if (Float.compare(vector.x, x) != 0) {
+			return false;
+		}
+		if (Float.compare(vector.y, y) != 0) {
+			return false;
+		}
+		if (Float.compare(vector.z, z) != 0) {
+			return false;
+		}
 
 		return true;
 	}
