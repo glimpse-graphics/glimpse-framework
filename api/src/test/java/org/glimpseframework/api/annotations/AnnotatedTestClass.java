@@ -2,36 +2,36 @@ package org.glimpseframework.api.annotations;
 
 public class AnnotatedTestClass {
 
-	@Attrib(type = DataType.FLOAT)
+	@Attribute
 	private float aFloatField = 1.1f;
 
-	@Attrib(name = "overriddenFloatAttrib", type = DataType.FLOAT)
+	@Attribute(name = "overriddenFloatAttrib")
 	private float aFloatFieldOverridden = 2.2f;
 
-	@Uniform(type = DataType.FLOAT)
+	@Uniform
 	private float uFloatField = 3.3f;
 
-	@Uniform(name = "overriddenFloatUniform", type = DataType.FLOAT)
+	@Uniform(name = "overriddenFloatUniform")
 	private float uFloatFieldOverridden = 4.4f;
 
 	private float notAnnotatedField = 5.5f;
 
-	@Attrib(type = DataType.INTEGER)
+	@Attribute
 	public int getAttribInt() {
 		return 11;
 	}
 
-	@Attrib(name = "overriddenIntAttrib", type = DataType.INTEGER)
+	@Attribute(name = "overriddenIntAttrib")
 	public int getAttribIntOverridden() {
 		return 22;
 	}
 
-	@Uniform(type = DataType.INTEGER)
+	@Uniform
 	public int getUniformInt() {
 		return 33;
 	}
 
-	@Uniform(name = "overriddenIntUniform", type = DataType.INTEGER)
+	@Uniform(name = "overriddenIntUniform")
 	public int getUniformIntOverridden() {
 		return 44;
 	}

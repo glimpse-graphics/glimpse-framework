@@ -1,10 +1,10 @@
-package org.glimpseframework.api.internal.resolver;
+package org.glimpseframework.api.internal.shader.parameters;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-class MethodDataResolver extends AccessibleObjectDataResolver<Method> {
+class MethodValueResolver extends AccessibleObjectValueResolver<Method> {
 
 	@Override
 	protected Method[] getAccessibleObjects(Class<?> resolvedClass) {

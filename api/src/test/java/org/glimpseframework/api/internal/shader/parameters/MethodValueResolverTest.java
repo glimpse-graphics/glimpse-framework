@@ -1,21 +1,20 @@
-package org.glimpseframework.api.internal.resolver;
+package org.glimpseframework.api.internal.shader.parameters;
 
-import org.glimpseframework.api.annotations.Attrib;
-import org.glimpseframework.api.annotations.DataType;
+import org.glimpseframework.api.annotations.Attribute;
 import org.glimpseframework.api.annotations.Uniform;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class MethodDataResolverTest {
+public class MethodValueResolverTest {
 
 	private class TestClass {
 
-		@Uniform(type = DataType.INTEGER)
+		@Uniform
 		private int internalInteger() {
 			return 17;
 		}
 
-		@Uniform(name = "overriddenFloat", type = DataType.FLOAT)
+		@Uniform(name = "overriddenFloat")
 		private float internalFloat() {
 			return 43.71f;
 		}
@@ -24,12 +23,12 @@ public class MethodDataResolverTest {
 			return 27.13f;
 		}
 
-		@Uniform(type = DataType.FLOAT)
+		@Uniform
 		private float getFloatValue() {
 			return 13.27f;
 		}
 
-		@Attrib(type = DataType.BOOLEAN)
+		@Attribute
 		private boolean notAnnotatedMethod() {
 			return true;
 		}
@@ -40,7 +39,7 @@ public class MethodDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		AccessibleObjectDataResolver resolver = new MethodDataResolver().register(TestClass.class, Uniform.class);
+		AccessibleObjectValueResolver resolver = new MethodValueResolver().register(TestClass.class, Uniform.class);
 		Object actual = resolver.resolve(testObject, "internalInteger");
 		// then:
 		Assert.assertNotNull(actual);
@@ -53,7 +52,7 @@ public class MethodDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		AccessibleObjectDataResolver resolver = new MethodDataResolver().register(TestClass.class, Uniform.class);
+		AccessibleObjectValueResolver resolver = new MethodValueResolver().register(TestClass.class, Uniform.class);
 		Object actual = resolver.resolve(testObject, "overriddenFloat");
 		// then:
 		Assert.assertNotNull(actual);
@@ -66,7 +65,7 @@ public class MethodDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		AccessibleObjectDataResolver resolver = new MethodDataResolver().register(TestClass.class, Uniform.class);
+		AccessibleObjectValueResolver resolver = new MethodValueResolver().register(TestClass.class, Uniform.class);
 		Object actual = resolver.resolve(testObject, "internalFloat");
 		// then:
 		Assert.assertNull(actual);
@@ -77,7 +76,7 @@ public class MethodDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		AccessibleObjectDataResolver resolver = new MethodDataResolver().register(TestClass.class, Uniform.class);
+		AccessibleObjectValueResolver resolver = new MethodValueResolver().register(TestClass.class, Uniform.class);
 		Object actual = resolver.resolve(testObject, "floatValue");
 		// then:
 		Assert.assertNotNull(actual);
@@ -90,7 +89,7 @@ public class MethodDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		AccessibleObjectDataResolver resolver = new MethodDataResolver().register(TestClass.class, Uniform.class);
+		AccessibleObjectValueResolver resolver = new MethodValueResolver().register(TestClass.class, Uniform.class);
 		Object actual = resolver.resolve(testObject, "notAnnotatedMethod");
 		// then:
 		Assert.assertNull(actual);

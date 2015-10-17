@@ -1,13 +1,13 @@
-package org.glimpseframework.api.internal.resolver;
+package org.glimpseframework.api.internal.shader.parameters;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.util.HashMap;
 import java.util.Map;
 
-abstract class AccessibleObjectDataResolver<E extends AccessibleObject> {
+abstract class AccessibleObjectValueResolver<E extends AccessibleObject> {
 
-	public AccessibleObjectDataResolver<E> register(Class<?> resolvedClass, Class<? extends Annotation> annotation) {
+	public AccessibleObjectValueResolver<E> register(Class<?> resolvedClass, Class<? extends Annotation> annotation) {
 		for (E accessibleObject : getAccessibleObjects(resolvedClass)) {
 			if (accessibleObject.isAnnotationPresent(annotation)) {
 				registerAccessibleObject(accessibleObject, accessibleObject.getAnnotation(annotation));

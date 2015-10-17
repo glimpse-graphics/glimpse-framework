@@ -3,8 +3,16 @@ package org.glimpseframework.api.primitives;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Exception thrown when the number of elements provided to a matrix is different than 16.
+ * @author Slawomir Czerwinski
+ */
 public class InvalidMatrixSizeException extends RuntimeException {
 
+	/**
+	 * Creates an exception.
+	 * @param matrixSize actual number of elements provided to a matrix
+	 */
 	public InvalidMatrixSizeException(int matrixSize) {
 		super(String.format(MESSAGE_FORMAT, matrixSize));
 		LOG.error(getMessage(), this);

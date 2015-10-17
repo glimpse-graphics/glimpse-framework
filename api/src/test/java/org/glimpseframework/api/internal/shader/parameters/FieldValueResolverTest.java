@@ -1,22 +1,21 @@
-package org.glimpseframework.api.internal.resolver;
+package org.glimpseframework.api.internal.shader.parameters;
 
-import org.glimpseframework.api.annotations.Attrib;
-import org.glimpseframework.api.annotations.DataType;
+import org.glimpseframework.api.annotations.Attribute;
 import org.glimpseframework.api.annotations.Uniform;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class FieldDataResolverTest {
+public class FieldValueResolverTest {
 
 	private class TestClass {
 
-		@Attrib(type = DataType.INTEGER)
+		@Attribute
 		private int intValue = 17;
 
-		@Attrib(name = "overriddenFloatValue", type = DataType.FLOAT)
+		@Attribute(name = "overriddenFloatValue")
 		private float floatValue = 17.23f;
 
-		@Uniform(type = DataType.BOOLEAN)
+		@Uniform
 		private boolean notAnnotatedField = true;
 	}
 
@@ -25,7 +24,7 @@ public class FieldDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		AccessibleObjectDataResolver resolver = new FieldDataResolver().register(TestClass.class, Attrib.class);
+		AccessibleObjectValueResolver resolver = new FieldValueResolver().register(TestClass.class, Attribute.class);
 		Object actual = resolver.resolve(testObject, "intValue");
 		// then:
 		Assert.assertNotNull(actual);
@@ -38,7 +37,7 @@ public class FieldDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		AccessibleObjectDataResolver resolver = new FieldDataResolver().register(TestClass.class, Attrib.class);
+		AccessibleObjectValueResolver resolver = new FieldValueResolver().register(TestClass.class, Attribute.class);
 		Object actual = resolver.resolve(testObject, "overriddenFloatValue");
 		// then:
 		Assert.assertNotNull(actual);
@@ -51,7 +50,7 @@ public class FieldDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		AccessibleObjectDataResolver resolver = new FieldDataResolver().register(TestClass.class, Attrib.class);
+		AccessibleObjectValueResolver resolver = new FieldValueResolver().register(TestClass.class, Attribute.class);
 		Object actual = resolver.resolve(testObject, "floatValue");
 		// then:
 		Assert.assertNull(actual);
@@ -62,7 +61,7 @@ public class FieldDataResolverTest {
 		// given:
 		TestClass testObject = new TestClass();
 		// when:
-		AccessibleObjectDataResolver resolver = new FieldDataResolver().register(TestClass.class, Attrib.class);
+		AccessibleObjectValueResolver resolver = new FieldValueResolver().register(TestClass.class, Attribute.class);
 		Object actual = resolver.resolve(testObject, "notAnnotatedField");
 		// then:
 		Assert.assertNull(actual);

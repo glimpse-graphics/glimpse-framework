@@ -1,8 +1,8 @@
-package org.glimpseframework.api.internal.resolver;
+package org.glimpseframework.api.internal.shader.parameters;
 
 import java.lang.reflect.Field;
 
-class FieldDataResolver extends AccessibleObjectDataResolver<Field> {
+class FieldValueResolver extends AccessibleObjectValueResolver<Field> {
 
 	@Override
 	protected Field[] getAccessibleObjects(Class<?> resolvedClass) {
