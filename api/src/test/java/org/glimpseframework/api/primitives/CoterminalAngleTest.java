@@ -10,7 +10,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class CoterminalAngleTest {
 
-	@Parameterized.Parameters
+	@Parameterized.Parameters(name = "{index}: {2} from {0} to {1} – {3}")
 	public static Collection<Object[]> parameters() {
 		return Arrays.asList(new Object[][]{
 				{Angle.fromDegrees(0.0f), Angle.fromDegrees(0.0f), Angle.Direction.CLOCKWISE, Angle.fromDegrees(-360.0f)},

@@ -10,7 +10,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class AnglesEqualTest {
 
-	@Parameterized.Parameters
+	@Parameterized.Parameters(name = "{index}: {0} vs. {1} – {2}")
 	public static Collection<Object[]> parameters() {
 		return Arrays.asList(new Object[][]{
 				{Angle.fromDegrees(30.0f), Angle.fromDegrees(30.0f), true},

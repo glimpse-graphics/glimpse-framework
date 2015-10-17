@@ -10,7 +10,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class VectorsParallelTest {
 
-	@Parameterized.Parameters
+	@Parameterized.Parameters(name = "{index}: {0} parallel to {1} – {2}")
 	public static Collection<Object[]> parameters() {
 		return Arrays.asList(new Object[][]{
 				{new Vector(1.0f, 1.0f, 1.0f), new Vector(1.0f, 1.0f, 1.0f), true},

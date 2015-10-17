@@ -10,7 +10,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class VectorSphericalCoordinatesTest {
 
-	@Parameterized.Parameters
+	@Parameterized.Parameters(name = "{index}: {0} – r={1}, θ={2}, φ={3}")
 	public static Collection<Object[]> parameters() {
 		return Arrays.asList(new Object[][]{
 				{Vector.X_UNIT_VECTOR, 1.0f, Angle.fromDegrees(90.0f), Angle.fromDegrees(0.0f)},

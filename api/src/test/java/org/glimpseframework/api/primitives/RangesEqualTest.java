@@ -10,7 +10,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class RangesEqualTest {
 
-	@Parameterized.Parameters
+	@Parameterized.Parameters(name = "{index}: {0} vs. {1} – {2}")
 	public static Collection<Object[]> parameters() {
 		return Arrays.asList(new Object[][]{
 				{new Range(1.0f, 2.0f), new Range(1.0f, 2.0f), true},

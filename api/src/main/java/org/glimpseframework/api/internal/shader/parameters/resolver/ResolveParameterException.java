@@ -1,4 +1,4 @@
-package org.glimpseframework.api.internal.shader.parameters;
+package org.glimpseframework.api.internal.shader.parameters.resolver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,5 +21,5 @@ public class ResolveParameterException extends Exception {
 
 	private static final String MESSAGE_FORMAT = "Error occurred while resolving value for: %s";
 
-	private static final Logger LOG = LoggerFactory.getLogger(ParameterResolver.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ParameterValueResolver.class);
 }

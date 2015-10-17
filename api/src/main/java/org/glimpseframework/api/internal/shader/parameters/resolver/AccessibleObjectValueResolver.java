@@ -1,4 +1,4 @@
-package org.glimpseframework.api.internal.shader.parameters;
+package org.glimpseframework.api.internal.shader.parameters.resolver;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;

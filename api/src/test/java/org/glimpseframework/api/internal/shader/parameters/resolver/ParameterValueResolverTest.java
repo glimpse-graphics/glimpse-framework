@@ -1,23 +1,25 @@
-package org.glimpseframework.api.internal.shader.parameters;
+package org.glimpseframework.api.internal.shader.parameters.resolver;
 
 import org.glimpseframework.api.annotations.AnnotatedTestClass;
+import org.glimpseframework.api.annotations.Attribute;
+import org.glimpseframework.api.annotations.Uniform;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ParameterResolverTest {
+public class ParameterValueResolverTest {
 
 	@Before
 	public void setUpParameterResolver() {
-		parameterResolver = new ParameterResolver();
+		parameterValueResolver = new ParameterValueResolver();
 	}
 
 	@Test
 	public void testAttributeFieldByName() throws ResolveParameterException {
 		// given:
-		parameterResolver.register(new AnnotatedTestClass());
+		parameterValueResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = parameterResolver.resolveAttribute("aFloatField");
+		Object result = parameterValueResolver.resolve(Attribute.class, "aFloatField");
 		// then:
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result instanceof Float);
@@ -27,9 +29,9 @@ public class ParameterResolverTest {
 	@Test
 	public void testAttributeFieldByNameOverridden() throws ResolveParameterException {
 		// given:
-		parameterResolver.register(new AnnotatedTestClass());
+		parameterValueResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = parameterResolver.resolveAttribute("aFloatFieldOverridden");
+		Object result = parameterValueResolver.resolve(Attribute.class, "aFloatFieldOverridden");
 		// then:
 		Assert.assertNull(result);
 	}
@@ -37,9 +39,9 @@ public class ParameterResolverTest {
 	@Test
 	public void testAttributeFieldByNameOverriddenName() throws ResolveParameterException {
 		// given:
-		parameterResolver.register(new AnnotatedTestClass());
+		parameterValueResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = parameterResolver.resolveAttribute("overriddenFloatAttrib");
+		Object result = parameterValueResolver.resolve(Attribute.class, "overriddenFloatAttrib");
 		// then:
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result instanceof Float);
@@ -49,9 +51,9 @@ public class ParameterResolverTest {
 	@Test
 	public void testUniformFieldByName() throws ResolveParameterException {
 		// given:
-		parameterResolver.register(new AnnotatedTestClass());
+		parameterValueResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = parameterResolver.resolveUniform("uFloatField");
+		Object result = parameterValueResolver.resolve(Uniform.class, "uFloatField");
 		// then:
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result instanceof Float);
@@ -61,9 +63,9 @@ public class ParameterResolverTest {
 	@Test
 	public void testUniformFieldByNameOverridden() throws ResolveParameterException {
 		// given:
-		parameterResolver.register(new AnnotatedTestClass());
+		parameterValueResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = parameterResolver.resolveUniform("uFloatFieldOverridden");
+		Object result = parameterValueResolver.resolve(Uniform.class, "uFloatFieldOverridden");
 		// then:
 		Assert.assertNull(result);
 	}
@@ -71,9 +73,9 @@ public class ParameterResolverTest {
 	@Test
 	public void testUniformFieldByNameOverriddenName() throws ResolveParameterException {
 		// given:
-		parameterResolver.register(new AnnotatedTestClass());
+		parameterValueResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = parameterResolver.resolveUniform("overriddenFloatUniform");
+		Object result = parameterValueResolver.resolve(Uniform.class, "overriddenFloatUniform");
 		// then:
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result instanceof Float);
@@ -83,9 +85,9 @@ public class ParameterResolverTest {
 	@Test
 	public void testNotAnnotatedFieldAttributeByName() throws ResolveParameterException {
 		// given:
-		parameterResolver.register(new AnnotatedTestClass());
+		parameterValueResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = parameterResolver.resolveAttribute("notAnnotatedField");
+		Object result = parameterValueResolver.resolve(Attribute.class, "notAnnotatedField");
 		// then:
 		Assert.assertNull(result);
 	}
@@ -93,9 +95,9 @@ public class ParameterResolverTest {
 	@Test
 	public void testNotAnnotatedFieldUniformByName() throws ResolveParameterException {
 		// given:
-		parameterResolver.register(new AnnotatedTestClass());
+		parameterValueResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = parameterResolver.resolveUniform("notAnnotatedField");
+		Object result = parameterValueResolver.resolve(Uniform.class, "notAnnotatedField");
 		// then:
 		Assert.assertNull(result);
 	}
@@ -103,9 +105,9 @@ public class ParameterResolverTest {
 	@Test
 	public void testAttributeMethodByName() throws ResolveParameterException {
 		// given:
-		parameterResolver.register(new AnnotatedTestClass());
+		parameterValueResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = parameterResolver.resolveAttribute("attribInt");
+		Object result = parameterValueResolver.resolve(Attribute.class, "attribInt");
 		// then:
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result instanceof Integer);
@@ -115,9 +117,9 @@ public class ParameterResolverTest {
 	@Test
 	public void testAttributeMethodByNameOverridden() throws ResolveParameterException {
 		// given:
-		parameterResolver.register(new AnnotatedTestClass());
+		parameterValueResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = parameterResolver.resolveAttribute("attribIntOverridden");
+		Object result = parameterValueResolver.resolve(Attribute.class, "attribIntOverridden");
 		// then:
 		Assert.assertNull(result);
 	}
@@ -125,9 +127,9 @@ public class ParameterResolverTest {
 	@Test
 	public void testAttributeMethodByNameOverriddenName() throws ResolveParameterException {
 		// given:
-		parameterResolver.register(new AnnotatedTestClass());
+		parameterValueResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = parameterResolver.resolveAttribute("overriddenIntAttrib");
+		Object result = parameterValueResolver.resolve(Attribute.class, "overriddenIntAttrib");
 		// then:
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result instanceof Integer);
@@ -137,9 +139,9 @@ public class ParameterResolverTest {
 	@Test
 	public void testUniformMethodByName() throws ResolveParameterException {
 		// given:
-		parameterResolver.register(new AnnotatedTestClass());
+		parameterValueResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = parameterResolver.resolveUniform("uniformInt");
+		Object result = parameterValueResolver.resolve(Uniform.class, "uniformInt");
 		// then:
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result instanceof Integer);
@@ -149,9 +151,9 @@ public class ParameterResolverTest {
 	@Test
 	public void testUniformMethodByNameOverridden() throws ResolveParameterException {
 		// given:
-		parameterResolver.register(new AnnotatedTestClass());
+		parameterValueResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = parameterResolver.resolveUniform("uniformIntOverridden");
+		Object result = parameterValueResolver.resolve(Uniform.class, "uniformIntOverridden");
 		// then:
 		Assert.assertNull(result);
 	}
@@ -159,9 +161,9 @@ public class ParameterResolverTest {
 	@Test
 	public void testUniformMethodByNameOverriddenName() throws ResolveParameterException {
 		// given:
-		parameterResolver.register(new AnnotatedTestClass());
+		parameterValueResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = parameterResolver.resolveUniform("overriddenIntUniform");
+		Object result = parameterValueResolver.resolve(Uniform.class, "overriddenIntUniform");
 		// then:
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result instanceof Integer);
@@ -171,9 +173,9 @@ public class ParameterResolverTest {
 	@Test
 	public void testNotAnnotatedMethodAttributeByName() throws ResolveParameterException {
 		// given:
-		parameterResolver.register(new AnnotatedTestClass());
+		parameterValueResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = parameterResolver.resolveAttribute("notAnnotatedMethod");
+		Object result = parameterValueResolver.resolve(Attribute.class, "notAnnotatedMethod");
 		// then:
 		Assert.assertNull(result);
 	}
@@ -181,9 +183,9 @@ public class ParameterResolverTest {
 	@Test
 	public void testNotAnnotatedMethodUniformByName() throws ResolveParameterException {
 		// given:
-		parameterResolver.register(new AnnotatedTestClass());
+		parameterValueResolver.register(new AnnotatedTestClass());
 		// when:
-		Object result = parameterResolver.resolveUniform("notAnnotatedMethod");
+		Object result = parameterValueResolver.resolve(Uniform.class, "notAnnotatedMethod");
 		// then:
 		Assert.assertNull(result);
 	}
@@ -192,21 +194,21 @@ public class ParameterResolverTest {
 	public void testUnregister() throws ResolveParameterException {
 		// given:
 		Object object = new AnnotatedTestClass();
-		parameterResolver.register(object);
+		parameterValueResolver.register(object);
 		// when:
-		parameterResolver.unregister(object);
+		parameterValueResolver.unregister(object);
 		// then:
-		Assert.assertNull(parameterResolver.resolveAttribute("aFloatField"));
-		Assert.assertNull(parameterResolver.resolveAttribute("overriddenFloatAttrib"));
-		Assert.assertNull(parameterResolver.resolveUniform("uFloatField"));
-		Assert.assertNull(parameterResolver.resolveUniform("overriddenFloatUniform"));
-		Assert.assertNull(parameterResolver.resolveAttribute("attribInt"));
-		Assert.assertNull(parameterResolver.resolveAttribute("overriddenIntAttrib"));
-		Assert.assertNull(parameterResolver.resolveUniform("uniformInt"));
-		Assert.assertNull(parameterResolver.resolveUniform("overriddenIntUniform"));
+		Assert.assertNull(parameterValueResolver.resolve(Attribute.class, "aFloatField"));
+		Assert.assertNull(parameterValueResolver.resolve(Attribute.class, "overriddenFloatAttrib"));
+		Assert.assertNull(parameterValueResolver.resolve(Uniform.class, "uFloatField"));
+		Assert.assertNull(parameterValueResolver.resolve(Uniform.class, "overriddenFloatUniform"));
+		Assert.assertNull(parameterValueResolver.resolve(Attribute.class, "attribInt"));
+		Assert.assertNull(parameterValueResolver.resolve(Attribute.class, "overriddenIntAttrib"));
+		Assert.assertNull(parameterValueResolver.resolve(Uniform.class, "uniformInt"));
+		Assert.assertNull(parameterValueResolver.resolve(Uniform.class, "overriddenIntUniform"));
 	}
 
 	private static final float DELTA = 0.01f;
 
-	private ParameterResolver parameterResolver;
+	private ParameterValueResolver parameterValueResolver;
 }
