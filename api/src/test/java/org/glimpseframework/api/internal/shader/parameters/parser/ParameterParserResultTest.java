@@ -38,7 +38,7 @@ public class ParameterParserResultTest {
 		// given:
 		ParameterParser parser = new ParameterParser();
 		// when:
-		Parameter parameter = parser.parse(stringToParse).get(0);
+		Parameter parameter = parser.parse(stringToParse).iterator().next();
 		// then:
 		assertEquals(scope, parameter.getScope());
 	}
@@ -48,7 +48,7 @@ public class ParameterParserResultTest {
 		// given:
 		ParameterParser parser = new ParameterParser();
 		// when:
-		Parameter parameter = parser.parse(stringToParse).get(0);
+		Parameter parameter = parser.parse(stringToParse).iterator().next();
 		// then:
 		assertEquals(type, parameter.getType());
 	}
@@ -58,7 +58,7 @@ public class ParameterParserResultTest {
 		// given:
 		ParameterParser parser = new ParameterParser();
 		// when:
-		Parameter parameter = parser.parse(stringToParse).get(0);
+		Parameter parameter = parser.parse(stringToParse).iterator().next();
 		// then:
 		assertEquals(name, parameter.getName());
 	}

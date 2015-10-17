@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
+import java.util.Set;
 import org.glimpseframework.api.shader.parameters.Parameter;
 import org.junit.Test;
 
@@ -18,7 +18,7 @@ public class ParameterParserTest {
 		// given:
 		String source = loadSource();
 		// when:
-		List<Parameter> parameters = new ParameterParser().parse(source);
+		Set<Parameter> parameters = new ParameterParser().parse(source);
 		// then:
 		assertEquals(6, parameters.size());
 	}
@@ -39,7 +39,7 @@ public class ParameterParserTest {
 		// given:
 		String source = "foo int boo;";
 		// when:
-		List<Parameter> parameters = new ParameterParser().parse(source);
+		Set<Parameter> parameters = new ParameterParser().parse(source);
 		// then:
 		assertTrue(parameters.isEmpty());
 	}
@@ -49,7 +49,7 @@ public class ParameterParserTest {
 		// given:
 		String source = "uniform foo boo;";
 		// when:
-		List<Parameter> parameters = new ParameterParser().parse(source);
+		Set<Parameter> parameters = new ParameterParser().parse(source);
 		// then:
 		assertTrue(parameters.isEmpty());
 	}

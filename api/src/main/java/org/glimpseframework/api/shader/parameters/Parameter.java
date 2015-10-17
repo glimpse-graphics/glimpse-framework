@@ -1,6 +1,7 @@
 package org.glimpseframework.api.shader.parameters;
 
 import java.lang.annotation.Annotation;
+import java.util.Objects;
 import org.glimpseframework.api.annotations.Attribute;
 import org.glimpseframework.api.annotations.Uniform;
 
@@ -8,7 +9,7 @@ import org.glimpseframework.api.annotations.Uniform;
  * OpenGL shader parameter.
  * @author Slawomir Czerwinski
  */
-public class Parameter {
+public final class Parameter {
 
 	/**
 	 * Parameter scope in shader.
@@ -129,7 +130,32 @@ public class Parameter {
 		return String.format("%s %s %s;", scope.name().toLowerCase(), type.glslTypeName, name);
 	}
 
-	private Scope scope;
-	private Type type;
-	private String name;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+
+		Parameter parameter = (Parameter) o;
+
+		if (scope != parameter.scope) {
+			return false;
+		}
+		if (type != parameter.type) {
+			return false;
+		}
+		return !(name != null ? !name.equals(parameter.name) : parameter.name != null);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(scope, type, name);
+	}
+
+	private final Scope scope;
+	private final Type type;
+	private final String name;
 }

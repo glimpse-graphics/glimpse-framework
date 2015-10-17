@@ -1,7 +1,7 @@
 package org.glimpseframework.api.internal.shader.parameters.parser;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.glimpseframework.api.shader.parameters.Parameter;
@@ -19,9 +19,9 @@ public class ParameterParser {
 	 * @param source GLSL source code
 	 * @return list of parameters
 	 */
-	public List<Parameter> parse(String source) {
+	public Set<Parameter> parse(String source) {
 		LOG.trace("Parsing parameters in shader source code:\n{}", source);
-		List<Parameter> parameters = new ArrayList<Parameter>();
+		Set<Parameter> parameters = new HashSet<Parameter>();
 		Matcher matcher = PARAMETER_PATTERN.matcher(source);
 		while (matcher.find()) {
 			try {

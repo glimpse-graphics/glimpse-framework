@@ -38,6 +38,15 @@ public class VectorsEqualTest {
 		Assert.assertEquals(expectedResult, result);
 	}
 
+	@Test
+	public void testHashCodesEqual() {
+		// given: v1, v2
+		// when:
+		boolean result = (v2 instanceof Vector) && (v1.hashCode() == v2.hashCode());
+		// then:
+		Assert.assertEquals(expectedResult, result);
+	}
+
 	private Vector v1;
 	private Object v2;
 	private boolean expectedResult;
