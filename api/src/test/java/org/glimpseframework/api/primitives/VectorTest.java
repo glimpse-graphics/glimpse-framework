@@ -89,7 +89,7 @@ public class VectorTest {
 		Assert.assertTrue(normalized.isParallelTo(v));
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test(expected = NullVectorNormalizationException.class)
 	public void testNormalizeNullVector() {
 		// given:
 		Vector v = new Vector(0.0f, 0.0f, 0.0f);

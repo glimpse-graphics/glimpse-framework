@@ -31,7 +31,7 @@ public class MatrixTest {
 		Assert.assertArrayEquals(expected, matrix16f, DELTA);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = InvalidMatrixSizeException.class)
 	public void testCreateMatrixInvalidArguments() {
 		// when:
 		new Matrix(

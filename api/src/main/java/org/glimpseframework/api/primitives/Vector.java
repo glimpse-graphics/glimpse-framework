@@ -1,8 +1,6 @@
 package org.glimpseframework.api.primitives;
 
 import java.util.Objects;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A vector in three-dimensional space, supporting affine transformations.
@@ -98,8 +96,9 @@ public final class Vector {
 	/**
 	 * Gets a vector with the same direction, but with a magnitude of 1.
 	 * @return vector with a magnitude of 1
+	 * @throws NullVectorNormalizationException if vector's magnitude is 0.
 	 */
-	public Vector normalize() {
+	public Vector normalize() throws NullVectorNormalizationException {
 		return normalize(1.0f);
 	}
 
@@ -109,11 +108,11 @@ public final class Vector {
 	 * the direction of the resulting vector will be changed to opposite.</p>
 	 * @param magnitude magnitude of the new vector
 	 * @return vector with the given magnitude
+	 * @throws NullVectorNormalizationException if vector's magnitude is 0.
 	 */
-	public Vector normalize(float magnitude) {
+	public Vector normalize(float magnitude) throws NullVectorNormalizationException {
 		if (equals(NULL_VECTOR)) {
-			LOG.error("Cannot normalize a null vector", new IllegalArgumentException());
-			throw new IllegalStateException("Cannot normalize a null vector.");
+			throw new NullVectorNormalizationException();
 		}
 		return multiply(magnitude / getMagnitude());
 	}
@@ -192,8 +191,6 @@ public final class Vector {
 	public int hashCode() {
 		return Objects.hash(x, y, z);
 	}
-
-	private static final Logger LOG = LoggerFactory.getLogger(Vector.class);
 
 	/** A null vector. */
 	public static final Vector NULL_VECTOR = new Vector(0.0f, 0.0f, 0.0f);

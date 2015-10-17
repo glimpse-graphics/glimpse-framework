@@ -1,8 +1,6 @@
 package org.glimpseframework.api.primitives;
 
 import java.util.Arrays;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Matrix defining three-dimensional affine transformations.
@@ -15,12 +13,11 @@ public final class Matrix {
 	 * Creates a new 4x4 matrix.
 	 * <p>There must be exactly 16 elements to properly generate a matrix.</p>
 	 * @param matrix matrix elements
+	 * @throws InvalidMatrixSizeException when the number of elements is different than 16.
 	 */
-	public Matrix(float... matrix) {
+	public Matrix(float... matrix) throws InvalidMatrixSizeException {
 		if (matrix.length != 16) {
-			LOG.error("The matrix must be 4\u00D74 (16 numbers), but {} numbers are provided", matrix.length,
-					new IllegalArgumentException());
-			throw new IllegalArgumentException("The matrix must be 4\u00D74 (16 numbers).");
+			throw new InvalidMatrixSizeException(matrix.length);
 		}
 		this.matrix = Arrays.copyOf(matrix, 16);
 	}
@@ -354,8 +351,6 @@ public final class Matrix {
 				matrix[2], matrix[6], matrix[10], matrix[14],
 				matrix[3], matrix[7], matrix[11], matrix[15]);
 	}
-
-	private static final Logger LOG = LoggerFactory.getLogger(Matrix.class);
 
 	/** Null matrix. */
 	public static final Matrix NULL_MATRIX = new Matrix(
