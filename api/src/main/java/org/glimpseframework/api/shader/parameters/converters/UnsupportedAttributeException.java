@@ -1,12 +1,13 @@
 package org.glimpseframework.api.shader.parameters.converters;
 
+import org.glimpseframework.api.GlimpseRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Exception thrown when shaders do not support attribute parameters of a given type.
  */
-public class UnsupportedAttributeException extends RuntimeException {
+public class UnsupportedAttributeException extends GlimpseRuntimeException {
 
 	/**
 	 * Creates an exception

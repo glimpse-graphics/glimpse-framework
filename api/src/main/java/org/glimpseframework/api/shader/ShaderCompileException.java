@@ -1,12 +1,13 @@
 package org.glimpseframework.api.shader;
 
+import org.glimpseframework.api.GlimpseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Exception thrown when shader compilation fails.
  */
-public class ShaderCompileException extends Exception {
+public class ShaderCompileException extends GlimpseException {
 
 	/**
 	 * Creates an exception

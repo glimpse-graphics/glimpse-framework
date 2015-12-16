@@ -1,12 +1,13 @@
 package org.glimpseframework.api.shader;
 
+import org.glimpseframework.api.GlimpseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Exception thrown when shader program linking fails.
  */
-public class ShaderProgramLinkException extends Exception {
+public class ShaderProgramLinkException extends GlimpseException {
 
 	/**
 	 * Creates an exception

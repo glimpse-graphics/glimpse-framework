@@ -1,5 +1,6 @@
 package org.glimpseframework.internal.shader.parameters.resolver;
 
+import org.glimpseframework.api.GlimpseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * Exception thrown when a reflection error occurs while resolving parameter value.
  * @author Slawomir Czerwinski
  */
-public class ResolveParameterException extends Exception {
+public class ResolveParameterException extends GlimpseException {
 
 	/**
 	 * Creates an exception.

@@ -1,5 +1,6 @@
 package org.glimpseframework.api.primitives;
 
+import org.glimpseframework.api.GlimpseRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * Exception thrown when a vector with a magnitude of 0 is being normalized.
  * @author Slawomir Czerwinski
  */
-public class NullVectorNormalizationException extends RuntimeException {
+public class NullVectorNormalizationException extends GlimpseRuntimeException {
 
 	/**
 	 * Creates an exception.
