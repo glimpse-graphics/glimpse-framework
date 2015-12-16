@@ -4,9 +4,12 @@ import java.nio.ByteBuffer;
 
 /**
  * Vertex buffer object containing bytes.
+ *
+ * <p>This class is immutable.</p>
+ *
  * @author Slawomir Czerwinski
  */
-public class ByteVBO implements VBO {
+public final class ByteVBO implements VBO {
 
 	/**
 	 * Creates a new buffer of bytes.
@@ -43,6 +46,6 @@ public class ByteVBO implements VBO {
 		return String.format("VBO[%d vectors of %d bytes]", bytes.length / vectorSize, vectorSize);
 	}
 
-	private byte[] bytes;
-	private int vectorSize;
+	private final byte[] bytes;
+	private final int vectorSize;
 }

@@ -11,7 +11,7 @@ public interface VBO {
 	/**
 	 * Type of VBO elements.
 	 */
-	public enum VBOType {
+	enum VBOType {
 		BYTE(1),
 		INT(4),
 		FLOAT(4);

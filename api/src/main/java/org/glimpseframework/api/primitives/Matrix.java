@@ -4,7 +4,11 @@ import java.util.Arrays;
 
 /**
  * Matrix defining three-dimensional affine transformations.
+ *
  * <p>A 4x4 transformation matrix.</p>
+ *
+ * <p>This class is immutable.</p>
+ *
  * @author Slawomir Czerwinski
  */
 public final class Matrix {

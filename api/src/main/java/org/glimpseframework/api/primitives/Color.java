@@ -4,6 +4,9 @@ import java.util.Objects;
 
 /**
  * RGBA color.
+ *
+ * <p>This class is immutable.</p>
+ *
  * @author Slawomir Czerwinski
  */
 public final class Color {

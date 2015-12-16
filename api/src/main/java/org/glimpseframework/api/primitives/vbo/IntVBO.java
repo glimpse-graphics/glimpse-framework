@@ -4,9 +4,12 @@ import java.nio.IntBuffer;
 
 /**
  * Vertex buffer object containing integer numbers.
+ *
+ * <p>This class is immutable.</p>
+ *
  * @author Slawomir Czerwinski
  */
-public class IntVBO implements VBO {
+public final class IntVBO implements VBO {
 
 	/**
 	 * Creates a new buffer of integer numbers.
@@ -43,6 +46,6 @@ public class IntVBO implements VBO {
 		return String.format("VBO[%d vectors of %d integers]", integers.length / vectorSize, vectorSize);
 	}
 
-	private int[] integers;
-	private int vectorSize;
+	private final int[] integers;
+	private final int vectorSize;
 }

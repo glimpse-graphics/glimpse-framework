@@ -4,6 +4,9 @@ import java.util.Objects;
 
 /**
  * Range of floating point values.
+ *
+ * <p>This class is immutable.</p>
+ *
  * @author Slawomir Czerwinski
  */
 public final class Range {

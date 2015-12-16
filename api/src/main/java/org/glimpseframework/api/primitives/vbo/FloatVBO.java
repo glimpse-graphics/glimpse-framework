@@ -4,9 +4,12 @@ import java.nio.FloatBuffer;
 
 /**
  * Vertex buffer object containing floating point numbers.
+ *
+ * <p>This class is immutable.</p>
+ *
  * @author Slawomir Czerwinski
  */
-public class FloatVBO implements VBO {
+public final class FloatVBO implements VBO {
 
 	/**
 	 * Creates a new buffer of floating point numbers.
@@ -43,6 +46,6 @@ public class FloatVBO implements VBO {
 		return String.format("VBO[%d vectors of %d floats]", floats.length / vectorSize, vectorSize);
 	}
 
-	private float[] floats;
-	private int vectorSize;
+	private final float[] floats;
+	private final int vectorSize;
 }

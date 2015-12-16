@@ -4,6 +4,9 @@ import java.util.Objects;
 
 /**
  * A point representation in three-dimensional space, supporting affine transformations.
+ *
+ * <p>This class is immutable.</p>
+ *
  * @author Slawomir Czerwinski
  */
 public final class Point {

@@ -4,6 +4,9 @@ import java.util.Objects;
 
 /**
  * Two-dimensional angle.
+ *
+ * <p>This class is immutable.</p>
+ *
  * @author Slawomir Czerwinski
  */
 public final class Angle implements Comparable<Angle> {
