@@ -30,6 +30,10 @@ public final class Parameter {
 			this.annotation = annotation;
 		}
 
+		public Class<? extends Annotation> getAnnotation() {
+			return annotation;
+		}
+
 		private Class<? extends Annotation> annotation;
 	}
 

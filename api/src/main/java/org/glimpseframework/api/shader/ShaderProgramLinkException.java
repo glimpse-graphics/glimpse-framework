@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Exception thrown when shader program linking fails.
+ * @author Slawomir Czerwinski
  */
 public class ShaderProgramLinkException extends GlimpseException {
 

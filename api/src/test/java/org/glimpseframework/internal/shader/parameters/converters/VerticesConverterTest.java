@@ -6,10 +6,6 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.nio.Buffer;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import java.util.Arrays;
 import java.util.Set;
 import org.glimpseframework.api.primitives.vbo.FloatVBO;
 import org.glimpseframework.api.primitives.vbo.IntVBO;
@@ -18,50 +14,15 @@ import org.glimpseframework.api.shader.parameters.Parameter;
 import org.glimpseframework.api.shader.parameters.converters.ParameterConverter;
 import org.glimpseframework.api.shader.parameters.converters.ShaderParameterAdapter;
 import org.glimpseframework.api.shader.parameters.converters.UnsupportedUniformException;
+import org.glimpseframework.test.matchers.IsFloatBufferOfValues;
+import org.glimpseframework.test.matchers.IsIntBufferOfValues;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class VerticesConverterTest {
-
-	private class IsFloatBufferOfValues extends ArgumentMatcher<Buffer> {
-
-		private float values[];
-
-		public IsFloatBufferOfValues(float[] values) {
-			this.values = values;
-		}
-
-		@Override
-		public boolean matches(Object argument) {
-			if (argument instanceof FloatBuffer) {
-				FloatBuffer buffer = (FloatBuffer) argument;
-				return Arrays.equals(values, buffer.array());
-			}
-			return false;
-		}
-	}
-
-	private class IsIntBufferOfValues extends ArgumentMatcher<Buffer> {
-
-		private int values[];
-
-		public IsIntBufferOfValues(int[] values) {
-			this.values = values;
-		}
-
-		@Override
-		public boolean matches(Object argument) {
-			if (argument instanceof IntBuffer) {
-				IntBuffer buffer = (IntBuffer) argument;
-				return Arrays.equals(values, buffer.array());
-			}
-			return false;
-		}
-	}
 
 	@Test
 	public void testConvertFloatAttribute() throws Exception {

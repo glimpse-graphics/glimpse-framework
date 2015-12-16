@@ -6,6 +6,9 @@ import org.glimpseframework.api.shader.ShaderProgram;
 
 /**
  * OpenGL shader parameters adapter.
+ *
+ * <p>Concrete implementation of this class must be provided by GlimpseFramework API implementation.</p>
+ *
  * @author Slawomir Czerwinski
  */
 public abstract class ShaderParameterAdapter {

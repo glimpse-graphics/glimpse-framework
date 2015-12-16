@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * OpenGL shader program builder.
+ *
+ * <p>Concrete implementation of this class must be provided by GlimpseFramework API implementation.</p>
  *
  * @param <S> shader implementation
  * @param <P> shader program implementation

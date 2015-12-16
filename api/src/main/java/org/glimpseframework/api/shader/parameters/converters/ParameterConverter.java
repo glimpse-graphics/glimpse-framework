@@ -15,7 +15,7 @@ public interface ParameterConverter<T> {
 	 * @param parameter parameter descriptor
 	 * @param value parameter value
 	 */
-	void convert(Parameter parameter, T value);
+	void convert(Parameter parameter, Object value);
 
 	/**
 	 * Provides a set of supported shader parameter types.

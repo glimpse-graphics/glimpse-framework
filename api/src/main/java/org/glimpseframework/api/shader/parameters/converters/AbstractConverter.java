@@ -18,16 +18,20 @@ public abstract class AbstractConverter<T> implements ParameterConverter<T> {
 	}
 
 	@Override
-	public final void convert(Parameter parameter, T value) {
-		switch (parameter.getScope()) {
-			case ATTRIBUTE:
-				convertAttribute(parameter, value);
-				break;
-			case UNIFORM:
-				convertUniform(parameter, value);
-				break;
-			default:
-				break;
+	public final void convert(Parameter parameter, Object value) {
+		try {
+			switch (parameter.getScope()) {
+				case ATTRIBUTE:
+					convertAttribute(parameter, (T) value);
+					break;
+				case UNIFORM:
+					convertUniform(parameter, (T) value);
+					break;
+				default:
+					break;
+			}
+		} catch (ClassCastException e) {
+			throw new InvalidParameterValueTypeException(value);
 		}
 	}
 

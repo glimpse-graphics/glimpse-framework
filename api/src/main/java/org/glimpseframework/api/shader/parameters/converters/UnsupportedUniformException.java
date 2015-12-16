@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Exception thrown when shaders do not support uniform parameters of a given type.
+ * @author Slawomir Czerwinski
  */
 public class UnsupportedUniformException extends GlimpseRuntimeException {
 

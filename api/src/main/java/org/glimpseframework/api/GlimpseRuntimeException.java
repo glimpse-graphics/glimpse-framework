@@ -2,6 +2,7 @@ package org.glimpseframework.api;
 
 /**
  * Common GlimpseFramework exception.
+ * @author Slawomir Czerwinski
  */
 public class GlimpseRuntimeException extends RuntimeException {
 

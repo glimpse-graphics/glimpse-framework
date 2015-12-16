@@ -7,12 +7,15 @@ import org.glimpseframework.api.primitives.Color;
 import org.glimpseframework.api.primitives.Matrix;
 import org.glimpseframework.api.primitives.Point;
 import org.glimpseframework.api.primitives.Vector;
-import org.glimpseframework.api.primitives.vbo.VBO;
+import org.glimpseframework.api.primitives.vbo.ByteVBO;
+import org.glimpseframework.api.primitives.vbo.FloatVBO;
+import org.glimpseframework.api.primitives.vbo.IntVBO;
 import org.glimpseframework.api.shader.parameters.converters.ParameterConverter;
 import org.glimpseframework.api.shader.parameters.converters.ShaderParameterAdapter;
 
 /**
  * Default GlimpseFramework converters for shader parameters.
+ * @author Slawomir Czerwinski
  */
 public class DefaultConverters {
 
@@ -24,10 +27,12 @@ public class DefaultConverters {
 	 * @param adapter adapter
 	 * @return converters
 	 */
-	public static Map<Class<?>, ParameterConverter<?>> create(ShaderParameterAdapter adapter) {
+	public static Map<Class<?>, ParameterConverter<?>> forAdapter(ShaderParameterAdapter adapter) {
 		Map<Class<?>, ParameterConverter<?>> converters = new HashMap<Class<?>, ParameterConverter<?>>();
 
-		converters.put(VBO.class, new VerticesConverter(adapter));
+		converters.put(FloatVBO.class, new VerticesConverter(adapter));
+		converters.put(IntVBO.class, new VerticesConverter(adapter));
+		converters.put(ByteVBO.class, new VerticesConverter(adapter));
 
 		converters.put(Angle.class, new AngleConverter(adapter));
 		converters.put(Color.class, new ColorConverter(adapter));

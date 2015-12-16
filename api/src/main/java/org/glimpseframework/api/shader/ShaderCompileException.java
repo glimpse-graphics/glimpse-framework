@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Exception thrown when shader compilation fails.
+ * @author Slawomir Czerwinski
  */
 public class ShaderCompileException extends GlimpseException {
 
