@@ -16,7 +16,7 @@ public interface VBO {
 		INT(4),
 		FLOAT(4);
 
-		private VBOType(int elementBytes) {
+		VBOType(int elementBytes) {
 			this.elementBytes = elementBytes;
 		}
 
