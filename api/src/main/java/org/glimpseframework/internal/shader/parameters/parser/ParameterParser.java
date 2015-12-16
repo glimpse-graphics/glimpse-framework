@@ -1,4 +1,4 @@
-package org.glimpseframework.api.internal.shader.parameters.parser;
+package org.glimpseframework.internal.shader.parameters.parser;
 
 import java.util.HashSet;
 import java.util.Set;

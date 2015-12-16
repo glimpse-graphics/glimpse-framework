@@ -1,4 +1,4 @@
-package org.glimpseframework.api.internal.shader.parameters.resolver;
+package org.glimpseframework.internal.shader.parameters.resolver;
 
 import java.lang.reflect.Field;
 
