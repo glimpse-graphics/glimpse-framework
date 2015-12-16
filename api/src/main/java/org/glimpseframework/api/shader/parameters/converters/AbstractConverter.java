@@ -9,8 +9,6 @@ import org.glimpseframework.api.shader.parameters.Parameter;
  */
 public abstract class AbstractConverter<T> implements ParameterConverter<T> {
 
-	protected ShaderParameterAdapter adapter;
-
 	/**
 	 * Creates a new converter
 	 * @param adapter adapter
@@ -40,4 +38,6 @@ public abstract class AbstractConverter<T> implements ParameterConverter<T> {
 	protected void convertUniform(Parameter parameter, T value) {
 		throw new UnsupportedUniformException(value);
 	}
+
+	protected ShaderParameterAdapter adapter;
 }

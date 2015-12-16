@@ -10,8 +10,6 @@ import org.glimpseframework.api.shader.ShaderProgram;
  */
 public abstract class ShaderParameterAdapter {
 
-	protected ShaderProgram shaderProgram;
-
 	/**
 	 * Creates a new adapter.
 	 * @param shaderProgram shader program
@@ -56,4 +54,6 @@ public abstract class ShaderParameterAdapter {
 	 * @param values 1 to 4 values
 	 */
 	public abstract void uniform(String parameterName, float... values);
+
+	protected ShaderProgram shaderProgram;
 }
