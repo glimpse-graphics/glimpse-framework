@@ -34,7 +34,7 @@ public abstract class ShaderParameterAdapter {
 			String parameterName, int vectorSize, VBO.VBOType type, boolean normalized, int stride, Buffer buffer);
 
 	/**
-	 * Applies 4x4 uniform matrix
+	 * Applies 4x4 uniform matrix.
 	 * @param parameterName shader parameter name
 	 * @param count amount of matrices
 	 * @param transpose {@code true} if the matrix should be transposed, {@code false} otherwise
@@ -42,4 +42,18 @@ public abstract class ShaderParameterAdapter {
 	 * @param offset offset in the array of matrix elements
 	 */
 	public abstract void uniformMatrix4(String parameterName, int count, boolean transpose, float[] value, int offset);
+
+	/**
+	 * Applies uniform integer values.
+	 * @param parameterName shader parameter name
+	 * @param values 1 to 4 values
+	 */
+	public abstract void uniform(String parameterName, int... values);
+
+	/**
+	 * Applies uniform floating point values.
+	 * @param parameterName shader parameter name
+	 * @param values 1 to 4 values
+	 */
+	public abstract void uniform(String parameterName, float... values);
 }

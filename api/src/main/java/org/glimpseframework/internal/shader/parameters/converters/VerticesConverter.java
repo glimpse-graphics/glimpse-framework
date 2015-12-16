@@ -4,33 +4,24 @@ import java.util.EnumSet;
 import java.util.Set;
 import org.glimpseframework.api.primitives.vbo.VBO;
 import org.glimpseframework.api.shader.parameters.Parameter;
-import org.glimpseframework.api.shader.parameters.converters.ParameterConverter;
+import org.glimpseframework.api.shader.parameters.converters.AbstractConverter;
 import org.glimpseframework.api.shader.parameters.converters.ShaderParameterAdapter;
-import org.glimpseframework.api.shader.parameters.converters.UnsupportedUniformException;
 
-class VerticesConverter implements ParameterConverter<VBO> {
-
-	private ShaderParameterAdapter adapter;
+class VerticesConverter extends AbstractConverter<VBO> {
 
 	VerticesConverter(ShaderParameterAdapter adapter) {
-		this.adapter = adapter;
+		super(adapter);
 	}
 
 	@Override
-	public void convert(Parameter parameter, VBO value) {
-		switch (parameter.getScope()) {
-			case UNIFORM:
-				throw new UnsupportedUniformException(VBO.class);
-			case ATTRIBUTE:
-				adapter.vertexAttributeBuffer(
-						parameter.getName(),
-						value.getVectorSize(),
-						value.getType(),
-						false,
-						value.getType().getElementBytes() * value.getVectorSize(),
-						value.getBuffer());
-			default:
-		}
+	protected void convertAttribute(Parameter parameter, VBO value) {
+		adapter.vertexAttributeBuffer(
+				parameter.getName(),
+				value.getVectorSize(),
+				value.getType(),
+				false,
+				value.getType().getElementBytes() * value.getVectorSize(),
+				value.getBuffer());
 	}
 
 	@Override
