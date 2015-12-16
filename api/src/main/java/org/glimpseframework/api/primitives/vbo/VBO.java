@@ -12,12 +12,12 @@ public interface VBO {
 	 * Type of VBO elements.
 	 */
 	enum VBOType {
-		BYTE(1),
-		INT(4),
-		FLOAT(4);
+		BYTE(Byte.SIZE),
+		INT(Integer.SIZE),
+		FLOAT(Float.SIZE);
 
-		VBOType(int elementBytes) {
-			this.elementBytes = elementBytes;
+		VBOType(int elementBits) {
+			elementBytes = elementBits / Byte.SIZE;
 		}
 
 		/**

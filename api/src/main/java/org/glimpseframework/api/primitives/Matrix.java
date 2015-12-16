@@ -336,7 +336,7 @@ public final class Matrix {
 	}
 
 	/**
-	 * Gets affine transformation matrix coordinates, as an array of 16 float numbers.
+	 * Gets affine transformation matrix elements, as an array of 16 float numbers.
 	 * @return array of 16 float numbers
 	 */
 	public float[] get16f() {

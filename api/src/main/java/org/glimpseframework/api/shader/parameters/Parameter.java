@@ -6,7 +6,7 @@ import org.glimpseframework.api.annotations.Attribute;
 import org.glimpseframework.api.annotations.Uniform;
 
 /**
- * OpenGL shader parameter.
+ * OpenGL shader parameter descriptor.
  * @author Slawomir Czerwinski
  */
 public final class Parameter {
