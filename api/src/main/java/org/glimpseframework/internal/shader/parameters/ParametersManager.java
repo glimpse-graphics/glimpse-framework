@@ -5,22 +5,24 @@ import java.util.Map;
 import org.glimpseframework.api.shader.ShaderProgram;
 import org.glimpseframework.api.shader.parameters.Parameter;
 import org.glimpseframework.api.shader.parameters.converters.ParameterConverter;
-import org.glimpseframework.api.shader.parameters.converters.ShaderParameterAdapter;
-import org.glimpseframework.internal.shader.parameters.converters.DefaultConverters;
 import org.glimpseframework.internal.shader.parameters.resolver.ParameterValueResolver;
 import org.glimpseframework.internal.shader.parameters.resolver.ResolveParameterException;
 
 /**
  * OpenGL shader parameters manager.
+ * @author Slawomir Czerwinski
  */
 public class ParametersManager {
 
-	public ParametersManager(ShaderParameterAdapter adapter) {
-		converters.putAll(DefaultConverters.forAdapter(adapter));
+	public ParametersManager() {
 	}
 
 	public <T> void registerConverter(Class<T> cls, ParameterConverter<T> converter) {
 		converters.put(cls, converter);
+	}
+
+	public void registerAllConverters(Map<Class<?>, ParameterConverter<?>> converters) {
+		this.converters.putAll(converters);
 	}
 
 	public <T> void unregisterConverter(Class<T> cls) {

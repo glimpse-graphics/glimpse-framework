@@ -2,7 +2,6 @@ package org.glimpseframework.api.shader.parameters.converters;
 
 import java.nio.Buffer;
 import org.glimpseframework.api.primitives.vbo.VBO;
-import org.glimpseframework.api.shader.ShaderProgram;
 
 /**
  * OpenGL shader parameters adapter.
@@ -12,14 +11,6 @@ import org.glimpseframework.api.shader.ShaderProgram;
  * @author Slawomir Czerwinski
  */
 public abstract class ShaderParameterAdapter {
-
-	/**
-	 * Creates a new adapter.
-	 * @param shaderProgram shader program
-	 */
-	public ShaderParameterAdapter(ShaderProgram shaderProgram) {
-		this.shaderProgram = shaderProgram;
-	}
 
 	/**
 	 * Applies a buffer containing attribute parameters of vertices.
@@ -48,6 +39,7 @@ public abstract class ShaderParameterAdapter {
 	 * Applies uniform integer values.
 	 * @param parameterName shader parameter name
 	 * @param values 1 to 4 values
+	 * @throws InvalidNumberOfValuesException when invelid number of values is passed as a parameter
 	 */
 	public abstract void uniform(String parameterName, int... values);
 
@@ -55,8 +47,13 @@ public abstract class ShaderParameterAdapter {
 	 * Applies uniform floating point values.
 	 * @param parameterName shader parameter name
 	 * @param values 1 to 4 values
+	 * @throws InvalidNumberOfValuesException when invelid number of values is passed as a parameter
 	 */
 	public abstract void uniform(String parameterName, float... values);
 
-	protected ShaderProgram shaderProgram;
+	/**
+	 * Draws triangles.
+	 * @param numberOfVertices number of vertices.
+	 */
+	public abstract void drawTriangles(int numberOfVertices);
 }

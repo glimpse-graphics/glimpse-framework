@@ -18,6 +18,7 @@ import org.glimpseframework.api.shader.ShaderProgram;
 import org.glimpseframework.api.shader.parameters.Parameter;
 import org.glimpseframework.api.shader.parameters.converters.ShaderParameterAdapter;
 import org.glimpseframework.api.shader.parameters.converters.UnsupportedUniformException;
+import org.glimpseframework.internal.shader.parameters.converters.DefaultConverters;
 import org.glimpseframework.test.matchers.IsFloatBufferOfValues;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,7 +57,8 @@ public class ParametersManagerTest {
 		parameters.add(new Parameter(Parameter.Scope.UNIFORM, Parameter.Type.FLOAT_VECTOR_4, "u_Color"));
 		parameters.add(new Parameter(Parameter.Scope.ATTRIBUTE, Parameter.Type.FLOAT_VECTOR_3, "a_Position"));
 		when(shaderProgram.getParameters()).thenReturn(parameters);
-		ParametersManager parametersManager = new ParametersManager(adapter);
+		ParametersManager parametersManager = new ParametersManager();
+		parametersManager.registerAllConverters(DefaultConverters.forAdapter(adapter));
 		parametersManager.registerValueObject(new TestClass(Matrix.IDENTITY_MATRIX, Color.GREEN, FLOAT_VALUES));
 		// when:
 		parametersManager.applyParameters(shaderProgram);
@@ -74,7 +76,8 @@ public class ParametersManagerTest {
 		Set<Parameter> parameters = new HashSet<Parameter>();
 		parameters.add(new Parameter(Parameter.Scope.UNIFORM, Parameter.Type.INTEGER, "u_Text"));
 		when(shaderProgram.getParameters()).thenReturn(parameters);
-		ParametersManager parametersManager = new ParametersManager(adapter);
+		ParametersManager parametersManager = new ParametersManager();
+		parametersManager.registerAllConverters(DefaultConverters.forAdapter(adapter));
 		parametersManager.registerValueObject(new TestClass(Matrix.IDENTITY_MATRIX, Color.GREEN, FLOAT_VALUES));
 		// when:
 		parametersManager.applyParameters(shaderProgram);
