@@ -6,6 +6,7 @@ import org.glimpseframework.api.models.Model;
 import org.glimpseframework.api.shader.ShaderProgram;
 import org.glimpseframework.api.shader.parameters.converters.ShaderParameterAdapter;
 import org.glimpseframework.internal.shader.parameters.ParametersManager;
+import org.glimpseframework.internal.shader.parameters.converters.DefaultConverters;
 import org.glimpseframework.internal.shader.parameters.resolver.ResolveParameterException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,22 @@ public abstract class Scene {
 	}
 
 	/**
+	 * Puts a model in the scene.
+	 * @param model the model
+	 */
+	public final void put(Model model) {
+		models.add(model);
+	}
+
+	/**
+	 * Removes a model from the scene.
+	 * @param model the model
+	 */
+	public final void remove(Model model) {
+		models.remove(model);
+	}
+
+	/**
 	 * Invoked once, before the scene is first rendered.
 	 */
 	protected void onCreate() {
@@ -83,9 +100,13 @@ public abstract class Scene {
 	}
 
 	private void renderModel(Model model) throws ResolveParameterException {
+		ShaderProgram shaderProgram = model.getShaderProgram();
+		shaderProgram.use();
+		ShaderParameterAdapter adapter = getAdapter(shaderProgram);
+		parametersManager.registerAllConverters(DefaultConverters.forAdapter(adapter));
 		parametersManager.registerValueObject(model);
-		parametersManager.applyParameters(model.getShaderProgram());
-		getAdapter(model.getShaderProgram()).drawTriangles(model.getNumberOfVertices());
+		parametersManager.applyParameters(shaderProgram);
+		adapter.drawTriangles(model.getNumberOfVertices());
 		parametersManager.unregisterValueObject(model);
 	}
 
