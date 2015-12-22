@@ -2,6 +2,9 @@ package org.glimpseframework.api.shader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import org.glimpseframework.api.shader.parameters.Parameter;
+import org.glimpseframework.internal.shader.parameters.parser.ParameterParser;
 
 /**
  * OpenGL shader program builder.
@@ -26,6 +29,10 @@ public abstract class ShaderProgramBuilder<S extends Shader, P extends ShaderPro
 		shaders.add(shader);
 	}
 
+	protected Set<Parameter> parseParameters(String source) {
+		return parser.parse(source);
+	}
+
 	/**
 	 * Builds a program.
 	 * @return shader program
@@ -46,6 +53,8 @@ public abstract class ShaderProgramBuilder<S extends Shader, P extends ShaderPro
 	protected List<S> getShaders() {
 		return shaders;
 	}
+
+	private ParameterParser parser = new ParameterParser();
 
 	private List<S> shaders = new ArrayList<S>(Shader.Type.values().length);
 	private P shaderProgram;
