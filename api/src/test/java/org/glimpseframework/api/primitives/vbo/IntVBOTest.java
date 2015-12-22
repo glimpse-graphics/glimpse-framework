@@ -13,7 +13,12 @@ public class IntVBOTest {
 		// when:
 		IntBuffer buffer = (IntBuffer) vbo.getBuffer();
 		// then:
-		Assert.assertArrayEquals(INTEGERS, buffer.array());
+		Assert.assertTrue(buffer.isDirect());
+		Assert.assertEquals(INTEGERS.length, buffer.capacity());
+		buffer.rewind();
+		for (int value : INTEGERS) {
+			Assert.assertEquals(value, buffer.get());
+		}
 	}
 
 	@Test

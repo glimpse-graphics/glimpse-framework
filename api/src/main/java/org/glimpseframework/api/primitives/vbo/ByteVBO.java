@@ -1,6 +1,7 @@
 package org.glimpseframework.api.primitives.vbo;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 /**
  * Vertex buffer object containing bytes.
@@ -23,7 +24,9 @@ public final class ByteVBO implements VBO {
 
 	@Override
 	public ByteBuffer getBuffer() {
-		return ByteBuffer.wrap(bytes);
+		return ByteBuffer.allocateDirect(bytes.length * getType().getElementBytes())
+				.order(ByteOrder.nativeOrder())
+				.put(bytes);
 	}
 
 	@Override

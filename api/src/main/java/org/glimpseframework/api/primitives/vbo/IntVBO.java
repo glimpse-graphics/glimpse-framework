@@ -1,5 +1,7 @@
 package org.glimpseframework.api.primitives.vbo;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 
 /**
@@ -23,7 +25,10 @@ public final class IntVBO implements VBO {
 
 	@Override
 	public IntBuffer getBuffer() {
-		return IntBuffer.wrap(integers);
+		return ByteBuffer.allocateDirect(integers.length * getType().getElementBytes())
+				.order(ByteOrder.nativeOrder())
+				.asIntBuffer()
+				.put(integers);
 	}
 
 	@Override

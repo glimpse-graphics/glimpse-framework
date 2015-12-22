@@ -13,7 +13,12 @@ public class ByteVBOTest {
 		// when:
 		ByteBuffer buffer = (ByteBuffer) vbo.getBuffer();
 		// then:
-		Assert.assertArrayEquals(BYTES, buffer.array());
+		Assert.assertTrue(buffer.isDirect());
+		Assert.assertEquals(BYTES.length, buffer.capacity());
+		buffer.rewind();
+		for (byte value : BYTES) {
+			Assert.assertEquals(value, buffer.get());
+		}
 	}
 
 	@Test

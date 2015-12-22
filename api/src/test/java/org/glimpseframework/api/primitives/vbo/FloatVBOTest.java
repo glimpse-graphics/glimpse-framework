@@ -13,7 +13,12 @@ public class FloatVBOTest {
 		// when:
 		FloatBuffer buffer = (FloatBuffer) vbo.getBuffer();
 		// then:
-		Assert.assertArrayEquals(FLOATS, buffer.array(), DELTA);
+		Assert.assertTrue(buffer.isDirect());
+		Assert.assertEquals(FLOATS.length, buffer.capacity());
+		buffer.rewind();
+		for (float value : FLOATS) {
+			Assert.assertEquals(value, buffer.get(), DELTA);
+		}
 	}
 
 	@Test

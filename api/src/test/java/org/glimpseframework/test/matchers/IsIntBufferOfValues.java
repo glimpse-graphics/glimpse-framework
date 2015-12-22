@@ -17,7 +17,16 @@ public class IsIntBufferOfValues extends ArgumentMatcher<Buffer> {
 	public boolean matches(Object argument) {
 		if (argument instanceof IntBuffer) {
 			IntBuffer buffer = (IntBuffer) argument;
-			return Arrays.equals(values, buffer.array());
+			buffer.rewind();
+			if (buffer.capacity() != values.length) {
+				return false;
+			}
+			for (int value : values) {
+				if (buffer.get() != value) {
+					return false;
+				}
+			}
+			return true;
 		}
 		return false;
 	}

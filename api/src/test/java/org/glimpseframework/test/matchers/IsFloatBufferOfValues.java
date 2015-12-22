@@ -17,7 +17,16 @@ public class IsFloatBufferOfValues extends ArgumentMatcher<Buffer> {
 	public boolean matches(Object argument) {
 		if (argument instanceof FloatBuffer) {
 			FloatBuffer buffer = (FloatBuffer) argument;
-			return Arrays.equals(values, buffer.array());
+			buffer.rewind();
+			if (buffer.capacity() != values.length) {
+				return false;
+			}
+			for (float value : values) {
+				if (buffer.get() != value) {
+					return false;
+				}
+			}
+			return true;
 		}
 		return false;
 	}
