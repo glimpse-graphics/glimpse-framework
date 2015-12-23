@@ -17,6 +17,9 @@ public class FieldValueResolverTest {
 
 		@Uniform
 		private boolean notAnnotatedField = true;
+
+		@Other
+		private float otherValue = 43.7f;
 	}
 
 	@Test
@@ -65,6 +68,19 @@ public class FieldValueResolverTest {
 		Object actual = resolver.resolve(testObject, "notAnnotatedField");
 		// then:
 		Assert.assertNull(actual);
+	}
+
+	@Test
+	public void testResolveOtherAnnotation() throws Exception {
+		// given:
+		TestClass testObject = new TestClass();
+		// when:
+		AccessibleObjectValueResolver resolver = new FieldValueResolver().register(TestClass.class, Other.class);
+		Object actual = resolver.resolve(testObject, "otherValue");
+		// then:
+		Assert.assertNotNull(actual);
+		Assert.assertTrue(actual instanceof Float);
+		Assert.assertEquals(43.7f, (Float) actual, DELTA);
 	}
 
 	private static final float DELTA = 0.001f;

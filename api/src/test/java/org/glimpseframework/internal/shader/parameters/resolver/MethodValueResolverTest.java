@@ -32,6 +32,11 @@ public class MethodValueResolverTest {
 		private boolean notAnnotatedMethod() {
 			return true;
 		}
+
+		@Other
+		private int otherMethod() {
+			return 52;
+		}
 	}
 
 	@Test
@@ -93,6 +98,19 @@ public class MethodValueResolverTest {
 		Object actual = resolver.resolve(testObject, "notAnnotatedMethod");
 		// then:
 		Assert.assertNull(actual);
+	}
+
+	@Test
+	public void testResolveOtherAnnotation() throws Exception {
+		// given:
+		TestClass testObject = new TestClass();
+		// when:
+		AccessibleObjectValueResolver resolver = new MethodValueResolver().register(TestClass.class, Other.class);
+		Object actual = resolver.resolve(testObject, "otherMethod");
+		// then:
+		Assert.assertNotNull(actual);
+		Assert.assertTrue(actual instanceof Integer);
+		Assert.assertEquals(52, ((Integer) actual).intValue());
 	}
 
 	private static final float DELTA = 0.001f;

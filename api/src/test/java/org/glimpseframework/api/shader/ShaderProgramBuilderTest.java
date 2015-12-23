@@ -58,7 +58,7 @@ public class ShaderProgramBuilderTest {
 	@Test(expected = ShaderCompileException.class)
 	public void testBuildCompileError() throws Exception{
 		// given:
-		doThrow(ShaderCompileException.class).when(vertexShader).compile();
+		doThrow(new ShaderCompileException("SHADER INFO LOG")).when(vertexShader).compile();
 		ShaderProgramBuilder<Shader, ShaderProgram> builder = new ShaderProgramBuilderMock();
 		// when:
 		ShaderProgram actual = builder
@@ -71,7 +71,7 @@ public class ShaderProgramBuilderTest {
 	@Test(expected = ShaderProgramLinkException.class)
 	public void testBuildLinkError() throws Exception{
 		// given:
-		doThrow(ShaderProgramLinkException.class).when(shaderProgram).link();
+		doThrow(new ShaderProgramLinkException("PROGRAM INFO LOG")).when(shaderProgram).link();
 		ShaderProgramBuilder<Shader, ShaderProgram> builder = new ShaderProgramBuilderMock();
 		// when:
 		ShaderProgram actual = builder
