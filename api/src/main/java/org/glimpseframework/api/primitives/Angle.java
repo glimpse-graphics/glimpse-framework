@@ -65,7 +65,7 @@ public final class Angle implements Comparable<Angle> {
 	 * @return angle coterminal with this angle
 	 */
 	public Angle getCoterminalNextTo(Angle reference, Direction direction) {
-		double turns;
+		double turns = 0.0;
 		switch (direction) {
 			case CLOCKWISE:
 				turns = -Math.floor((getRadians() - reference.getRadians()) * 0.5 / Math.PI) - 1.0;
@@ -74,7 +74,6 @@ public final class Angle implements Comparable<Angle> {
 				turns = Math.floor((reference.getRadians() - getRadians()) * 0.5 / Math.PI) + 1.0;
 				break;
 			default:
-				turns = 0.0;
 				break;
 		}
 		return Angle.fromRadians(getRadians() + Double.valueOf((turns) * 2.0 * Math.PI).floatValue());

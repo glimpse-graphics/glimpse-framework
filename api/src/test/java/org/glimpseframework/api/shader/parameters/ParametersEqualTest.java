@@ -14,6 +14,11 @@ public class ParametersEqualTest {
 	public static Collection<Object[]> parameters() {
 		return Arrays.asList(new Object[][]{
 				{
+						CONST_PARAMETER,
+						CONST_PARAMETER,
+						true
+				},
+				{
 						new Parameter(Parameter.Scope.UNIFORM, Parameter.Type.MATRIX_4, "u_mvpMatrix"),
 						new Parameter(Parameter.Scope.UNIFORM, Parameter.Type.MATRIX_4, "u_mvpMatrix"),
 						true
@@ -43,6 +48,16 @@ public class ParametersEqualTest {
 						"uniform mat4 u_mvpMatrix;",
 						false
 				},
+				{
+						new Parameter(Parameter.Scope.UNIFORM, Parameter.Type.MATRIX_4, null),
+						new Parameter(Parameter.Scope.UNIFORM, Parameter.Type.MATRIX_4, "u_mvpMatrix"),
+						false
+				},
+				{
+						new Parameter(Parameter.Scope.UNIFORM, Parameter.Type.MATRIX_4, null),
+						new Parameter(Parameter.Scope.UNIFORM, Parameter.Type.MATRIX_4, null),
+						true
+				},
 		});
 	}
 
@@ -69,6 +84,9 @@ public class ParametersEqualTest {
 		// then:
 		Assert.assertEquals(expectedResult, result);
 	}
+
+	private static final Parameter CONST_PARAMETER =
+			new Parameter(Parameter.Scope.UNIFORM, Parameter.Type.MATRIX_4, "u_mvpMatrix");
 
 	private Parameter p1;
 	private Object p2;
