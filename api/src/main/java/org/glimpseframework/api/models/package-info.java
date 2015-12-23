@@ -1,4 +1,4 @@
 /**
- * Contains OpenGL 3D modelss.
+ * Contains OpenGL 3D models.
  */
 package org.glimpseframework.api.models;

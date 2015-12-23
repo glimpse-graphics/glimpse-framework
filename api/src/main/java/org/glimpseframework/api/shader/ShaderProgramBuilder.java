@@ -25,11 +25,20 @@ public abstract class ShaderProgramBuilder<S extends Shader, P extends ShaderPro
 	 */
 	public abstract ShaderProgramBuilder setSource(Shader.Type shaderType, String source);
 
-	protected void addShader(S shader) {
+	/**
+	 * Prepares a shader to be added to the shader program.
+	 * @param shader shader
+	 */
+	protected final void addShader(S shader) {
 		shaders.add(shader);
 	}
 
-	protected Set<Parameter> parseParameters(String source) {
+	/**
+	 * Parses shader parameters from shader source code.
+	 * @param source shader source code
+	 * @return shader parameters
+	 */
+	protected final Set<Parameter> parseParameters(String source) {
 		return parser.parse(source);
 	}
 
@@ -39,7 +48,7 @@ public abstract class ShaderProgramBuilder<S extends Shader, P extends ShaderPro
 	 * @throws ShaderCompileException when shader compilation ends with error
 	 * @throws ShaderProgramLinkException when program linking ends with error
 	 */
-	public ShaderProgram build() throws ShaderCompileException, ShaderProgramLinkException {
+	public final ShaderProgram build() throws ShaderCompileException, ShaderProgramLinkException {
 		shaderProgram = createProgram();
 		for (Shader shader : shaders) {
 			shader.compile();
@@ -48,9 +57,17 @@ public abstract class ShaderProgramBuilder<S extends Shader, P extends ShaderPro
 		return shaderProgram;
 	}
 
+	/**
+	 * Creates a new shader program.
+	 * @return new shader program
+	 */
 	protected abstract P createProgram();
 
-	protected List<S> getShaders() {
+	/**
+	 * Gets shaders to be added to the shader program.
+	 * @return shaders
+	 */
+	protected final List<S> getShaders() {
 		return shaders;
 	}
 

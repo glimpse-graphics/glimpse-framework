@@ -1,4 +1,5 @@
 # Java target
+target/
 */target/
 *.class
 

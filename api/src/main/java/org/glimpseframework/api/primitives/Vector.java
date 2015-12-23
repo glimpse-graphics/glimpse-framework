@@ -51,14 +51,26 @@ public final class Vector {
 						.floatValue());
 	}
 
+	/**
+	 * Gets X coordinate of the vector.
+	 * @return X coordinate
+	 */
 	public float getX() {
 		return x;
 	}
 
+	/**
+	 * Gets Y coordinate of the vector.
+	 * @return Y coordinate
+	 */
 	public float getY() {
 		return y;
 	}
 
+	/**
+	 * Gets Z coordinate of the vector.
+	 * @return Z coordinate
+	 */
 	public float getZ() {
 		return z;
 	}

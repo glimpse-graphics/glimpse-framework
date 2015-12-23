@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Exception thrown when invalid number of values is passed as a method parameter.
+ * @author Slawomir Czerwinski
  */
 public class InvalidNumberOfValuesException extends GlimpseRuntimeException {
 

@@ -77,6 +77,9 @@ public abstract class Scene {
 	protected void onResize(int width, int height) {
 	}
 
+	/**
+	 * Renders the scene.
+	 */
 	protected final void render() {
 		onPreRender();
 		doRender();

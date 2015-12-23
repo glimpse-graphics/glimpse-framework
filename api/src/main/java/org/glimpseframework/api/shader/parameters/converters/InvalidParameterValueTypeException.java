@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Exception thrown when a value of invalid type is applied to shader parameter converter.
+ * @author Slawomir Czerwinski
  */
 public class InvalidParameterValueTypeException extends GlimpseRuntimeException {
 

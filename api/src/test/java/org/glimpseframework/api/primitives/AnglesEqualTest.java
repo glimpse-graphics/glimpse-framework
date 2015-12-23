@@ -17,6 +17,7 @@ public class AnglesEqualTest {
 				{Angle.RIGHT_ANGLE, Angle.RIGHT_ANGLE, true},
 				{Angle.RIGHT_ANGLE, Angle.FULL_ANGLE, false},
 				{Angle.RIGHT_ANGLE, Angle.STRAIGHT_ANGLE, false},
+				{Angle.NULL_ANGLE, null, false},
 				{Angle.RIGHT_ANGLE, null, false},
 				{Angle.RIGHT_ANGLE, "RIGHT_ANGLE", false},
 				{Angle.fromDegrees(30.0f), Angle.fromDegrees(30.01f), false},

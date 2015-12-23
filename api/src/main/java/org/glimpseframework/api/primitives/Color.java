@@ -35,18 +35,34 @@ public final class Color {
 		this.alpha = alpha;
 	}
 
+	/**
+	 * Gets value of red channel.
+	 * @return value of red channel
+	 */
 	public float getR() {
 		return r;
 	}
 
+	/**
+	 * Gets value of green channel.
+	 * @return value of green channel
+	 */
 	public float getG() {
 		return g;
 	}
 
+	/**
+	 * Gets value of blue channel.
+	 * @return value of blue channel
+	 */
 	public float getB() {
 		return b;
 	}
 
+	/**
+	 * Gets value of alpha channel.
+	 * @return value of alpha channel
+	 */
 	public float getAlpha() {
 		return alpha;
 	}

@@ -50,10 +50,18 @@ public final class Angle implements Comparable<Angle> {
 		this.radians = radians;
 	}
 
+	/**
+	 * Gets angle size in degrees.
+	 * @return angle size in degrees
+	 */
 	public float getDegrees() {
 		return degrees;
 	}
 
+	/**
+	 * Gets angle size in degrees.
+	 * @return angle size in radians
+	 */
 	public float getRadians() {
 		return radians;
 	}
@@ -109,8 +117,16 @@ public final class Angle implements Comparable<Angle> {
 	private static final float STRAIGHT_ANGLE_RADIANS = Double.valueOf(Math.PI).floatValue();
 	private static final float FULL_ANGLE_RADIANS = Double.valueOf(2.0 * Math.PI).floatValue();
 
+	/** Null angle (0&deg;). */
+	public static final Angle NULL_ANGLE = fromRadians(0.0f);
+
+	/** Right angle (90&deg;). */
 	public static final Angle RIGHT_ANGLE = fromRadians(RIGHT_ANGLE_RADIANS);
+
+	/** Straight angle (180&deg;). */
 	public static final Angle STRAIGHT_ANGLE = fromRadians(STRAIGHT_ANGLE_RADIANS);
+
+	/** Full angle (360&deg;). */
 	public static final Angle FULL_ANGLE = fromRadians(FULL_ANGLE_RADIANS);
 
 	private final float degrees;

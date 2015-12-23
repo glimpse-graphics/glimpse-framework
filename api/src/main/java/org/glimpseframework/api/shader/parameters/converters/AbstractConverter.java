@@ -35,13 +35,26 @@ public abstract class AbstractConverter<T> implements ParameterConverter<T> {
 		}
 	}
 
+	/**
+	 * Converts attribute parameter value to a shader parameter.
+	 * @param parameter parameter descriptor
+	 * @param value parameter value
+	 */
 	protected void convertAttribute(Parameter parameter, T value) {
 		throw new UnsupportedAttributeException(value);
 	}
 
+	/**
+	 * Converts uniform parameter value to a shader parameter.
+	 * @param parameter parameter descriptor
+	 * @param value parameter value
+	 */
 	protected void convertUniform(Parameter parameter, T value) {
 		throw new UnsupportedUniformException(value);
 	}
 
+	/**
+	 * Shader parameter adapter that may be used to apply the parameter value to a shader program.
+	 */
 	protected ShaderParameterAdapter adapter;
 }

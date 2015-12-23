@@ -30,6 +30,10 @@ public final class Parameter {
 			this.annotation = annotation;
 		}
 
+		/**
+		 * Gets annotation type related to the parameter scope.
+		 * @return annotation type
+		 */
 		public Class<? extends Annotation> getAnnotation() {
 			return annotation;
 		}

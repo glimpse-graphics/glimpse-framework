@@ -53,7 +53,7 @@ public class ParameterValueResolver {
 	 * @param annotation parameter scope annotation type
 	 * @param name parameter name
 	 * @return parameter value
-	 * @throws ResolveParameterException when a reflection error occurs while resolving parameter value.
+	 * @throws ResolveParameterException when an exception occurs while resolving parameter value.
 	 */
 	public Object resolve(Class<? extends Annotation> annotation, String name) throws ResolveParameterException {
 		return resolve(name, resolvers.get(annotation));

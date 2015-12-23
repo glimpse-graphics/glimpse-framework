@@ -23,14 +23,26 @@ public final class Point {
 		this.z = z;
 	}
 
+	/**
+	 * Gets X coordinate of the point.
+	 * @return X coordinate
+	 */
 	public float getX() {
 		return x;
 	}
 
+	/**
+	 * Gets Y coordinate of the point.
+	 * @return Y coordinate
+	 */
 	public float getY() {
 		return y;
 	}
 
+	/**
+	 * Gets Z coordinate of the point.
+	 * @return Z coordinate
+	 */
 	public float getZ() {
 		return z;
 	}

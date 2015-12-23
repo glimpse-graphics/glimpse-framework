@@ -14,29 +14,53 @@ import org.glimpseframework.internal.shader.parameters.resolver.ResolveParameter
  */
 public class ParametersManager {
 
-	public ParametersManager() {
-	}
-
+	/**
+	 * Registers a shader parameter converter.
+	 * @param cls shader parameter value type
+	 * @param converter shader parameter converter
+	 * @param <T> shader parameter value type
+	 */
 	public <T> void registerConverter(Class<T> cls, ParameterConverter<T> converter) {
 		converters.put(cls, converter);
 	}
 
+	/**
+	 * Registers all shader parameter converters from a given map.
+	 * @param converters shader parameter converters
+	 */
 	public void registerAllConverters(Map<Class<?>, ParameterConverter<?>> converters) {
 		this.converters.putAll(converters);
 	}
 
-	public <T> void unregisterConverter(Class<T> cls) {
+	/**
+	 * Unregisters a shader parameter converter for a given parameter value type.
+	 * @param cls shader parameter value type
+	 */
+	public void unregisterConverter(Class<?> cls) {
 		converters.remove(cls);
 	}
 
+	/**
+	 * Registers an object containing values of parameters.
+	 * @param object object containing values of parameters
+	 */
 	public void registerValueObject(Object object) {
 		resolver.register(object);
 	}
 
+	/**
+	 * Unregisters an object containing values of parameters.
+	 * @param object object containing values of parameters
+	 */
 	public void unregisterValueObject(Object object) {
 		resolver.unregister(object);
 	}
 
+	/**
+	 * Applies parameters to the given shader program.
+	 * @param shaderProgram shader program
+	 * @throws ResolveParameterException when an exception occurs while resolving parameter value.
+	 */
 	public void applyParameters(ShaderProgram shaderProgram) throws ResolveParameterException {
 		for (Parameter parameter : shaderProgram.getParameters()) {
 			applyParameter(parameter);
