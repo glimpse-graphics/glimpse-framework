@@ -1,11 +1,14 @@
 package org.glimpseframework.internal.shader.parameters;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 import org.glimpseframework.api.annotations.Attribute;
@@ -16,6 +19,7 @@ import org.glimpseframework.api.primitives.vbo.FloatVBO;
 import org.glimpseframework.api.primitives.vbo.VBO;
 import org.glimpseframework.api.shader.ShaderProgram;
 import org.glimpseframework.api.shader.parameters.Parameter;
+import org.glimpseframework.api.shader.parameters.converters.ParameterConverter;
 import org.glimpseframework.api.shader.parameters.converters.ShaderParameterAdapter;
 import org.glimpseframework.api.shader.parameters.converters.UnsupportedUniformException;
 import org.glimpseframework.internal.shader.parameters.converters.DefaultConverters;
@@ -47,6 +51,9 @@ public class ParametersManagerTest {
 
 		@Uniform(name = "u_Text")
 		private String text = "some text";
+
+		@Uniform(name = "u_Bool")
+		private Boolean bool = true;
 	}
 
 	@Test
@@ -84,6 +91,22 @@ public class ParametersManagerTest {
 		// then: UnsupportedUniformException is thrown
 	}
 
+	@Test
+	public void testCustomConverter() throws Exception {
+		// given:
+		Set<Parameter> parameters = new HashSet<Parameter>();
+		parameters.add(new Parameter(Parameter.Scope.UNIFORM, Parameter.Type.BOOLEAN, "u_Bool"));
+		when(shaderProgram.getParameters()).thenReturn(parameters);
+		when(customConverter.getOutputTypes()).thenReturn(EnumSet.of(Parameter.Type.BOOLEAN));
+		ParametersManager parametersManager = new ParametersManager();
+		parametersManager.registerConverter(Boolean.class, customConverter);
+		parametersManager.registerValueObject(new TestClass(Matrix.IDENTITY_MATRIX, Color.GREEN, FLOAT_VALUES));
+		// when:
+		parametersManager.applyParameters(shaderProgram);
+		// then:
+		verify(customConverter, times(1)).convert(any(Parameter.class), any());
+	}
+
 	private static final float[] FLOAT_VALUES = {
 			1.0f, 2.0f, 3.0f,
 			4.0f, 5.0f, 6.0f,
@@ -95,4 +118,7 @@ public class ParametersManagerTest {
 
 	@Mock
 	private ShaderProgram shaderProgram;
+
+	@Mock
+	private ParameterConverter<Boolean> customConverter;
 }

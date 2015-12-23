@@ -39,4 +39,9 @@ public class AnnotatedTestClass {
 	public int getNotAnnotatedMethod() {
 		return 55;
 	}
+
+	@Uniform
+	public int paramMethod(int value) {
+		return value;
+	}
 }

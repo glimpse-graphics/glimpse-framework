@@ -190,6 +190,16 @@ public class ParameterValueResolverTest {
 		Assert.assertNull(result);
 	}
 
+	@Test(expected = ResolveParameterException.class)
+	public void testMethodWithParameters() throws ResolveParameterException {
+		// given:
+		parameterValueResolver.register(new AnnotatedTestClass());
+		// when:
+		Object result = parameterValueResolver.resolve(Uniform.class, "paramMethod");
+		// then:
+		Assert.assertNull(result);
+	}
+
 	@Test
 	public void testUnregister() throws ResolveParameterException {
 		// given:

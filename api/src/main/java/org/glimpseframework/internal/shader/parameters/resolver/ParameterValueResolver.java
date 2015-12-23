@@ -67,7 +67,7 @@ public class ParameterValueResolver {
 				if (result != null) {
 					return result;
 				}
-			} catch (ReflectiveOperationException e) {
+			} catch (Exception e) {
 				throw new ResolveParameterException(name, e);
 			}
 		}
