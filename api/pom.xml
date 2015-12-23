@@ -8,7 +8,7 @@
 	<parent>
 		<artifactId>glimpse-framework</artifactId>
 		<groupId>org.glimpseframework</groupId>
-		<version>0.1-SNAPSHOT</version>
+		<version>0.1</version>
 	</parent>
 
 	<artifactId>glimpse-framework-api</artifactId>
