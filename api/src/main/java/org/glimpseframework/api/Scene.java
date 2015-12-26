@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * OpenGL scene.
+ *
+ * <p>Concrete implementation of this class must be provided by GlimpseFramework API implementation.</p>
+ *
  * @author Slawomir Czerwinski
  */
 public abstract class Scene {
