@@ -15,7 +15,7 @@ public class UnsupportedAttributeException extends GlimpseRuntimeException {
 	 * @param type parameter type
 	 */
 	public UnsupportedAttributeException(Class<?> type) {
-		super(String.format(MESSAGE_FORMAT, type.getName()));
+		super(String.format(MESSAGE_FORMAT, type != null ? type.getName() : null));
 		LOG.error(getMessage(), this);
 	}
 
@@ -24,7 +24,7 @@ public class UnsupportedAttributeException extends GlimpseRuntimeException {
 	 * @param value parameter value
 	 */
 	public UnsupportedAttributeException(Object value) {
-		this(value.getClass());
+		this(value != null ? value.getClass() : null);
 	}
 
 	private static final String MESSAGE_FORMAT = "Shader attribute parameters not supported for type <%s>";

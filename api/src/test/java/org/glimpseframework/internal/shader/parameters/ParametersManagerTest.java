@@ -21,6 +21,7 @@ import org.glimpseframework.api.shader.ShaderProgram;
 import org.glimpseframework.api.shader.parameters.Parameter;
 import org.glimpseframework.api.shader.parameters.converters.ParameterConverter;
 import org.glimpseframework.api.shader.parameters.converters.ShaderParameterAdapter;
+import org.glimpseframework.api.shader.parameters.converters.UnsupportedAttributeException;
 import org.glimpseframework.api.shader.parameters.converters.UnsupportedUniformException;
 import org.glimpseframework.internal.shader.parameters.converters.DefaultConverters;
 import org.glimpseframework.test.matchers.IsFloatBufferOfValues;
@@ -112,6 +113,34 @@ public class ParametersManagerTest {
 			4.0f, 5.0f, 6.0f,
 			7.0f, 8.0f, 9.0f,
 	};
+
+	@Test(expected = UnsupportedUniformException.class)
+	public void testApplyNonExistingUniformParameter() throws Exception {
+		// given:
+		Set<Parameter> parameters = new HashSet<Parameter>();
+		parameters.add(new Parameter(Parameter.Scope.UNIFORM, Parameter.Type.INTEGER, "u_NonExisting"));
+		when(shaderProgram.getParameters()).thenReturn(parameters);
+		ParametersManager parametersManager = new ParametersManager();
+		parametersManager.registerAllConverters(DefaultConverters.forAdapter(adapter));
+		parametersManager.registerValueObject(new TestClass(Matrix.IDENTITY_MATRIX, Color.GREEN, FLOAT_VALUES));
+		// when:
+		parametersManager.applyParameters(shaderProgram);
+		// then: UnsupportedUniformException is thrown
+	}
+
+	@Test(expected = UnsupportedAttributeException.class)
+	public void testApplyNonExistingAttributeParameter() throws Exception {
+		// given:
+		Set<Parameter> parameters = new HashSet<Parameter>();
+		parameters.add(new Parameter(Parameter.Scope.ATTRIBUTE, Parameter.Type.INTEGER, "a_NonExisting"));
+		when(shaderProgram.getParameters()).thenReturn(parameters);
+		ParametersManager parametersManager = new ParametersManager();
+		parametersManager.registerAllConverters(DefaultConverters.forAdapter(adapter));
+		parametersManager.registerValueObject(new TestClass(Matrix.IDENTITY_MATRIX, Color.GREEN, FLOAT_VALUES));
+		// when:
+		parametersManager.applyParameters(shaderProgram);
+		// then: UnsupportedAttributeException is thrown
+	}
 
 	@Mock
 	private ShaderParameterAdapter adapter;
