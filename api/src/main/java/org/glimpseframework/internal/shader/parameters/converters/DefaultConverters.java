@@ -41,6 +41,7 @@ public class DefaultConverters {
 		converters.put(Vector.class, new VectorConverter(adapter));
 
 		converters.put(Object.class, new UnsupportedConverter());
+		converters.put(null, new NullConverter());
 
 		return converters;
 	}

@@ -74,6 +74,9 @@ public class ParametersManager {
 	}
 
 	private ParameterConverter<?> findConverter(Object rawValue) {
+		if (rawValue == null) {
+			return converters.get(null);
+		}
 		ParameterConverter<?> converter = null;
 		for (Class<?> cls = rawValue.getClass(); converter == null; cls = cls.getSuperclass()) {
 			converter = converters.get(cls);
