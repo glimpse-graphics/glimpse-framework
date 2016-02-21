@@ -7,7 +7,7 @@ import org.glimpseframework.api.shader.parameters.converters.AbstractConverter;
 
 class NullConverter extends AbstractConverter<Object> {
 
-	public NullConverter() {
+	NullConverter() {
 		super(null);
 	}
 
