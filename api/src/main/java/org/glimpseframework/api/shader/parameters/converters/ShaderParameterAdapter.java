@@ -1,6 +1,7 @@
 package org.glimpseframework.api.shader.parameters.converters;
 
 import java.nio.Buffer;
+import org.glimpseframework.api.materials.Texture;
 import org.glimpseframework.api.primitives.vbo.VBO;
 
 /**
@@ -50,6 +51,13 @@ public abstract class ShaderParameterAdapter {
 	 * @throws InvalidNumberOfValuesException when invelid number of values is passed as a parameter
 	 */
 	public abstract void uniform(String parameterName, float... values);
+
+	/**
+	 * Applies uniform texture.
+	 * @param parameterName shader parameter name
+	 * @param texture texture object
+	 */
+	public abstract void uniform(String parameterName, Texture texture);
 
 	/**
 	 * Draws triangles.

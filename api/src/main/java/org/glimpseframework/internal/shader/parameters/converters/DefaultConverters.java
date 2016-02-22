@@ -2,6 +2,7 @@ package org.glimpseframework.internal.shader.parameters.converters;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.glimpseframework.api.materials.AbstractTexture;
 import org.glimpseframework.api.primitives.Angle;
 import org.glimpseframework.api.primitives.Color;
 import org.glimpseframework.api.primitives.Matrix;
@@ -39,6 +40,8 @@ public class DefaultConverters {
 		converters.put(Matrix.class, new MatrixConverter(adapter));
 		converters.put(Point.class, new PointConverter(adapter));
 		converters.put(Vector.class, new VectorConverter(adapter));
+
+		converters.put(AbstractTexture.class, new TextureConverter(adapter));
 
 		converters.put(Object.class, new UnsupportedConverter());
 		converters.put(null, new NullConverter());
