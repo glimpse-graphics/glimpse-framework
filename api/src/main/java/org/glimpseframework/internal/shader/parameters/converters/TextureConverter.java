@@ -15,7 +15,7 @@ class TextureConverter extends AbstractConverter<Texture> {
 
 	@Override
 	protected void convertUniform(Parameter parameter, Texture value) {
-		adapter.uniform(parameter.getName(), value.getId());
+		adapter.uniform(parameter.getName(), value);
 	}
 
 	@Override

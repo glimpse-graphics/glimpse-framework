@@ -13,6 +13,12 @@ public interface Texture {
 	void generate() throws TextureGeneratingException;
 
 	/**
+	 * Gets texture index.
+	 * @return texture index
+	 */
+	int getIndex();
+
+	/**
 	 * Gets texture ID.
 	 * @return texture ID
 	 */
