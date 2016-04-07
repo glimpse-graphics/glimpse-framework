@@ -1,0 +1,5 @@
+rootProject.name = 'glimpse-framework'
+
+include ':glimpse-framework-api'
+
+project(':glimpse-framework-api').projectDir = "$rootDir/api" as File

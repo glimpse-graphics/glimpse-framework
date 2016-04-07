@@ -1,0 +1,18 @@
+allprojects  {
+	apply plugin: 'maven'
+
+	group = 'org.glimpseframework'
+	version = '0.2-SNAPSHOT'
+}
+
+subprojects {
+	apply plugin: 'java'
+
+	sourceCompatibility = 1.6
+	targetCompatibility = 1.6
+
+	repositories {
+		jcenter()
+	}
+
+}
