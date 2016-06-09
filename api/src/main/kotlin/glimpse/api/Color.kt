@@ -1,7 +1,5 @@
 package glimpse.api
 
-import org.glimpseframework.api.primitives.Color
-
 /**
  * RGBA color.
  *
@@ -38,3 +36,13 @@ data class Color(val red: Float, val green: Float, val blue: Float, val alpha: F
 
 	private fun Float.toIntChannel() = (this * 255f).toInt()
 }
+
+/**
+ * Returns a direct buffer containing values of RGB channels of colors in the original list.
+ */
+fun List<Color>.toDirectBuffer() = toDirectFloatBuffer(size * 3) { it._3f }
+
+/**
+ * Returns a direct buffer containing values of RGBA channels of colors in the original list.
+ */
+fun List<Color>.toDirectBufferWithAlpha() = toDirectFloatBuffer(size * 4) { it._4f }
