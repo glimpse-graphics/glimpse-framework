@@ -1,0 +1,28 @@
+allprojects  {
+	apply plugin: 'maven'
+
+	group = 'org.glimpseframework'
+	version = '0.2-SNAPSHOT'
+}
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'jacoco'
+
+	sourceCompatibility = 1.6
+	targetCompatibility = 1.6
+
+	repositories {
+		jcenter()
+	}
+
+	jacocoTestReport {
+		reports {
+			xml.enabled = true
+			html.enabled = true
+		}
+	}
+
+	check.dependsOn jacocoTestReport
+
+}
