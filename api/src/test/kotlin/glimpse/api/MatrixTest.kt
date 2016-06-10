@@ -1,6 +1,7 @@
 package glimpse.api
 
 import org.junit.Test
+import kotlin.test.assertTrue
 import kotlin.test.expect
 
 class MatrixTest {
@@ -51,5 +52,28 @@ class MatrixTest {
 				3.0f, 7.0f, 11.0f, 15.0f,
 				4.0f, 8.0f, 12.0f, 16.0f
 		))) { m.transpose() }
+	}
+
+	@Test
+	fun invertMatrix() {
+		val m = Matrix(listOf(
+				4.0f, 9.0f, 5.0f, 6.0f,
+				2.0f, 7.0f, 8.0f, 10.0f,
+				11.0f, 12.0f, 13.0f, 14.0f,
+				15.0f, 16.0f, 17.0f, 18.0f))
+		println(m.invert())
+		assertMatrix(Matrix.IDENTITY, 0.000001f) {
+			m.invert() * m
+		}
+	}
+
+	private fun assertMatrix(expected: Matrix, maxSquaredError: Float, actual: () -> Matrix) {
+		assertTrue {
+			maxSquaredError > expected._16f
+					.zip(actual()._16f)
+					.map { it.first - it.second }
+					.map { it * it }
+					.reduce { sum, next -> sum + next }
+		}
 	}
 }
