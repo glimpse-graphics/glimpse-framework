@@ -10,13 +10,10 @@ data class Matrix(private val matrix: List<Float>) {
 		/**
 		 * Identity matrix.
 		 */
-		val IDENTITY = Matrix((0..15)
-				.map { it.toRowCol() }
-				.map {
-					val (row, col) = it
-					if (row === col) 1f else 0f
-				}
-		)
+		val IDENTITY = matrix {
+			val (row, col) = it
+			if (row === col) 1f else 0f
+		}
 
 		/**
 		 * Null matrix.
@@ -24,6 +21,9 @@ data class Matrix(private val matrix: List<Float>) {
 		val NULL = Matrix((0..15).map { 0f })
 
 		private fun Int.toRowCol() = Pair(this % 4, this / 4)
+
+		private fun matrix(transform: (Pair<Int, Int>) -> Float) =
+				Matrix((0..15).map { transform(it.toRowCol()) })
 	}
 
 	init {
@@ -39,8 +39,9 @@ data class Matrix(private val matrix: List<Float>) {
 	 */
 	override fun toString() =
 			(0..3).map { row ->
-				(0..3).map { col -> this[row, col] }
-						.joinToString(separator = " ", prefix = "| ", postfix = " |") { "%8.2f".format(it) }
+				(0..3).map { col ->
+					"%8.2f".format(this[row, col])
+				}.joinToString(separator = " ", prefix = "| ", postfix = " |") { it }
 			}.joinToString(separator = "\n", prefix = "\n", postfix = "\n") { it }
 
 	/**
@@ -54,12 +55,16 @@ data class Matrix(private val matrix: List<Float>) {
 	/**
 	 * Multiplies this matrix by the [other] matrix.
 	 */
-	operator fun times(other: Matrix) =
-			Matrix((0..15)
-					.map { it.toRowCol() }
-					.map {
-						val (row, col) = it
-						(0..3).map { this[row, it] * other[it, col] }.reduce { sum, next -> sum + next }
-					}
-			)
+	operator fun times(other: Matrix) = matrix {
+		val (row, col) = it
+		(0..3).map {this[row, it] * other[it, col] }.reduce { sum, next -> sum + next }
+	}
+
+	/**
+	 * Returns a transposed matrix.
+	 */
+	fun transpose() = matrix {
+		val (row, col) = it
+		this[col, row]
+	}
 }
