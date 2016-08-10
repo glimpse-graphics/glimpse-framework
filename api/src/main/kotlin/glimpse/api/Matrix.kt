@@ -59,5 +59,5 @@ data class Matrix(private val matrix: List<Float>) {
 	/**
 	 * Returns an inverted matrix.
 	 */
-	fun invert(): Matrix = squareMatrix.invert().asMatrix()
+	fun inverse(): Matrix = squareMatrix.inverse().asMatrix()
 }

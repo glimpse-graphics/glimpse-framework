@@ -1,6 +1,6 @@
 package glimpse.api
 
-internal class SquareMatrix(val size:Int, private val elements: (Int, Int) -> Float) {
+internal class SquareMatrix(val size: Int, private val elements: (Int, Int) -> Float) {
 
 	companion object {
 
@@ -46,12 +46,12 @@ internal class SquareMatrix(val size:Int, private val elements: (Int, Int) -> Fl
 
 	fun transpose(): SquareMatrix = SquareMatrix(size) { row, col -> this[col, row] }
 
-	fun invert(): SquareMatrix = SquareMatrix(size) { row, col -> adj[row, col] / det }
+	fun inverse(): SquareMatrix = SquareMatrix(size) { row, col -> adj[row, col] / det }
 
 	operator fun times(other: SquareMatrix): SquareMatrix {
 		require(other.size == size) { "Cannot multiply matrices of different sizes." }
 		return SquareMatrix(size) { row, col ->
-			(0..3).map {this[row, it] * other[it, col] }.sum()
+			(0..size - 1).map {this[row, it] * other[it, col] }.sum()
 		}
 	}
 

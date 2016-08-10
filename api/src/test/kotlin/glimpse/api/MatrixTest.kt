@@ -57,7 +57,7 @@ class MatrixTest {
 	@Test
 	fun invertIdentityMatrix() {
 		assertMatrix(Matrix.IDENTITY, 0.000001f) {
-			Matrix.IDENTITY.invert()
+			Matrix.IDENTITY.inverse()
 		}
 	}
 
@@ -69,7 +69,7 @@ class MatrixTest {
 				11.0f, 12.0f, 13.0f, 14.0f,
 				15.0f, 16.0f, 17.0f, 18.0f))
 		assertMatrix(Matrix.IDENTITY, 0.000001f) {
-			m.invert() * m
+			m.inverse() * m
 		}
 	}
 
