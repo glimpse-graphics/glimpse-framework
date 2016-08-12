@@ -82,6 +82,11 @@ data class Angle private constructor(val deg: Float, val rad: Float) : Comparabl
 	operator fun mod(other: Angle) = Angle(deg % other.deg, rad % other.rad)
 
 	/**
+	 * Returns a range of angles.
+	 */
+	operator fun rangeTo(other: Angle) = AnglesRange(this, other)
+
+	/**
 	 * Returns an angle coterminal to this angle, closest to [other] angle in clockwise direction.
 	 */
 	infix fun clockwiseFrom(other: Angle) =
