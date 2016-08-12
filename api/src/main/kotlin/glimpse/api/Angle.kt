@@ -13,7 +13,7 @@ data class Angle private constructor(val deg: Float, val rad: Float) : Comparabl
 		/**
 		 * Null angle.
 		 */
-		val NULL = Angle(0f, 0F)
+		val NULL = Angle(0f, 0f)
 
 		/**
 		 * Full angle.

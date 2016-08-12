@@ -7,21 +7,21 @@ class AngleTest {
 
 	@Test
 	fun angleFromDeg() {
-		val angle = Angle.fromDeg(45f)
+		val angle = 45.degrees
 		expect(45f) { angle.deg }
 		expect(0.7853982f) { angle.rad }
 	}
 
 	@Test
 	fun angleFromRad() {
-		val angle = Angle.fromRad(2f)
+		val angle = 2.radians
 		expect(114.59156f) { angle.deg }
 		expect(2f) { angle.rad }
 	}
 
 	@Test
 	fun angleToString() {
-		expect("30.0°") { Angle.fromDeg(30f).toString() }
+		expect("30.0°") { 30.degrees.toString() }
 	}
 
 	@Test
@@ -37,32 +37,40 @@ class AngleTest {
 	}
 
 	@Test
+	fun trigonometricOperations() {
+		expect(sin(90.degrees)) { 1.0f }
+		expect(cos(0.degrees)) { 1.0f }
+		expect(tan(45.degrees)) { 1.0f }
+		expect(atan2(1f, 1f)) { 45.degrees }
+	}
+
+	@Test
 	fun coterminalClockwise() {
-		expect(Angle.fromDeg(450f)) { Angle.RIGHT clockwiseFrom Angle.fromDeg(630f) }
+		expect(450.degrees) { Angle.RIGHT clockwiseFrom 630.degrees }
 		expect(Angle.RIGHT) { Angle.RIGHT clockwiseFrom Angle.RIGHT }
-		expect(Angle.fromDeg(-270f)) { Angle.RIGHT clockwiseFrom Angle.NULL }
-		expect(Angle.NULL) { Angle.fromDeg(360f) clockwiseFrom Angle.RIGHT }
+		expect(-270.degrees) { Angle.RIGHT clockwiseFrom Angle.NULL }
+		expect(Angle.NULL) { 360.degrees clockwiseFrom Angle.RIGHT }
 	}
 
 	@Test
 	fun coterminalCounterClockwise() {
 		expect(Angle.RIGHT) { Angle.RIGHT counterClockwiseFrom Angle.RIGHT }
 		expect(Angle.RIGHT) { Angle.RIGHT counterClockwiseFrom Angle.NULL }
-		expect(Angle.fromDeg(-270f)) { Angle.RIGHT counterClockwiseFrom Angle.fromDeg(-360f) }
-		expect(Angle.fromDeg(540f)) { Angle.STRAIGHT counterClockwiseFrom Angle.fromDeg(270f) }
+		expect(-270.degrees) { Angle.RIGHT counterClockwiseFrom -360.degrees }
+		expect(540.degrees) { Angle.STRAIGHT counterClockwiseFrom 270.degrees }
 	}
 
 	@Test
 	fun sortedListOfAngles() {
-		expect(listOf(Angle.fromDeg(-30f), Angle.fromDeg(0f), Angle.fromDeg(30f), Angle.fromDeg(60f))) {
-			listOf(Angle.fromDeg(0f), Angle.fromDeg(60f), Angle.fromDeg(-30f), Angle.fromDeg(30f)).sorted()
+		expect(listOf(-30.degrees, 0.degrees, 30.degrees, 60.degrees)) {
+			listOf(0.degrees, 60.degrees, -30.degrees, 30.degrees).sorted()
 		}
 	}
 
 	@Test
 	fun setOfAngles() {
-		expect(setOf(Angle.fromDeg(0f), Angle.fromDeg(30f), Angle.fromDeg(60f))) {
-			setOf(Angle.fromDeg(0f), Angle.fromDeg(30f), Angle.fromDeg(30f), Angle.fromDeg(60f))
+		expect(setOf(0.degrees, 30.degrees, 60.degrees)) {
+			setOf(0.degrees, 30.degrees, 30.degrees, 60.degrees)
 		}
 	}
 }
