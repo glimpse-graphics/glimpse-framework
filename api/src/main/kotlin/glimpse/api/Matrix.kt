@@ -52,6 +52,18 @@ data class Matrix(private val matrix: List<Float>) {
 	operator fun times(other: Matrix): Matrix = (squareMatrix * other.squareMatrix).asMatrix()
 
 	/**
+	 * Multiplies this matrix by a [vector].
+	 */
+	operator fun times(vector: Vector): Vector {
+		val v = (0..3).map { row ->
+			(0..3).map { col ->
+				this[row, col] * vector._4f[col]
+			}.sum()
+		}
+		return Vector(v[0], v[1], v[2])
+	}
+
+	/**
 	 * Returns a transposed matrix.
 	 */
 	fun transpose() = squareMatrix.transpose().asMatrix()

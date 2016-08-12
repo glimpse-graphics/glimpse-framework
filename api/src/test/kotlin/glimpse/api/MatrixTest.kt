@@ -44,6 +44,19 @@ class MatrixTest {
 	}
 
 	@Test
+	fun multiplyIdentityMatrixByVector() {
+		val v = Vector(1f, 2f, 3f)
+		expect(v) { Matrix.IDENTITY * v }
+	}
+
+	@Test
+	fun multiplyMatrixByVector() {
+		val m = Matrix((1..16).map { it.toFloat() })
+		val v = Vector(1f, 2f, 3f)
+		expect(Vector(51f, 58f, 65f)) { m * v }
+	}
+
+	@Test
 	fun transposeMatrix() {
 		val m = Matrix((1..16).map { it.toFloat() })
 		expect(Matrix(listOf(
