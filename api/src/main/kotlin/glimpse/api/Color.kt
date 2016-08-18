@@ -28,6 +28,11 @@ data class Color(val red: Float, val green: Float, val blue: Float, val alpha: F
 	internal val _4f: Array<Float> by lazy { arrayOf(red, green, blue, alpha) }
 
 	/**
+	 * Returns a new [Color] with [newAlpha] channel.
+	 */
+	infix fun transparent(newAlpha: Float) = Color(red, green, blue, newAlpha)
+
+	/**
 	 * Returns a string representation of the [Color].
 	 */
 	override fun toString() =
