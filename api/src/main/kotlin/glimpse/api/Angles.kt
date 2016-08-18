@@ -60,3 +60,8 @@ fun tan(angle: Angle) = Math.tan(angle.rad.toDouble()).toFloat()
  * Returns the angle _theta_ from the conversion of rectangular coordinates ([x],&nbsp;[y]) to polar coordinates (r,&nbsp;_theta_).
  */
 fun atan2(y: Float, x: Float) = Math.atan2(y.toDouble(), x.toDouble()).radians
+
+/**
+ * Returns absolute value of the [angle].
+ */
+fun abs(angle: Angle) = if (angle < Angle.NULL) -angle else angle

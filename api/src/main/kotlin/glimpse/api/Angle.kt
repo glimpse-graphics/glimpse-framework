@@ -79,7 +79,7 @@ data class Angle private constructor(val deg: Float, val rad: Float) : Comparabl
 	/**
 	 * Returns a remainder of dividing this angle by the [other] angle.
 	 */
-	operator fun mod(other: Angle) = Angle(deg % other.deg, rad % other.rad)
+	operator fun mod(other: Angle) = (deg % other.deg).degrees
 
 	/**
 	 * Returns a range of angles.
