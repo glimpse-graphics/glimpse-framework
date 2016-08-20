@@ -1,5 +1,7 @@
 package glimpse.api
 
+import generators.chooseFloat
+import generators.matrix
 import io.kotlintest.properties.Gen
 import io.kotlintest.specs.WordSpec
 
@@ -8,10 +10,7 @@ class MatrixSpec : WordSpec() {
 	companion object {
 		private val delta = 0.01f
 		private val m = Matrix((1..16).map { it.toFloat() })
-		val integers = Gen.choose(1, 100)
-		val matrices: Gen<Matrix> = object : Gen<Matrix> {
-			override fun generate(): Matrix = Matrix((0..15).map { integers.generate().toFloat() }.toList())
-		}
+		val matrices = Gen.matrix(Gen.chooseFloat(1, 100))
 	}
 
 	init {
