@@ -18,14 +18,14 @@ class Mesh(internal val positions: List<Point>, internal val textureCoordinates:
 	/**
 	 * Mesh vertices.
 	 */
-	val vertices by lazy {
+	val vertices: List<Vertex> by lazy {
 		(positions zip textureCoordinates zip normals).map { Vertex(it.first.first, it.first.second, it.second) }
 	}
 
 	/**
 	 * Mesh faces.
 	 */
-	val faces by lazy {
+	val faces: List<Face> by lazy {
 		tailrec fun extractFaces(vertices: List<Vertex>, faces: List<Face>): List<Face> =
 			if (vertices.isEmpty()) faces
 			else extractFaces(vertices.drop(3), faces + Face(vertices[0], vertices[1], vertices[2]))
