@@ -16,7 +16,6 @@ class AngleSpec : WordSpec(), FloatMatchers {
 
 	init {
 
-
 		"Angle created from degrees" should {
 			val angle = 45.degrees
 			"have correct measure in radians" {
@@ -133,6 +132,14 @@ class AngleSpec : WordSpec(), FloatMatchers {
 			"give correct results" {
 				forAll(floats) { x ->
 					tan(x.radians) isRoughly Math.tan(x.toDouble()).toFloat()
+				}
+			}
+		}
+
+		"Arctangent calculated from X and Y coordinates" should {
+			"give correct angle" {
+				forAll(floats, floats) { x, y ->
+					atan2(y, x).rad isRoughly Math.atan2(y.toDouble(), x.toDouble()).toFloat();
 				}
 			}
 		}

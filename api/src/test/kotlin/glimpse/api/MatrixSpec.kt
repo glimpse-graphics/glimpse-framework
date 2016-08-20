@@ -16,6 +16,17 @@ class MatrixSpec : WordSpec() {
 
 	init {
 
+		"Initializing a matrix with a list of wrong size" should {
+			"cause an exception" {
+				shouldThrow<IllegalArgumentException> {
+					Matrix((1..15).map { it.toFloat() })
+				}
+				shouldThrow<IllegalArgumentException> {
+					Matrix((1..17).map { it.toFloat() })
+				}
+			}
+		}
+
 		"String representation of a matrix" should {
 			"be properly a formatted matrix of numbers" {
 				m.toString() shouldBe """|
@@ -71,7 +82,7 @@ class MatrixSpec : WordSpec() {
 			}
 			"give identity matrix when multiplied by the original matrix" {
 				forAll(matrices) { matrix ->
-					matrix * matrix.inverse() isRoughly Matrix.IDENTITY
+					matrix.squareMatrix.det == 0f || matrix * matrix.inverse() isRoughly Matrix.IDENTITY
 				}
 			}
 		}

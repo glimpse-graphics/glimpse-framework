@@ -33,6 +33,31 @@ class SquareMatrixSpec : WordSpec() {
 			}
 		}
 
+		"Getting an element outside of the matrix" should {
+			"cause an exception" {
+				shouldThrow<IllegalArgumentException> {
+					SquareMatrix.identity(4)[4, 2]
+				}
+				shouldThrow<IllegalArgumentException> {
+					SquareMatrix.identity(4)[2, 4]
+				}
+				shouldThrow<IllegalArgumentException> {
+					SquareMatrix.identity(4)[-1, 2]
+				}
+				shouldThrow<IllegalArgumentException> {
+					SquareMatrix.identity(4)[2, -1]
+				}
+			}
+		}
+
+		"Multiplication of matrices of different sizes" should {
+			"cause an exception" {
+				shouldThrow<IllegalArgumentException> {
+					SquareMatrix.identity(4) * SquareMatrix.identity(3)
+				}
+			}
+		}
+
 	}
 
 }
