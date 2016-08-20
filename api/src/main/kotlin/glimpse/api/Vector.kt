@@ -48,6 +48,11 @@ data class Vector(val x: Float, val y: Float, val z: Float) {
 	internal val _4f: Array<Float> by lazy { arrayOf(x, y, z, 1f) }
 
 	/**
+	 * Returns a string representation of the [Vector].
+	 */
+	override fun toString() = "[%.1f, %.1f, %.1f]".format(x, y, z)
+
+	/**
 	 * Magnitude of the [Vector].
 	 */
 	val magnitude by lazy { Math.sqrt((x * x + y * y + z * z).toDouble()).toFloat() }
@@ -93,7 +98,7 @@ data class Vector(val x: Float, val y: Float, val z: Float) {
 	/**
 	 * Returns a dot product of this vector and the [other] vector.
 	 */
-	infix fun dot(other: Vector): Float = throw UnsupportedOperationException()
+	infix fun dot(other: Vector): Float = _3f.zip(other._3f).map { it.first * it.second }.sum()
 
 	/**
 	 * Returns a product of this vector and the [number].
@@ -123,3 +128,13 @@ data class Vector(val x: Float, val y: Float, val z: Float) {
 	 */
 	fun toPoint() = Point(x, y, z)
 }
+
+/**
+ * Returns a direct buffer containing values of X, Y, Z coordinates of vectors from the original list.
+ */
+fun List<Vector>.toDirectBuffer() = toDirectFloatBuffer(size * 3) { it._3f }
+
+/**
+ * Returns a direct buffer containing values of X, Y, Z, 1 coordinates of augmented vectors from the original list.
+ */
+fun List<Vector>.toDirectBufferAugmented() = toDirectFloatBuffer(size * 4) { it._4f }
