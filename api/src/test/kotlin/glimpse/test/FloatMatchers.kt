@@ -1,4 +1,4 @@
-package matchers
+package glimpse.test
 
 import io.kotlintest.matchers.Matcher
 

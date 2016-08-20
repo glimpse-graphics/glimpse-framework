@@ -1,4 +1,4 @@
-package generators
+package glimpse.test
 
 import glimpse.api.Matrix
 import glimpse.api.Point
@@ -6,7 +6,7 @@ import glimpse.api.Vector
 import io.kotlintest.properties.Gen
 
 fun Gen.Companion.chooseFloat(min: Int, max: Int) = object : Gen<Float> {
-	val intGen = Gen.choose(min, max)
+	val intGen = choose(min, max)
 	override fun generate(): Float = intGen.generate().toFloat()
 }
 

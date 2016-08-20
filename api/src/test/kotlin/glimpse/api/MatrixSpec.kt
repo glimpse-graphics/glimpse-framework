@@ -1,16 +1,11 @@
 package glimpse.api
 
-import generators.chooseFloat
-import generators.matrix
-import io.kotlintest.properties.Gen
-import io.kotlintest.specs.WordSpec
+import glimpse.test.GlimpseSpec
 
-class MatrixSpec : WordSpec() {
+class MatrixSpec : GlimpseSpec() {
 
 	companion object {
-		private val delta = 0.01f
 		private val m = Matrix((1..16).map { it.toFloat() })
-		val matrices = Gen.matrix(Gen.chooseFloat(1, 100))
 	}
 
 	init {
@@ -85,20 +80,6 @@ class MatrixSpec : WordSpec() {
 				}
 			}
 		}
+
 	}
-
-	private infix fun Float.isRoughly(other: Float) =
-			Math.abs(other - this) < delta
-
-	private infix fun Matrix.isRoughly(other: Matrix) =
-			(0..3).all { row ->
-				(0..3).all { col ->
-					this[row, col] isRoughly other[row, col]
-				}
-			}
-
-	private infix fun Matrix.shouldBeRoughly(other: Matrix) {
-		this isRoughly other shouldBe true
-	}
-
 }

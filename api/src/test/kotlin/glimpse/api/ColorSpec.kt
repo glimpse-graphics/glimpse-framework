@@ -1,8 +1,8 @@
 package glimpse.api
 
-import io.kotlintest.specs.WordSpec
+import glimpse.test.GlimpseSpec
 
-class ColorSpec : WordSpec() {
+class ColorSpec : GlimpseSpec() {
 
 	init {
 
@@ -51,5 +51,4 @@ class ColorSpec : WordSpec() {
 		}
 
 	}
-
 }

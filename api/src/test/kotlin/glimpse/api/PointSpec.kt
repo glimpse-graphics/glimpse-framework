@@ -1,17 +1,8 @@
 package glimpse.api
 
-import generators.chooseFloat
-import generators.point
-import generators.vector
-import io.kotlintest.properties.Gen
-import io.kotlintest.specs.WordSpec
+import glimpse.test.GlimpseSpec
 
-class PointSpec : WordSpec() {
-
-	companion object {
-		val points = Gen.point(Gen.chooseFloat(-100, 100))
-		val vectors = Gen.vector(Gen.chooseFloat(-100, 100))
-	}
+class PointSpec : GlimpseSpec() {
 
 	init {
 
@@ -70,5 +61,4 @@ class PointSpec : WordSpec() {
 		}
 
 	}
-
 }

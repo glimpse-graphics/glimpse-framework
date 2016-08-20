@@ -1,8 +1,8 @@
 package glimpse.api
 
-import io.kotlintest.specs.WordSpec
+import glimpse.test.GlimpseSpec
 
-class TextureCoordinatesSpec : WordSpec() {
+class TextureCoordinatesSpec : GlimpseSpec() {
 
 	init {
 
@@ -29,5 +29,4 @@ class TextureCoordinatesSpec : WordSpec() {
 		}
 
 	}
-
 }

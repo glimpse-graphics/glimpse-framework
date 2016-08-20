@@ -1,18 +1,9 @@
 package glimpse.api
 
+import glimpse.test.GlimpseSpec
 import io.kotlintest.properties.Gen
-import io.kotlintest.specs.WordSpec
-import matchers.FloatMatchers
 
-class AngleSpec : WordSpec(), FloatMatchers {
-
-	companion object {
-		private val delta = 0.01f
-		private val integers = Gen.choose(-1000, 1000)
-		private val positiveIntegers = Gen.choose(1, 1000)
-		private val negativeIntegers = Gen.choose(-1000, -1)
-		private val floats = Gen.float()
-	}
+class AngleSpec : GlimpseSpec() {
 
 	init {
 
@@ -139,7 +130,7 @@ class AngleSpec : WordSpec(), FloatMatchers {
 		"Arctangent calculated from X and Y coordinates" should {
 			"give correct angle" {
 				forAll(floats, floats) { x, y ->
-					atan2(y, x).rad isRoughly Math.atan2(y.toDouble(), x.toDouble()).toFloat();
+					atan2(y, x).rad isRoughly Math.atan2(y.toDouble(), x.toDouble()).toFloat()
 				}
 			}
 		}
@@ -214,10 +205,4 @@ class AngleSpec : WordSpec(), FloatMatchers {
 		}
 
 	}
-
-	private infix fun Float.isRoughly(other: Float) =
-			Math.abs(other - this) < delta
-
-	private infix fun Angle.isRoughly(other: Angle) =
-			deg isRoughly other.deg && rad isRoughly other.rad
 }

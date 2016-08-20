@@ -1,8 +1,8 @@
 package glimpse.api
 
-import io.kotlintest.specs.WordSpec
+import glimpse.test.GlimpseSpec
 
-class SquareMatrixSpec : WordSpec() {
+class SquareMatrixSpec : GlimpseSpec() {
 
 	init {
 
@@ -59,5 +59,4 @@ class SquareMatrixSpec : WordSpec() {
 		}
 
 	}
-
 }
