@@ -1,7 +1,80 @@
 package glimpse.api
 
 /**
- * Transformation matrix for a rotation by an [angle] around an [axis].
+ * Returns a frustum projection [Matrix].
+ * The [left] to [right], [top] to [bottom] rectangle is the [near] clipping plane of the frustum.
+ */
+fun frustumProjectionMatrix(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float): Matrix {
+	val width = right - left
+	val height = top - bottom
+	val depth = near - far
+	return Matrix(listOf(
+			2f * near / width, 0f, 0f, 0f,
+			0f, 2f * near / height, 0f, 0f,
+			2f * (right + left) / width, (top + bottom) / height, (far + near) / depth, -1f,
+			0f, 0f, 2f * far * near / depth, 0f))
+}
+
+/**
+ * Returns a perspective projection [Matrix].
+ *
+ * @param fovY field of view angle for Y-axis (viewport height axis)
+ * @param aspect width aspect ratio against height
+ * @param near near clipping plane distance
+ * @param far far clipping plane distance
+ */
+fun perspectiveProjectionMatrix(fovY: Angle, aspect: Float, near: Float, far: Float): Matrix {
+	val top = tan(fovY / 2f) * near
+	val bottom = -top
+	val left = aspect * bottom
+	val right = aspect * top
+	return frustumProjectionMatrix(left, right, bottom, top, near, far)
+}
+
+/**
+ * Returns an orthographic projection [Matrix].
+ */
+fun orthographicProjectionMatrix(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float): Matrix {
+	val width = right - left
+	val height = top - bottom
+	val depth = near - far
+	return Matrix(listOf(
+			2f / width, 0f, 0f, 0f,
+			0f, 2f / height, 0f, 0f,
+			0f, 0f, 2f / depth, 0f
+			-(right + left) / width, -(top + bottom) / height, -(near + far) / depth, 1f))
+}
+
+
+/**
+ * Returns a look-at view [Matrix].
+ */
+fun lookAtViewMatrix(eye: Point, center: Point, up: Vector): Matrix {
+	val f = (eye to center).normalize
+	val s = (f * up).normalize
+	val u = s * f
+	return Matrix(listOf(
+			s.x, u.x, -f.x, 0f,
+			s.y, u.y, -f.y, 0f,
+			s.z, u.z, -f.z, 0f,
+			-eye.x, -eye.y, -eye.z, 1f))
+}
+
+
+/**
+ * Returns a transformation [Matrix] for a translation by an [vector].
+ */
+fun translationMatrix(vector: Vector): Matrix {
+	val (x, y, z) = vector
+	return Matrix(listOf(
+			1f, 0f, 0f, 0f,
+			0f, 1f, 0f, 0f,
+			0f, 0f, 1f, 0f,
+			x, y, z, 1f))
+}
+
+/**
+ * Returns a transformation [Matrix] for a rotation by an [angle] around an [axis].
  */
 fun rotationMatrix(axis: Vector, angle: Angle): Matrix {
 	val (x, y, z) = axis.normalize
@@ -16,7 +89,7 @@ fun rotationMatrix(axis: Vector, angle: Angle): Matrix {
 }
 
 /**
- * Transformation matrix for a rotation by an [angle] around X axis.
+ * Returns a transformation [Matrix] for a rotation by an [angle] around X axis.
  */
 fun rotationMatrixX(angle: Angle): Matrix {
 	val sin = sin(angle)
@@ -29,7 +102,7 @@ fun rotationMatrixX(angle: Angle): Matrix {
 }
 
 /**
- * Transformation matrix for a rotation by an [angle] around Y axis.
+ * Returns a transformation [Matrix] for a rotation by an [angle] around Y axis.
  */
 fun rotationMatrixY(angle: Angle): Matrix {
 	val sin = sin(angle)
@@ -42,7 +115,7 @@ fun rotationMatrixY(angle: Angle): Matrix {
 }
 
 /**
- * Transformation matrix for a rotation by an [angle] around Z axis.
+ * Returns a transformation [Matrix] for a rotation by an [angle] around Z axis.
  */
 fun rotationMatrixZ(angle: Angle): Matrix {
 	val sin = sin(angle)
@@ -51,5 +124,34 @@ fun rotationMatrixZ(angle: Angle): Matrix {
 			cos, sin, 0f, 0f,
 			-sin, cos, 0f, 0f,
 			0f, 0f, 1f, 0f,
+			0f, 0f, 0f, 1f))
+}
+
+/**
+ * Returns a transformation [Matrix] for scaling.
+ */
+fun scalingMatrix(scale: Float): Matrix = scalingMatrix(scale, scale, scale)
+
+/**
+ * Returns a transformation [Matrix] for scaling.
+ */
+fun scalingMatrix(scaleX: Float, scaleY: Float, scaleZ: Float): Matrix =
+		Matrix(listOf(
+				scaleX, 0f, 0f, 0f,
+				0f, scaleY, 0f, 0f,
+				0f, 0f, scaleZ, 0f,
+				0f, 0f, 0f, 1f))
+
+/**
+ * Returns a transformation [Matrix] for reflection through a plane,
+ * defined by a [normal] vector and a [point] on the plane.
+ */
+fun reflectionMatrix(normal: Vector, point: Point): Matrix {
+	val (a, b, c) = normal.normalize
+	val d = point.toVector() dot normal
+	return Matrix(listOf(
+			1f - 2f * a * a, -2f * a * b, -2f * a * c, -2f * a * d,
+			-2f * b * a, 1f - 2f * b * b, -2f * b * c, -2f * b * d,
+			-2f * c * a, -2f * c * b, 1f - 2f * c * c, -2f * c * d,
 			0f, 0f, 0f, 1f))
 }
