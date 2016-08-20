@@ -13,13 +13,13 @@ data class Vector(val x: Float, val y: Float, val z: Float) {
 	 * Constructs a [Vector] from spherical coordinates.
 	 *
 	 * @param radius Radial coordinate.
-	 * @param polarAngle Polar angle.
-	 * @param azimuthAngle Azimuth angle.
+	 * @param inclination Inclination.
+	 * @param azimuth Azimuth.
 	 */
-	constructor(radius: Float, polarAngle: Angle, azimuthAngle: Angle) : this(
-			radius * sin(polarAngle) * cos(azimuthAngle),
-			radius * sin(polarAngle) * sin(azimuthAngle),
-			radius * cos(polarAngle))
+	constructor(radius: Float, inclination: Angle, azimuth: Angle) : this(
+			radius * sin(inclination) * cos(azimuth),
+			radius * sin(inclination) * sin(azimuth),
+			radius * cos(inclination))
 
 	companion object {
 
@@ -58,14 +58,14 @@ data class Vector(val x: Float, val y: Float, val z: Float) {
 	val magnitude by lazy { Math.sqrt((x * x + y * y + z * z).toDouble()).toFloat() }
 
 	/**
-	 * Polar angle of the vector in spherical coordinate system.
+	 * Inclination of the vector in spherical coordinate system.
 	 */
-	val polarAngle by lazy { atan2(Vector(x, y, 0f).magnitude, z) }
+	val inclination by lazy { atan2(Vector(x, y, 0f).magnitude, z) }
 
 	/**
-	 * Azimuth angle of the vector in spherical coordinate system.
+	 * Azimuth of the vector in spherical coordinate system.
 	 */
-	val azimuthAngle by lazy { atan2(y, x) }
+	val azimuth by lazy { atan2(y, x) }
 
 	/**
 	 * Returns a unit vector in the direction of this [Vector].
