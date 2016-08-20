@@ -20,7 +20,7 @@ class TextureCoordinatesSpec : WordSpec() {
 			"contain a number of elements equal to the number of texture coordinates times 2" {
 				buffer.capacity() == 6
 			}
-			"contain subsequent RGB color channels" {
+			"contain subsequent UV coordinates" {
 				val array = FloatArray(6)
 				buffer.rewind()
 				buffer.get(array)
