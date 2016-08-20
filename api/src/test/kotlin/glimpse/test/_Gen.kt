@@ -1,13 +1,15 @@
 package glimpse.test
 
-import glimpse.api.Matrix
-import glimpse.api.Point
-import glimpse.api.Vector
+import glimpse.api.*
 import io.kotlintest.properties.Gen
 
 fun Gen.Companion.chooseFloat(min: Int, max: Int) = object : Gen<Float> {
 	val intGen = choose(min, max)
 	override fun generate(): Float = intGen.generate().toFloat()
+}
+
+fun Gen.Companion.angle(floatGen: Gen<Float>) = object : Gen<Angle> {
+	override fun generate(): Angle = floatGen.generate().degrees
 }
 
 fun Gen.Companion.point(floatGen: Gen<Float>) = object : Gen<Point> {
