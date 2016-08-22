@@ -40,7 +40,7 @@ class AffineTransformationSpec : GlimpseSpec() {
 		}
 
 		"Transformation matrix for rotation around X axis" should {
-			"be consistent with rotation matrix around a unit vector in the direction of the X axis" {
+			"be equivalent to transformation matrix for rotation around a unit vector in the direction of the X axis" {
 				forAll(angles) { angle ->
 					rotationMatrixX(angle) isRoughly rotationMatrix(Vector.X_UNIT, angle)
 				}
@@ -48,7 +48,7 @@ class AffineTransformationSpec : GlimpseSpec() {
 		}
 
 		"Transformation matrix for rotation around Y axis" should {
-			"be consistent with rotation matrix around a unit vector in the direction of the Y axis" {
+			"be equivalent to transformation matrix for rotation around a unit vector in the direction of the Y axis" {
 				forAll(angles) { angle ->
 					rotationMatrixY(angle) isRoughly rotationMatrix(Vector.Y_UNIT, angle)
 				}
@@ -56,7 +56,7 @@ class AffineTransformationSpec : GlimpseSpec() {
 		}
 
 		"Transformation matrix for rotation around Z axis" should {
-			"be consistent with rotation matrix around a unit vector in the direction of the Z axis" {
+			"be equivalent to transformation matrix for rotation around a unit vector in the direction of the Z axis" {
 				forAll(angles) { angle ->
 					rotationMatrixZ(angle) isRoughly rotationMatrix(Vector.Z_UNIT, angle)
 				}
