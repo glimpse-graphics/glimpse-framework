@@ -128,7 +128,7 @@ fun rotationMatrixZ(angle: Angle): Matrix {
 }
 
 /**
- * Returns a transformation [Matrix] for scaling.
+ * Returns a transformation [Matrix] for uniform scaling.
  */
 fun scalingMatrix(scale: Float): Matrix = scalingMatrix(scale, scale, scale)
 
@@ -148,10 +148,10 @@ fun scalingMatrix(scaleX: Float, scaleY: Float, scaleZ: Float): Matrix =
  */
 fun reflectionMatrix(normal: Vector, point: Point): Matrix {
 	val (a, b, c) = normal.normalize
-	val d = point.toVector() dot normal
+	val d = -point.toVector() dot (normal.normalize)
 	return Matrix(listOf(
-			1f - 2f * a * a, -2f * a * b, -2f * a * c, -2f * a * d,
-			-2f * b * a, 1f - 2f * b * b, -2f * b * c, -2f * b * d,
-			-2f * c * a, -2f * c * b, 1f - 2f * c * c, -2f * c * d,
-			0f, 0f, 0f, 1f))
+			1f - 2f * a * a, -2f * b * a, -2f * c * a, 0f,
+			-2f * a * b, 1f - 2f * b * b, -2f * c * b, 0f,
+			-2f * a * c, -2f * b * c, 1f - 2f * c * c, 0f,
+			-2f * a * d, -2f * b * d, -2f * c * d, 1f))
 }
