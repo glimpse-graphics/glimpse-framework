@@ -55,12 +55,23 @@ data class Matrix(private val matrix: List<Float>) {
 	 * Multiplies this matrix by a [vector].
 	 */
 	operator fun times(vector: Vector): Vector {
-		val v = (0..3).map { row ->
-			(0..3).map { col ->
-				this[row, col] * vector._4f[col]
-			}.sum()
-		}
+		val v = timesArray(vector._4f)
 		return Vector(v[0], v[1], v[2])
+	}
+
+	private fun timesArray(array: Array<Float>): List<Float> =
+			(0..3).map { row ->
+				(0..3).map { col ->
+					this[row, col] * array[col]
+				}.sum()
+			}
+
+	/**
+	 * Multiplies this matrix by a [point].
+	 */
+	operator fun times(point: Point): Point {
+		val p = timesArray(point._4f)
+		return Point(p[0], p[1], p[2])
 	}
 
 	/**

@@ -59,6 +59,14 @@ class MatrixSpec : GlimpseSpec() {
 			}
 		}
 
+		"Matrix multiplication by a point" should {
+			"be consistent with multiplication by a vector" {
+				forAll(matrices, points) { matrix, point ->
+					(matrix * point).toVector() == matrix * point.toVector()
+				}
+			}
+		}
+
 		"Matrix transposition" should {
 			"return a transposed matrix" {
 				m.transpose() shouldBe
