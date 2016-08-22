@@ -113,13 +113,13 @@ data class Vector(val x: Float, val y: Float, val z: Float) {
 	/**
 	 * Returns `true` if this vector is parallel to the [other] vector.
 	 */
-	infix fun parallelTo(other: Vector) = x * other.y == other.x * y && x * other.z == other.x * z && y * other.z == other.y * z
+	infix fun parallelTo(other: Vector) = this * other == NULL
 
 	/**
 	 * Returns a vector of the given [magnitude], in the direction of this vector.
 	 */
 	fun normalize(magnitude: Float): Vector {
-		require(magnitude > 0f) { "Cannot normalize a null vector. Division by 0." }
+		require(this.magnitude > 0f) { "Cannot normalize a null vector. Division by 0." }
 		return this * magnitude / this.magnitude
 	}
 

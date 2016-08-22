@@ -25,6 +25,16 @@ class VectorSpec : GlimpseSpec() {
 			}
 		}
 
+		"Magnitude of the vector" should {
+			"Be 1 for unit vectors" {
+				Vector.X_UNIT.magnitude shouldBe 1f
+				Vector.Y_UNIT.magnitude shouldBe 1f
+				Vector.Z_UNIT.magnitude shouldBe 1f
+			}
+			"Be 0 for null vector" {
+				Vector.NULL.magnitude shouldBe 0f
+			}
+		}
 		"Opposite vectors" should {
 			"have correct values" {
 				forAll(vectors) { v ->
@@ -175,6 +185,14 @@ class VectorSpec : GlimpseSpec() {
 				}
 				forAll(vectors, bigFloats) { v, x ->
 					v.magnitude > 0f || v.normalize.magnitude isRoughly 1f
+				}
+			}
+		}
+
+		"Normalizing a null vector" should {
+			"cause an exception" {
+				shouldThrow<IllegalArgumentException> {
+					Vector.NULL.normalize
 				}
 			}
 		}
