@@ -22,8 +22,11 @@ OpenGL made easy
 * lights – planned
 * animations – planned
 * Blender OBJ file support – planned
+* **Android support** – planned
 
 ## Example
+
+### JOGL – desktop
 
 ```kotlin
 fun main(args: Array<String>) {
@@ -59,3 +62,7 @@ fun main(args: Array<String>) {
 	}
 }
 ```
+
+### Android
+
+Stay tuned…
