@@ -5,19 +5,23 @@ import glimpse.*
 /**
  * Builds a surface of revolution created by rotating a [curve] around Z axis, approximated in a given number [steps].
  */
-fun revolution(steps: Int, curve: List<Vertex>) = mesh {
-	val vertices = (Angle.NULL..Angle.FULL partition steps).map { angle ->
+fun revolution(steps: Int, curve: Curve) = mesh {
+	fun Vertex.rotate(matrix: Matrix, angle: Angle): Vertex = Vertex(
+			(matrix * position.toVector()).toPoint(),
+			textureCoordinates.copy(u = textureCoordinates.u + Angle.FULL / angle),
+			matrix * normal)
+
+	val segments = (Angle.NULL..Angle.FULL partition steps).map { angle ->
 		val matrix = rotationMatrixZ(angle)
-		curve.map {
-			Vertex(
-					(matrix * it.position.toVector()).toPoint(),
-					it.textureCoordinates.copy(u = it.textureCoordinates.u + Angle.FULL / angle),
-					matrix * it.normal)
+		curve.segments.map {
+			it.first.rotate(matrix, angle) to it.second.rotate(matrix, angle)
 		}
 	}
 	for (step in 0..steps - 1) {
-		for (vertex in 0..curve.size - 2) {
-			quad(vertices[step][vertex], vertices[step + 1][vertex], vertices[step + 1][vertex + 1], vertices[step][vertex + 1])
+		for (segment in 0..curve.segments.size - 1) {
+			val (v1, v2) = segments[step][segment]
+			val (v4, v3) = segments[step + 1][segment]
+			quad(v1, v2, v3, v4)
 		}
 	}
 }
@@ -25,14 +29,19 @@ fun revolution(steps: Int, curve: List<Vertex>) = mesh {
 /**
  * Builds a surface of revolution created by rotating a [curve] around Z axis, approximated in a given number of [steps].
  */
-fun revolution(steps: Int, curve: () -> List<Vertex>) = revolution(steps, curve())
+fun revolution(steps: Int, curve: () -> Curve) = revolution(steps, curve())
 
 /**
  * Builds a sphere of a given [radius], approximated in a given number of [curveSteps] and [rotateSteps].
  */
-fun sphere(curveSteps: Int, rotateSteps: Int, radius: Float = 1f) = revolution(rotateSteps) {
-	(Angle.NULL..Angle.STRAIGHT partition curveSteps).map { angle ->
-		val normal = rotationMatrixY(angle) * Vector.Z_UNIT
-		Vertex((normal * radius).toPoint(), TextureCoordinates(0f, Angle.STRAIGHT / angle), normal)
+fun sphere(curveSteps: Int, rotateSteps: Int = curveSteps * 2, radius: Float = 1f) = revolution(rotateSteps) {
+	curve {
+		val vertices = (Angle.NULL..Angle.STRAIGHT partition curveSteps).map { angle ->
+			val normal = rotationMatrixY(angle) * Vector.Z_UNIT
+			Vertex((normal * radius).toPoint(), TextureCoordinates(0f, Angle.STRAIGHT / angle), normal)
+		}
+		vertices.dropLast(1).zip(vertices.drop(1)).forEach {
+			segment(it)
+		}
 	}
 }

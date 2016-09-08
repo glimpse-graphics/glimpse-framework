@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
 		return lookAtViewMatrix(eye, Point.ORIGIN, Vector.Z_UNIT)
 	}
 
-	val mesh = sphere(16, 32)
+	val mesh = sphere(16)
 
 	glimpseFrame("Glimpse Framework Preview") {
 		menuBar {
@@ -47,13 +47,13 @@ fun main(args: Array<String>) {
 			}
 			menu("Lenses") {
 				menuItem("Frustum") {
-					onClick { projectionMatrix = frustumProjectionMatrix(-1f, 1f, -1f, 1f, 1f, 20f) }
+					onClick { projectionMatrix = frustumProjectionMatrix(-1f, 1f, -.75f, .75f, 1f, 20f) }
 				}
 				menuItem("Perspective") {
 					onClick { projectionMatrix = perspectiveProjectionMatrix(120.degrees, 1.3f, 1f, 100f) }
 				}
 				menuItem("Orthographic") {
-					onClick { projectionMatrix = orthographicProjectionMatrix(-20f, 20f, -20f, 20f, -20f, 20f) }
+					onClick { projectionMatrix = orthographicProjectionMatrix(-10f, 10f, -7.5f, 7.5f, -20f, 20f) }
 				}
 			}
 		}

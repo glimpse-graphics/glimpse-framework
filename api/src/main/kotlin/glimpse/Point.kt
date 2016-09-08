@@ -9,7 +9,7 @@ import glimpse.buffers.toDirectFloatBuffer
  * @param y Y coordinate.
  * @param z Z coordinate.
  */
-data class Point(val x: Float, val y: Float, val z: Float) {
+data class Point(val x: Float, val y: Float, val z: Float = 0f) {
 
 	companion object {
 
