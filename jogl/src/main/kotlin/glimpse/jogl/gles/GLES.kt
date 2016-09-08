@@ -2,12 +2,15 @@ package glimpse.jogl.gles
 
 import com.jogamp.opengl.util.texture.TextureIO
 import glimpse.api.Color
-import glimpse.api.gles.*
-import glimpse.api.gles.GLES
-import glimpse.api.gles.delegates.EnumPairSetAndRememberDelegate
-import glimpse.api.gles.delegates.EnumSetAndRememberDelegate
-import glimpse.api.gles.delegates.SetAndRememberDelegate
+import glimpse.gles.*
+import glimpse.gles.GLES
+import glimpse.gles.delegates.EnumPairSetAndRememberDelegate
+import glimpse.gles.delegates.EnumSetAndRememberDelegate
+import glimpse.gles.delegates.SetAndRememberDelegate
 import glimpse.jogl.gles.delegates.EnableDisableDelegate
+import glimpse.shaders.ProgramHandle
+import glimpse.shaders.ShaderHandle
+import glimpse.shaders.ShaderType
 import java.io.InputStream
 import java.nio.Buffer
 import java.nio.ByteBuffer
@@ -25,13 +28,17 @@ class GLES(val gles: GL2ES2) : GLES {
 		gles.glClearColor(it.red, it.green, it.blue, it.alpha)
 	}
 
+	override var clearDepth: Float by SetAndRememberDelegate(1f) {
+		gles.glClearDepthf(it)
+	}
+
 	override var isDepthTest: Boolean by EnableDisableDelegate(gles, GL2ES2.GL_DEPTH_TEST)
 	override var depthTestFunction: DepthTestFunction by EnumSetAndRememberDelegate(DepthTestFunction.LESS, depthTestFunctionMapping) {
 		gles.glDepthFunc(it)
 	}
 
 	override var isBlend: Boolean by EnableDisableDelegate(gles, GL2ES2.GL_BLEND)
-	override var blendFunction: Pair<BlendFactor, BlendFactor> by EnumPairSetAndRememberDelegate(BlendFactor.ZERO.complementaryPair, blendFactorMapping) {
+	override var blendFunction: Pair<BlendFactor, BlendFactor> by EnumPairSetAndRememberDelegate(BlendFactor.ZERO to BlendFactor.ONE, blendFactorMapping) {
 		gles.glBlendFunc(it.first, it.second)
 	}
 
@@ -136,23 +143,23 @@ class GLES(val gles: GL2ES2) : GLES {
 		gles.glUniform4fv(location.value, 1, _4f.toFloatArray(), 0)
 	}
 
-	override fun createAttributeFloatArray(location: AttributeLocation, buffer: FloatBuffer, size: Int) =
-			createAttributeArray(location, buffer, size, GL2ES2.GL_FLOAT, 4L)
+	override fun createAttributeFloatArray(location: AttributeLocation, buffer: FloatBuffer, vectorSize: Int) =
+			createAttributeArray(location, buffer, vectorSize, GL2ES2.GL_FLOAT, 4L)
 
-	override fun createAttributeIntArray(location: AttributeLocation, buffer: IntBuffer, size: Int) =
-			createAttributeArray(location, buffer, size, GL2ES2.GL_INT, 4L)
+	override fun createAttributeIntArray(location: AttributeLocation, buffer: IntBuffer, vectorSize: Int) =
+			createAttributeArray(location, buffer, vectorSize, GL2ES2.GL_INT, 4L)
 
-	private fun createAttributeArray(location: AttributeLocation, buffer: Buffer, size: Int, type: Int, typeSize: Long): BufferHandle {
+	private fun createAttributeArray(location: AttributeLocation, buffer: Buffer, vectorSize: Int, type: Int, typeSize: Long): BufferHandle {
 		buffer.rewind()
 		val handles = IntArray(1)
 		gles.glGenBuffers(1, handles, 0)
 		gles.glBindBuffer(GL2ES2.GL_ARRAY_BUFFER, handles[0])
-		gles.glBufferData(GL2ES2.GL_ARRAY_BUFFER, buffer.remaining().toLong() * typeSize, buffer, GL2ES2.GL_STATIC_DRAW)
-		gles.glVertexAttribPointer(location.value, size, type, false, 0, 0L)
+		gles.glBufferData(GL2ES2.GL_ARRAY_BUFFER, buffer.limit().toLong() * typeSize, buffer, GL2ES2.GL_STATIC_DRAW)
+		gles.glVertexAttribPointer(location.value, vectorSize, type, false, 0, 0L)
 		return BufferHandle(handles[0])
 	}
 
-	override fun deleteAttributeArray(handle: BufferHandle, name: String) {
+	override fun deleteAttributeArray(handle: BufferHandle) {
 		gles.glDeleteBuffers(1, arrayOf(handle.value).toIntArray(), 0)
 	}
 

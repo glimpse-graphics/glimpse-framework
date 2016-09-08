@@ -7,7 +7,7 @@ package glimpse.api
  * @param textureCoordinates Texture coordinates at the mesh vertices.
  * @param normals Normal vectors at the mesh vertices.
  */
-class Mesh(internal val positions: List<Point>, internal val textureCoordinates: List<TextureCoordinates>, internal val normals: List<Vector>) {
+class Mesh(val positions: List<Point>, val textureCoordinates: List<TextureCoordinates>, val normals: List<Vector>) {
 
 	init {
 		require(positions.size % 3 == 0) { "Positions size should divide by 3" }

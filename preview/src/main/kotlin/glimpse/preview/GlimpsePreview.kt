@@ -1,9 +1,26 @@
 package glimpse.preview
 
+import glimpse.api.*
+import glimpse.api.Vector
+import glimpse.gles.BlendFactor
+import glimpse.gles.DepthTestFunction
 import glimpse.jogl.*
+import glimpse.shaders.PlainShaderProgram
+import java.util.*
 
 fun main(args: Array<String>) {
-	glimpseFrame("Glimpse Framework Preview", GlimpsePreviewEventListener()) {
+
+	var projectionMatrix = perspectiveProjectionMatrix(120.degrees, 1.3f, 1f, 100f)
+
+	fun viewMatrix(): Matrix {
+		val time = (Date().time / 20L) % 360L
+		val eye = Point.ORIGIN translateBy Vector(10f, 60.degrees, time.degrees)
+		return lookAtViewMatrix(eye, Point.ORIGIN, Vector.Z_UNIT)
+	}
+
+	val mesh = sphere(16, 32)
+
+	glimpseFrame("Glimpse Framework Preview") {
 		menuBar {
 			menu("Mesh") {
 				menuItem("Sphere") {
@@ -27,6 +44,39 @@ fun main(args: Array<String>) {
 				menuItem("Normal map…") {
 				}
 			}
+			menu("Lenses") {
+				menuItem("Frustum") {
+					onClick { projectionMatrix = frustumProjectionMatrix(-1f, 1f, -1f, 1f, 1f, 20f) }
+				}
+				menuItem("Perspective") {
+					onClick { projectionMatrix = perspectiveProjectionMatrix(120.degrees, 1.3f, 1f, 100f) }
+				}
+				menuItem("Orthographic") {
+					onClick { projectionMatrix = orthographicProjectionMatrix(-20f, 20f, -20f, 20f, -20f, 20f) }
+				}
+			}
+		}
+		onInit {
+			PlainShaderProgram(this)
+			clearColor = Color(.1f, .1f, .1f)
+			clearDepth = 1f
+			isDepthTest = true
+			depthTestFunction = DepthTestFunction.LESS_OR_EQUAL
+			isBlend = true
+			blendFunction = BlendFactor.SRC_ALPHA to BlendFactor.ONE_MINUS_SRC_ALPHA
+			isCullFace = false
+		}
+		onReshape { v ->
+			viewport = v
+		}
+		onDisplay {
+			clearColorBuffer()
+			clearDepthBuffer()
+			PlainShaderProgram.mvpMatrix { projectionMatrix * viewMatrix() }
+			PlainShaderProgram.drawMesh { mesh }
+		}
+		onDispose {
+			PlainShaderProgram.dispose()
 		}
 	}
 }

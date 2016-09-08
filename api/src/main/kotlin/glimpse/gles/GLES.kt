@@ -1,9 +1,12 @@
-package glimpse.api.gles
+package glimpse.gles
 
 import glimpse.api.Color
 import glimpse.api.Matrix
 import glimpse.api.Point
 import glimpse.api.Vector
+import glimpse.shaders.ProgramHandle
+import glimpse.shaders.ShaderHandle
+import glimpse.shaders.ShaderType
 import java.io.InputStream
 import java.nio.FloatBuffer
 import java.nio.IntBuffer
@@ -13,6 +16,7 @@ interface GLES {
 	var viewport: Viewport
 
 	var clearColor: Color
+	var clearDepth: Float
 
 	var isDepthTest: Boolean
 	var depthTestFunction: DepthTestFunction
@@ -61,7 +65,7 @@ interface GLES {
 	fun createAttributeFloatArray(location: AttributeLocation, buffer: FloatBuffer, size: Int): BufferHandle
 	fun createAttributeIntArray(location: AttributeLocation, buffer: IntBuffer, size: Int): BufferHandle
 
-	fun deleteAttributeArray(handle: BufferHandle, name: String): Unit
+	fun deleteAttributeArray(handle: BufferHandle): Unit
 
 	fun enableAttributeArray(location: AttributeLocation): Unit
 	fun disableAttributeArray(location: AttributeLocation): Unit

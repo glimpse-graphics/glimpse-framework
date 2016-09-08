@@ -1,4 +1,4 @@
-package glimpse.api.gles.delegates
+package glimpse.gles.delegates
 
 import kotlin.reflect.KProperty
 

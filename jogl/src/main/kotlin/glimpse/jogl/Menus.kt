@@ -32,10 +32,10 @@ fun JMenu.separator() {
 }
 
 fun JMenuItem.onClick(callback: () -> Unit) {
-	action = MenuItemAction(callback)
+	action = MenuItemAction(text, callback)
 }
 
-class MenuItemAction(val callback: () -> Unit) : AbstractAction() {
+class MenuItemAction(caption: String, val callback: () -> Unit) : AbstractAction(caption) {
 	override fun actionPerformed(e: ActionEvent?) {
 		callback()
 	}

@@ -5,7 +5,7 @@ package glimpse.api
  */
 fun revolution(steps: Int, curve: List<Vertex>) = mesh {
 	val vertices = (Angle.NULL..Angle.FULL partition steps).map { angle ->
-		val matrix = rotationMatrixX(angle)
+		val matrix = rotationMatrixZ(angle)
 		curve.map {
 			Vertex(
 					(matrix * it.position.toVector()).toPoint(),
@@ -14,7 +14,7 @@ fun revolution(steps: Int, curve: List<Vertex>) = mesh {
 		}
 	}
 	for (step in 0..steps - 1) {
-		for (vertex in 0..curve.size - 1) {
+		for (vertex in 0..curve.size - 2) {
 			quad(vertices[step][vertex], vertices[step + 1][vertex], vertices[step + 1][vertex + 1], vertices[step][vertex + 1])
 		}
 	}

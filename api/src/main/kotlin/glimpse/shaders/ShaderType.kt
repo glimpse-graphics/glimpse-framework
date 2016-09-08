@@ -1,4 +1,4 @@
-package glimpse.api.gles
+package glimpse.shaders
 
 enum class ShaderType {
 	VERTEX,

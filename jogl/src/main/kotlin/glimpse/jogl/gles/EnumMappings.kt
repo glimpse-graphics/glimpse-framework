@@ -1,6 +1,7 @@
 package glimpse.jogl.gles
 
-import glimpse.api.gles.*
+import glimpse.gles.*
+import glimpse.shaders.ShaderType
 import javax.media.opengl.GL2ES2
 
 internal val depthTestFunctionMapping = mapOf(

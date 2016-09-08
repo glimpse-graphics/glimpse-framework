@@ -25,10 +25,13 @@ fun frustumProjectionMatrix(left: Float, right: Float, bottom: Float, top: Float
  */
 fun perspectiveProjectionMatrix(fovY: Angle, aspect: Float, near: Float, far: Float): Matrix {
 	val top = tan(fovY / 2f) * near
-	val bottom = -top
-	val left = aspect * bottom
 	val right = aspect * top
-	return frustumProjectionMatrix(left, right, bottom, top, near, far)
+	val depth = near - far
+	return Matrix(listOf(
+			1f / right, 0f, 0f, 0f,
+			0f, 1f / top, 0f, 0f,
+			0f, 0f, 2f / depth, 0f,
+			0f, 0f, (near + far) / depth, 1f))
 }
 
 /**
@@ -37,11 +40,11 @@ fun perspectiveProjectionMatrix(fovY: Angle, aspect: Float, near: Float, far: Fl
 fun orthographicProjectionMatrix(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float): Matrix {
 	val width = right - left
 	val height = top - bottom
-	val depth = near - far
+	val depth = far - near
 	return Matrix(listOf(
 			2f / width, 0f, 0f, 0f,
 			0f, 2f / height, 0f, 0f,
-			0f, 0f, 2f / depth, 0f
+			0f, 0f, 2f / depth, 0f,
 			-(right + left) / width, -(top + bottom) / height, -(near + far) / depth, 1f))
 }
 
@@ -57,7 +60,7 @@ fun lookAtViewMatrix(eye: Point, center: Point, up: Vector): Matrix {
 			s.x, u.x, -f.x, 0f,
 			s.y, u.y, -f.y, 0f,
 			s.z, u.z, -f.z, 0f,
-			-eye.x, -eye.y, -eye.z, 1f))
+			0f, 0f, 0f, 1f)) * translationMatrix(-eye.toVector())
 }
 
 

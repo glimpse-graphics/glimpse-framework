@@ -1,4 +1,4 @@
-package glimpse.api.gles
+package glimpse.gles
 
 enum class DepthTestFunction {
 	NEVER,
