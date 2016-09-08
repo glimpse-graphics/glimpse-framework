@@ -1,9 +1,9 @@
 package glimpse.shaders
 
-import glimpse.api.Matrix
-import glimpse.api.Mesh
-import glimpse.api.toDirectBufferAugmented
+import glimpse.Matrix
 import glimpse.gles.GLES
+import glimpse.models.Mesh
+import glimpse.toDirectBufferAugmented
 
 object PlainShaderProgram {
 

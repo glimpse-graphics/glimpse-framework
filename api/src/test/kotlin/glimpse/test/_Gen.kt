@@ -1,6 +1,6 @@
 package glimpse.test
 
-import glimpse.api.*
+import glimpse.*
 import io.kotlintest.properties.Gen
 
 fun Gen.Companion.chooseFloat(min: Int, max: Int) = object : Gen<Float> {

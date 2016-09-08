@@ -1,9 +1,9 @@
 package glimpse.gles
 
-import glimpse.api.Color
-import glimpse.api.Matrix
-import glimpse.api.Point
-import glimpse.api.Vector
+import glimpse.Color
+import glimpse.Matrix
+import glimpse.Point
+import glimpse.Vector
 import glimpse.shaders.ProgramHandle
 import glimpse.shaders.ShaderHandle
 import glimpse.shaders.ShaderType
@@ -62,8 +62,8 @@ interface GLES {
 
 	fun uniform4f(location: UniformLocation, _4f: Array<Float>): Unit
 
-	fun createAttributeFloatArray(location: AttributeLocation, buffer: FloatBuffer, size: Int): BufferHandle
-	fun createAttributeIntArray(location: AttributeLocation, buffer: IntBuffer, size: Int): BufferHandle
+	fun createAttributeFloatArray(location: AttributeLocation, buffer: FloatBuffer, vectorSize: Int): BufferHandle
+	fun createAttributeIntArray(location: AttributeLocation, buffer: IntBuffer, vectorSize: Int): BufferHandle
 
 	fun deleteAttributeArray(handle: BufferHandle): Unit
 

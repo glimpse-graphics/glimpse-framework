@@ -1,7 +1,7 @@
 package glimpse.jogl.gles
 
 import com.jogamp.opengl.util.texture.TextureIO
-import glimpse.api.Color
+import glimpse.Color
 import glimpse.gles.*
 import glimpse.gles.GLES
 import glimpse.gles.delegates.EnumPairSetAndRememberDelegate

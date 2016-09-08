@@ -1,5 +1,5 @@
 package glimpse.shaders
 
-import glimpse.api.GlimpseException
+import glimpse.GlimpseException
 
 class ShaderCompileException(log: String) : GlimpseException("Shader compilation failed:\n$log")

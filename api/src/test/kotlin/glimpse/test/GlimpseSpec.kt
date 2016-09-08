@@ -1,9 +1,9 @@
 package glimpse.test
 
-import glimpse.api.Angle
-import glimpse.api.Matrix
-import glimpse.api.Point
-import glimpse.api.Vector
+import glimpse.Angle
+import glimpse.Matrix
+import glimpse.Point
+import glimpse.Vector
 import io.kotlintest.properties.Gen
 import io.kotlintest.specs.WordSpec
 

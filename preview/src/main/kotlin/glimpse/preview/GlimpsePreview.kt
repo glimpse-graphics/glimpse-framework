@@ -1,10 +1,11 @@
 package glimpse.preview
 
-import glimpse.api.*
-import glimpse.api.Vector
+import glimpse.*
+import glimpse.Vector
 import glimpse.gles.BlendFactor
 import glimpse.gles.DepthTestFunction
 import glimpse.jogl.*
+import glimpse.models.sphere
 import glimpse.shaders.PlainShaderProgram
 import java.util.*
 
