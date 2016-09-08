@@ -1,11 +1,12 @@
-description = 'Glimpse Framework API'
+description = 'Glimpse Framework Shaders'
 
 dependencies {
+	compile project(":glimpse-framework-api")
 	compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
 	testCompile "io.kotlintest:kotlintest:${kotlintest_version}"
 }
 
 dokka {
-	moduleName = 'GlimpseFramework API'
+	moduleName = 'GlimpseFramework Shaders'
 	outputFormat = 'jekyll'
 }
