@@ -1,5 +1,8 @@
 package glimpse.gles
 
+/**
+ * Texture minification filter.
+ */
 enum class TextureMinificationFilter {
 	NEAREST,
 	LINEAR,
@@ -9,11 +12,17 @@ enum class TextureMinificationFilter {
 	LINEAR_MIPMAP_LINEAR
 }
 
+/**
+ * Texture magnification filter.
+ */
 enum class TextureMagnificationFilter {
 	NEAREST,
 	LINEAR
 }
 
+/**
+ * Texture wrapping strategy.
+ */
 enum class TextureWrapping {
 	REPEAT,
 	MIRRORED_REPEAT,

@@ -1,5 +1,8 @@
 package glimpse.gles
 
+/**
+ * Depth test function.
+ */
 enum class DepthTestFunction {
 	NEVER,
 	LESS,

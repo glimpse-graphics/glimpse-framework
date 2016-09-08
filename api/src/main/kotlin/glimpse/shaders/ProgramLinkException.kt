@@ -2,4 +2,7 @@ package glimpse.shaders
 
 import glimpse.GlimpseException
 
-class ProgramLinkException(log: String) : GlimpseException("Program linking failed:\n$log")
+/**
+ * Shader program linking exception.
+ */
+class ProgramLinkException internal constructor(log: String) : GlimpseException("Program linking failed:\n$log")

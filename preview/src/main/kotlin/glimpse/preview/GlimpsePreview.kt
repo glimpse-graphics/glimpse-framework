@@ -67,10 +67,10 @@ fun main(args: Array<String>) {
 			blendFunction = BlendFactor.SRC_ALPHA to BlendFactor.ONE_MINUS_SRC_ALPHA
 			isCullFace = false
 		}
-		onReshape { v ->
+		onResize { v ->
 			viewport = v
 		}
-		onDisplay {
+		onRender {
 			clearColorBuffer()
 			clearDepthBuffer()
 			PlainShaderProgram.mvpMatrix { projectionMatrix * viewMatrix() }

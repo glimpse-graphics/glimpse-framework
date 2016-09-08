@@ -18,6 +18,11 @@ import java.nio.FloatBuffer
 import java.nio.IntBuffer
 import javax.media.opengl.GL2ES2
 
+/**
+ * JOGL implementation of GLES facade.
+ *
+ * @property gles JOGL GL2ES2 implementation.
+ */
 class GLES(val gles: GL2ES2) : GLES {
 
 	override var viewport: Viewport by SetAndRememberDelegate(Viewport(1, 1)) {
@@ -213,7 +218,7 @@ class GLES(val gles: GL2ES2) : GLES {
 		gles.glActiveTexture(GL2ES2.GL_TEXTURE0 + index)
 	}
 
-	override fun drawTriangles(count: Int) {
-		gles.glDrawArrays(GL2ES2.GL_TRIANGLES, 0, count)
+	override fun drawTriangles(verticesCount: Int) {
+		gles.glDrawArrays(GL2ES2.GL_TRIANGLES, 0, verticesCount)
 	}
 }

@@ -2,11 +2,14 @@ package glimpse.shaders
 
 import glimpse.gles.GLES
 
+/**
+ * GLSL shader program builder.
+ */
 class ProgramBuilder(private val gles: GLES) {
 
 	private val shaders = mutableListOf<Shader>()
 
-	operator fun ShaderType.invoke(source: () -> String) {
+	private operator fun ShaderType.invoke(source: () -> String) {
 		val handle = gles.createShader(this)
 		gles.compileShader(handle, source())
 		if (!gles.getShaderCompileStatus(handle)) {
@@ -15,15 +18,25 @@ class ProgramBuilder(private val gles: GLES) {
 		shaders.add(Shader(gles, this, handle))
 	}
 
+	/**
+	 * Compiles a vertex shader.
+	 *
+	 * @param source Shader source code lambda.
+	 */
 	fun vertexShader(source: () -> String): Unit {
 		ShaderType.VERTEX(source)
 	}
 
+	/**
+	 * Compiles a fragment shader.
+	 *
+	 * @param source Shader source code lambda.
+	 */
 	fun fragmentShader(source: () -> String): Unit {
 		ShaderType.FRAGMENT(source)
 	}
 
-	fun build(): Program {
+	internal fun build(): Program {
 		val handle = gles.createProgram()
 		shaders.forEach { shader ->
 			gles.attachShader(handle, shader.handle)
@@ -36,6 +49,9 @@ class ProgramBuilder(private val gles: GLES) {
 	}
 }
 
+/**
+ * Returns a [Program], initialized with an [init] function and linked using given [gles] implementation.
+ */
 fun shaderProgram(gles: GLES, init: ProgramBuilder.() -> Unit): Program {
 	val builder = ProgramBuilder(gles)
 	builder.init()

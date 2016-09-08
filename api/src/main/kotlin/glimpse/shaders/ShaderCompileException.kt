@@ -2,4 +2,7 @@ package glimpse.shaders
 
 import glimpse.GlimpseException
 
-class ShaderCompileException(log: String) : GlimpseException("Shader compilation failed:\n$log")
+/**
+ * Shader compilation exception.
+ */
+class ShaderCompileException internal constructor(log: String) : GlimpseException("Shader compilation failed:\n$log")

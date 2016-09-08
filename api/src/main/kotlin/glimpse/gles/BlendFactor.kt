@@ -1,5 +1,8 @@
 package glimpse.gles
 
+/**
+ * Blending factor.
+ */
 enum class BlendFactor() {
 	ZERO,
 	ONE,
