@@ -29,6 +29,6 @@ class Shader(val gles: GLES, val type: ShaderType, val handle: ShaderHandle) {
  */
 data class ShaderHandle(val value: Int) {
 	init {
-		require(value != 0) { "Invalid shader handle" }
+		require(value != 0) { "Invalid shader handle: $value" }
 	}
 }
