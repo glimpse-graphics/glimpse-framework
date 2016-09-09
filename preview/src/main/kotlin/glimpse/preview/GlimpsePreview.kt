@@ -5,8 +5,9 @@ import glimpse.Vector
 import glimpse.gles.BlendFactor
 import glimpse.gles.DepthTestFunction
 import glimpse.jogl.*
+import glimpse.materials.Material
+import glimpse.materials.Plastic
 import glimpse.models.sphere
-import glimpse.shaders.PlainShaderProgram
 import java.util.*
 
 fun main(args: Array<String>) {
@@ -19,7 +20,10 @@ fun main(args: Array<String>) {
 		return lookAtViewMatrix(eye, Point.ORIGIN, Vector.Z_UNIT)
 	}
 
-	val mesh = sphere(16)
+	val model = sphere(8).transform {
+	}
+
+	val material = Plastic(Color.BLUE)
 
 	glimpseFrame("Glimpse Framework Preview") {
 		menuBar {
@@ -58,8 +62,8 @@ fun main(args: Array<String>) {
 			}
 		}
 		onInit {
-			PlainShaderProgram(this)
-			clearColor = Color(.1f, .1f, .1f)
+			Plastic.init(this)
+			clearColor = Color.GRAY
 			clearDepth = 1f
 			isDepthTest = true
 			depthTestFunction = DepthTestFunction.LESS_OR_EQUAL
@@ -69,15 +73,16 @@ fun main(args: Array<String>) {
 		}
 		onResize { v ->
 			viewport = v
+			val aspect = viewport.width.toFloat() / viewport.height.toFloat()
+			projectionMatrix = perspectiveProjectionMatrix(120.degrees, aspect, 1f, 100f)
 		}
 		onRender {
 			clearColorBuffer()
 			clearDepthBuffer()
-			PlainShaderProgram.mvpMatrix { projectionMatrix * viewMatrix() }
-			PlainShaderProgram.drawMesh { mesh }
+			material.render(model, projectionMatrix * viewMatrix())
 		}
 		onDispose {
-			PlainShaderProgram.dispose()
+			material.dispose()
 		}
 	}
 }

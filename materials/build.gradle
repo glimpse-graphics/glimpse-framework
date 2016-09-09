@@ -1,4 +1,4 @@
-description = 'Glimpse Framework Shaders'
+description = 'Glimpse Framework Materials'
 
 dependencies {
 	compile project(":glimpse-framework-api")
@@ -7,6 +7,6 @@ dependencies {
 }
 
 dokka {
-	moduleName = 'GlimpseFramework Shaders'
+	moduleName = 'GlimpseFramework Materials'
 	outputFormat = 'jekyll'
 }
