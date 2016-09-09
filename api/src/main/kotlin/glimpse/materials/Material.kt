@@ -1,6 +1,6 @@
 package glimpse.materials
 
-import glimpse.Matrix
+import glimpse.cameras.Camera
 import glimpse.models.Model
 
 /**
@@ -11,7 +11,7 @@ interface Material {
 	/**
 	 * Renders a [Model] using this [Material].
 	 */
-	fun render(model: Model, vpMatrix: Matrix)
+	fun render(model: Model, camera: Camera)
 
 	/**
 	 * Disposes material.
