@@ -11,7 +11,7 @@ import glimpse.gles.GLES
  */
 class Program(val gles: GLES, val handle: ProgramHandle, val shaders: List<Shader>) {
 
-	internal var deleted = false;
+	internal var deleted = false
 
 	/**
 	 * Tells GLES implementation to use this program.
