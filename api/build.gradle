@@ -3,6 +3,7 @@ description = 'Glimpse Framework API'
 dependencies {
 	compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
 	testCompile "io.kotlintest:kotlintest:${kotlintest_version}"
+	testCompile "com.nhaarman:mockito-kotlin:${mockito_kotlin_version}"
 }
 
 dokka {
