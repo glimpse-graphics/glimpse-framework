@@ -18,6 +18,11 @@ class Mesh(val positions: List<Point>, val textureCoordinates: List<TextureCoord
 	}
 
 	/**
+	 * Mesh vertices counter.
+	 */
+	val count = positions.size
+
+	/**
 	 * Mesh vertices.
 	 */
 	val vertices: List<Vertex> by lazy {

@@ -6,7 +6,7 @@ mainClassName = 'glimpse.preview.GlimpsePreviewKt'
 
 dependencies {
 	compile project(":glimpse-framework-api")
-	compile project(":glimpse-framework-shaders")
+	compile project(":glimpse-framework-materials")
 	compile project(":glimpse-framework-jogl")
 
 	compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"

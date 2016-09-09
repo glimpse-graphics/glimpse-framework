@@ -2,24 +2,37 @@ package glimpse.preview
 
 import glimpse.*
 import glimpse.Vector
+import glimpse.cameras.camera
+import glimpse.cameras.perspective
+import glimpse.cameras.targeted
 import glimpse.gles.BlendFactor
 import glimpse.gles.DepthTestFunction
 import glimpse.jogl.*
+import glimpse.materials.Plastic
 import glimpse.models.sphere
-import glimpse.shaders.PlainShaderProgram
 import java.util.*
 
 fun main(args: Array<String>) {
 
-	var projectionMatrix = perspectiveProjectionMatrix(120.degrees, 1.3f, 1f, 100f)
+	var aspect: Float = 1.333f
 
-	fun viewMatrix(): Matrix {
-		val time = (Date().time / 20L) % 360L
-		val eye = Point.ORIGIN translateBy Vector(10f, 60.degrees, time.degrees)
-		return lookAtViewMatrix(eye, Point.ORIGIN, Vector.Z_UNIT)
+	val camera = camera {
+		targeted {
+			position {
+				val time = (Date().time / 30L) % 360L
+				Vector(10f, 60.degrees, time.degrees).toPoint()
+			}
+		}
+		perspective {
+			fov { 120.degrees }
+			aspect { aspect }
+			distanceRange(1f to 20f)
+		}
 	}
 
-	val mesh = sphere(16)
+	val model = sphere(20, 30).transform {}
+
+	val material = Plastic(Color.RED)
 
 	glimpseFrame("Glimpse Framework Preview") {
 		menuBar {
@@ -47,19 +60,16 @@ fun main(args: Array<String>) {
 			}
 			menu("Lenses") {
 				menuItem("Frustum") {
-					onClick { projectionMatrix = frustumProjectionMatrix(-1f, 1f, -.75f, .75f, 1f, 20f) }
 				}
 				menuItem("Perspective") {
-					onClick { projectionMatrix = perspectiveProjectionMatrix(120.degrees, 1.3f, 1f, 100f) }
 				}
 				menuItem("Orthographic") {
-					onClick { projectionMatrix = orthographicProjectionMatrix(-10f, 10f, -7.5f, 7.5f, -20f, 20f) }
 				}
 			}
 		}
 		onInit {
-			PlainShaderProgram(this)
-			clearColor = Color(.1f, .1f, .1f)
+			Plastic.init(this)
+			clearColor = Color.BLACK
 			clearDepth = 1f
 			isDepthTest = true
 			depthTestFunction = DepthTestFunction.LESS_OR_EQUAL
@@ -69,15 +79,15 @@ fun main(args: Array<String>) {
 		}
 		onResize { v ->
 			viewport = v
+			aspect = viewport.aspect
 		}
 		onRender {
 			clearColorBuffer()
 			clearDepthBuffer()
-			PlainShaderProgram.mvpMatrix { projectionMatrix * viewMatrix() }
-			PlainShaderProgram.drawMesh { mesh }
+			material.render(model, camera)
 		}
 		onDispose {
-			PlainShaderProgram.dispose()
+			material.dispose()
 		}
 	}
 }

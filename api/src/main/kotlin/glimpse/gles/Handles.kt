@@ -7,7 +7,7 @@ package glimpse.gles
  */
 data class TextureHandle(val value: Int) {
 	init {
-		require(value != 0) { "Invalid texture handle" }
+		require(value != 0) { "Invalid texture handle: $value" }
 	}
 }
 
@@ -18,7 +18,7 @@ data class TextureHandle(val value: Int) {
  */
 data class BufferHandle(val value: Int) {
 	init {
-		require(value != 0) { "Invalid buffer handle" }
+		require(value != 0) { "Invalid buffer handle: $value" }
 	}
 }
 
@@ -29,7 +29,7 @@ data class BufferHandle(val value: Int) {
  */
 data class UniformLocation(val value: Int) {
 	init {
-		require(value >= 0) { "Invalid uniform location" }
+		require(value >= 0) { "Invalid uniform location: $value" }
 	}
 }
 
@@ -40,7 +40,7 @@ data class UniformLocation(val value: Int) {
  */
 data class AttributeLocation(val value: Int) {
 	init {
-		require(value >= 0) { "Invalid attribute location" }
+		require(value >= 0) { "Invalid attribute location: $value" }
 	}
 }
 

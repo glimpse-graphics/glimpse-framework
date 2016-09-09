@@ -77,7 +77,7 @@ data class Matrix(private val matrix: List<Float>) {
 	/**
 	 * Returns a transposed matrix.
 	 */
-	fun transpose() = squareMatrix.transpose().asMatrix()
+	fun transpose(): Matrix = squareMatrix.transpose().asMatrix()
 
 	/**
 	 * Returns an inverted matrix.

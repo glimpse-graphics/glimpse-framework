@@ -11,7 +11,7 @@ import glimpse.gles.GLES
  */
 class Shader(val gles: GLES, val type: ShaderType, val handle: ShaderHandle) {
 
-	internal var deleted = false;
+	internal var deleted = false
 
 	/**
 	 * Tells GLES implementation to delete this shader.
@@ -29,6 +29,6 @@ class Shader(val gles: GLES, val type: ShaderType, val handle: ShaderHandle) {
  */
 data class ShaderHandle(val value: Int) {
 	init {
-		require(value != 0) { "Invalid shader handle" }
+		require(value != 0) { "Invalid shader handle: $value" }
 	}
 }

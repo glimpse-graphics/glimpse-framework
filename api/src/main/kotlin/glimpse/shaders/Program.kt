@@ -11,7 +11,7 @@ import glimpse.gles.GLES
  */
 class Program(val gles: GLES, val handle: ProgramHandle, val shaders: List<Shader>) {
 
-	internal var deleted = false;
+	internal var deleted = false
 
 	/**
 	 * Tells GLES implementation to use this program.
@@ -43,6 +43,6 @@ class Program(val gles: GLES, val handle: ProgramHandle, val shaders: List<Shade
  */
 data class ProgramHandle(val value: Int) {
 	init {
-		require(value != 0) { "Invalid program handle" }
+		require(value != 0) { "Invalid program handle: $value" }
 	}
 }
