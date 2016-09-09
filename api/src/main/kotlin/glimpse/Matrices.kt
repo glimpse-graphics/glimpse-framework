@@ -18,10 +18,10 @@ fun frustumProjectionMatrix(left: Float, right: Float, bottom: Float, top: Float
 /**
  * Returns a perspective projection [Matrix].
  *
- * @param fovY field of view angle for Y-axis (viewport height axis)
- * @param aspect width aspect ratio against height
- * @param near near clipping plane distance
- * @param far far clipping plane distance
+ * @param fovY Field of view angle for Y-axis (viewport height axis).
+ * @param aspect Width aspect ratio against height.
+ * @param near Near clipping plane distance.
+ * @param far Far clipping plane distance.
  */
 fun perspectiveProjectionMatrix(fovY: Angle, aspect: Float, near: Float, far: Float): Matrix {
 	val top = tan(fovY / 2f) * near
