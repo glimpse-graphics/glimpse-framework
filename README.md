@@ -16,9 +16,9 @@ OpenGL made easy
 * models and model builders
 * colors
 * textures – planned
-* materials – planned
+* materials
 * shaders
-* cameras – planned
+* cameras
 * lights – planned
 * animations – planned
 * Blender OBJ file support – planned
@@ -30,13 +30,32 @@ OpenGL made easy
 
 ```kotlin
 fun main(args: Array<String>) {
-	var projectionMatrix = perspectiveProjectionMatrix(90.degrees, 1f, 1f, 20f)
-	val viewMatrix = lookAtViewMatrix(Point(10f, 0f, 5f), Point.ORIGIN, Vector.Z_UNIT)
-	val mesh = sphere(16)
 
-	glimpseFrame("Glimpse Framework Preview") {
+	var aspect: Float = 1.333f
+
+	val camera = camera {
+		targeted {
+			position {
+				val time = (Date().time / 30L) % 360L
+				Vector(10f, 60.degrees, time.degrees).toPoint()
+			}
+			target { Point.ORIGIN }
+			up { Vector.Z_UNIT }
+		}
+		perspective {
+			fov { 120.degrees }
+			aspect { aspect }
+			distanceRange(1f to 20f)
+		}
+	}
+
+	val model = sphere(20, 30).transform {}
+
+	val material = Plastic(Color.RED)
+
+	glimpseFrame("Glimpse Framework") {
 		onInit {
-			PlainShaderProgram(this)
+			Plastic.init(this)
 			clearColor = Color.BLACK
 			clearDepth = 1f
 			isDepthTest = true
@@ -47,17 +66,15 @@ fun main(args: Array<String>) {
 		}
 		onResize { v ->
 			viewport = v
-			val aspect = viewport.width.toFloat() / viewport.height.toFloat()
-			projectionMatrix = perspectiveProjectionMatrix(90.degrees, aspect, 1f, 20f)
+			aspect = viewport.aspect
 		}
 		onRender {
 			clearColorBuffer()
 			clearDepthBuffer()
-			PlainShaderProgram.mvpMatrix { projectionMatrix * viewMatrix }
-			PlainShaderProgram.drawMesh { mesh }
+			material.render(model, camera)
 		}
 		onDispose {
-			PlainShaderProgram.dispose()
+			material.dispose()
 		}
 	}
 }
