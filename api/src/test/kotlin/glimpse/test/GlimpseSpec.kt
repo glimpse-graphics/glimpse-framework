@@ -17,6 +17,7 @@ abstract class GlimpseSpec : WordSpec(), FloatMatchers {
 		val positiveIntegers = Gen.choose(1, 1000)
 		val negativeIntegers = Gen.choose(-1000, -1)
 		val floats = Gen.float()
+		val positiveFloats = Gen.chooseFloat(1, 100)
 		val bigFloats = Gen.chooseFloat(-100, 100)
 		val angles = Gen.angle(Gen.chooseFloat(0, 360))
 		val points = Gen.point(bigFloats)
