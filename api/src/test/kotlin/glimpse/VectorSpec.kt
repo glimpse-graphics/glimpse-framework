@@ -153,13 +153,13 @@ class VectorSpec : GlimpseSpec() {
 				}
 			}
 			"be correctly divided by a number" {
-				forAll(vectors, floats) { v, n ->
+				forAll(vectors, positiveFloats) { v, n ->
 					v.x / n isRoughly (v / n).x
 				}
-				forAll(vectors, floats) { v, n ->
+				forAll(vectors, positiveFloats) { v, n ->
 					v.y / n isRoughly (v / n).y
 				}
-				forAll(vectors, floats) { v, n ->
+				forAll(vectors, positiveFloats) { v, n ->
 					v.z / n isRoughly (v / n).z
 				}
 			}

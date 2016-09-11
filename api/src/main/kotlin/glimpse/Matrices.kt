@@ -11,7 +11,7 @@ fun frustumProjectionMatrix(left: Float, right: Float, bottom: Float, top: Float
 	return Matrix(listOf(
 			2f * near / width, 0f, 0f, 0f,
 			0f, 2f * near / height, 0f, 0f,
-			2f * (right + left) / width, (top + bottom) / height, (far + near) / depth, -1f,
+			(right + left) / width, (top + bottom) / height, (far + near) / depth, -1f,
 			0f, 0f, 2f * far * near / depth, 0f))
 }
 
@@ -30,8 +30,8 @@ fun perspectiveProjectionMatrix(fovY: Angle, aspect: Float, near: Float, far: Fl
 	return Matrix(listOf(
 			1f / right, 0f, 0f, 0f,
 			0f, 1f / top, 0f, 0f,
-			0f, 0f, 2f / depth, 0f,
-			0f, 0f, (near + far) / depth, 1f))
+			0f, 0f, (near + far) / depth, -1f,
+			0f, 0f, 2 * near * far / depth, 0f))
 }
 
 /**
