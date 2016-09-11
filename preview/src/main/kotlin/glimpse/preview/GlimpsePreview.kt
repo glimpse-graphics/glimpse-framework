@@ -20,17 +20,17 @@ fun main(args: Array<String>) {
 		targeted {
 			position {
 				val time = (Date().time / 30L) % 360L
-				Vector(10f, 60.degrees, time.degrees).toPoint()
+				Vector(5f, 60.degrees, time.degrees).toPoint()
 			}
 		}
 		perspective {
-			fov { 120.degrees }
+			fov { 45.degrees }
 			aspect { aspect }
 			distanceRange(1f to 20f)
 		}
 	}
 
-	val model = sphere(20, 30).transform {}
+	val model = sphere(16).transform {}
 
 	val material = Plastic(Color.RED)
 
