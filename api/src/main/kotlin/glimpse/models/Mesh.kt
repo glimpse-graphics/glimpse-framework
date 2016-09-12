@@ -40,17 +40,17 @@ class Mesh(val positions: List<Point>, val textureCoordinates: List<TextureCoord
 	}
 
 	/**
-	 * Returns a [Model] from the [Mesh], transformed with the [modelMatrix].
+	 * Returns a [Model] from the [Mesh], transformed with the [transformationMatrix].
 	 */
-	fun transform(modelMatrix: Matrix) = Model(this, modelMatrix)
+	fun transform(transformationMatrix: Matrix) = transform(transformationMatrix) {}
 
 	/**
-	 * Returns a [Model] from the [Mesh], transformed with the [transformation] applied to the [modelMatrix].
+	 * Returns a [Model] from the [Mesh], transformed with the [transformation] applied to the initial [transformationMatrix].
 	 */
-	fun transform(modelMatrix: Matrix, transformation: MatrixBuilder.() -> Unit): Model {
-		val builder = MatrixBuilder(modelMatrix)
+	fun transform(transformationMatrix: Matrix, transformation: MatrixBuilder.() -> Unit) = Model(this) {
+		val builder = MatrixBuilder(transformationMatrix)
 		builder.transformation()
-		return transform(builder.matrix)
+		builder.matrix
 	}
 
 	/**

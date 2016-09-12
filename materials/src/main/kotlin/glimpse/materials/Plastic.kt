@@ -21,8 +21,8 @@ class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Co
 	}
 
 	override fun render(model: Model, camera: Camera) {
-		val mvpMatrix = camera.cameraMatrix * model.modelMatrix
-		val modelViewMatrix = camera.view.viewMatrix * model.modelMatrix
+		val mvpMatrix = camera.cameraMatrix * model.transformation()
+		val modelViewMatrix = camera.view.viewMatrix * model.transformation()
 		PlasticShaderHelper.use()
 		PlasticShaderHelper["u_DiffuseColor"] = diffuse
 		PlasticShaderHelper["u_AmbientColor"] = ambient

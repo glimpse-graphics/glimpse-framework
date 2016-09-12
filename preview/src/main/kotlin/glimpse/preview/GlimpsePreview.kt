@@ -18,10 +18,7 @@ fun main(args: Array<String>) {
 
 	val camera = camera {
 		targeted {
-			position {
-				val time = (Date().time / 30L) % 360L
-				Vector(5f, 60.degrees, time.degrees).toPoint()
-			}
+			position { Vector(5f, 60.degrees, 0.degrees).toPoint() }
 		}
 		perspective {
 			fov { 45.degrees }
@@ -30,7 +27,10 @@ fun main(args: Array<String>) {
 		}
 	}
 
-	val model = sphere(16).transform {}
+	val model = sphere(16).transform {
+		val time = (Date().time / 30L) % 360L
+		rotateZ(time.degrees)
+	}
 
 	val material = Plastic(Color.RED)
 

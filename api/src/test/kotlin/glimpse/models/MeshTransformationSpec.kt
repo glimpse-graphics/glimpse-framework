@@ -14,8 +14,17 @@ class MeshTransformationSpec : GlimpseSpec() {
 				forAll(vectors, vectors) { vector, translation ->
 					mesh { }.transform {
 						translate(translation)
-					}.modelMatrix * vector isRoughly vector + translation
+					}.transformation() * vector isRoughly vector + translation
 				}
+			}
+			"change in time" {
+				var translation = Vector.X_UNIT
+				val model = mesh { }.transform {
+					translate(translation)
+				}
+				model.transformation() * Vector.NULL shouldBeRoughly Vector.X_UNIT
+				translation = Vector.Z_UNIT
+				model.transformation() * Vector.NULL shouldBeRoughly Vector.Z_UNIT
 			}
 		}
 
@@ -26,9 +35,9 @@ class MeshTransformationSpec : GlimpseSpec() {
 						list.forEach { vector ->
 							translate(vector)
 						}
-					}.modelMatrix isRoughly mesh { }.transform {
+					}.transformation() isRoughly mesh { }.transform {
 						translate(list.reduce { sum, next -> sum + next })
-					}.modelMatrix
+					}.transformation()
 				}
 			}
 		}
@@ -38,7 +47,7 @@ class MeshTransformationSpec : GlimpseSpec() {
 				mesh { }.transform {
 					translate(Vector.X_UNIT)
 					rotateZ(Angle.RIGHT)
-				}.modelMatrix * Vector.X_UNIT shouldBeRoughly Vector.Y_UNIT * 2f
+				}.transformation() * Vector.X_UNIT shouldBeRoughly Vector.Y_UNIT * 2f
 			}
 		}
 
@@ -47,14 +56,14 @@ class MeshTransformationSpec : GlimpseSpec() {
 				mesh { }.transform {
 					rotateZ(Angle.RIGHT)
 					translate(Vector.X_UNIT)
-				}.modelMatrix * Vector.X_UNIT shouldBeRoughly Vector.Y_UNIT + Vector.X_UNIT
+				}.transformation() * Vector.X_UNIT shouldBeRoughly Vector.Y_UNIT + Vector.X_UNIT
 			}
 		}
 
 		"Rotation around X axis" should {
 			"be consistent with rotation around a unit vector in the direction of the X axis" {
 				forAll(angles) { angle ->
-					mesh { }.transform { rotateX(angle) }.modelMatrix isRoughly mesh { }.transform { rotate(Vector.X_UNIT, angle) }.modelMatrix
+					mesh { }.transform { rotateX(angle) }.transformation() isRoughly mesh { }.transform { rotate(Vector.X_UNIT, angle) }.transformation()
 				}
 			}
 		}
@@ -62,7 +71,7 @@ class MeshTransformationSpec : GlimpseSpec() {
 		"Rotation around Y axis" should {
 			"be consistent with rotation around a unit vector in the direction of the Y axis" {
 				forAll(angles) { angle ->
-					mesh { }.transform { rotateY(angle) }.modelMatrix isRoughly mesh { }.transform { rotate(Vector.Y_UNIT, angle) }.modelMatrix
+					mesh { }.transform { rotateY(angle) }.transformation() isRoughly mesh { }.transform { rotate(Vector.Y_UNIT, angle) }.transformation()
 				}
 			}
 		}
@@ -70,7 +79,7 @@ class MeshTransformationSpec : GlimpseSpec() {
 		"Rotation around Z axis" should {
 			"be consistent with rotation around a unit vector in the direction of the Z axis" {
 				forAll(angles) { angle ->
-					mesh { }.transform { rotateZ(angle) }.modelMatrix isRoughly mesh { }.transform { rotate(Vector.Z_UNIT, angle) }.modelMatrix
+					mesh { }.transform { rotateZ(angle) }.transformation() isRoughly mesh { }.transform { rotate(Vector.Z_UNIT, angle) }.transformation()
 				}
 			}
 		}
@@ -80,7 +89,7 @@ class MeshTransformationSpec : GlimpseSpec() {
 				mesh { }.transform {
 					translate(Vector.X_UNIT)
 					scale(2f)
-				}.modelMatrix * Vector.X_UNIT shouldBeRoughly Vector.X_UNIT * 4f
+				}.transformation() * Vector.X_UNIT shouldBeRoughly Vector.X_UNIT * 4f
 			}
 		}
 
@@ -89,7 +98,7 @@ class MeshTransformationSpec : GlimpseSpec() {
 				mesh { }.transform {
 					scale(2f)
 					translate(Vector.X_UNIT)
-				}.modelMatrix * Vector.X_UNIT shouldBeRoughly Vector.X_UNIT * 3f
+				}.transformation() * Vector.X_UNIT shouldBeRoughly Vector.X_UNIT * 3f
 			}
 		}
 
