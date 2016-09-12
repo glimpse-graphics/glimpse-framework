@@ -7,6 +7,10 @@ import glimpse.Vector
 import glimpse.shaders.ProgramHandle
 import glimpse.shaders.ShaderHandle
 import glimpse.shaders.ShaderType
+import glimpse.textures.TextureHandle
+import glimpse.textures.TextureMagnificationFilter
+import glimpse.textures.TextureMinificationFilter
+import glimpse.textures.TextureWrapping
 import java.io.InputStream
 import java.nio.FloatBuffer
 import java.nio.IntBuffer
