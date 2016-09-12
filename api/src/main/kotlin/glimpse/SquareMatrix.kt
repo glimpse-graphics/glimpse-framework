@@ -35,7 +35,7 @@ internal class SquareMatrix(val size: Int, private val elements: (Int, Int) -> F
 	private fun minor(row: Int, col: Int): Float =
 			sub(row, col).det
 
-	private fun sub(delRow: Int, delCol: Int) = SquareMatrix(size - 1) { row, col ->
+	internal fun sub(delRow: Int, delCol: Int) = SquareMatrix(size - 1) { row, col ->
 		this[if (row < delRow) row else row + 1, if (col < delCol) col else col + 1]
 	}
 

@@ -24,6 +24,17 @@ data class Matrix(private val matrix: List<Float>) {
 		}
 	}
 
+	/**
+	 * Matrix trimmed to 3 by 3, and supplemented with identity matrix values.
+	 */
+	val trimmed: Matrix by lazy {
+		val subMatrix = squareMatrix.sub(3, 3)
+		SquareMatrix(4) { row, col ->
+			if (row < 3 && col < 3) subMatrix[row, col]
+			else IDENTITY[row, col]
+		}.asMatrix()
+	}
+
 	internal val _16f : Array<Float> by lazy { matrix.toTypedArray() }
 
 	internal val squareMatrix: SquareMatrix by lazy { SquareMatrix(4) { row, col -> this[row, col] } }
