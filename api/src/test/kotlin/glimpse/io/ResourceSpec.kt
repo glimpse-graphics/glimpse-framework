@@ -12,6 +12,14 @@ class ResourceSpec : GlimpseSpec() {
 			}
 		}
 
+		"Non-existing resource" should {
+			"cause an exception" {
+				shouldThrow<ResourceNotFoundException> {
+					resource("non-existing").inputStream
+				}
+			}
+		}
+
 		"Resource in context of the object" should {
 			"be loaded to strings" {
 				resource("lines.txt").lines shouldBe listOf("a file", "with", "a few", "lines")
