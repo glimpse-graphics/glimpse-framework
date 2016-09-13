@@ -9,10 +9,9 @@ import glimpse.degrees
 import glimpse.gles.BlendFactor
 import glimpse.gles.DepthTestFunction
 import glimpse.io.resource
-import glimpse.jogl.glimpseFrame
-import glimpse.jogl.menu
-import glimpse.jogl.menuBar
-import glimpse.jogl.menuItem
+import glimpse.jogl.*
+import glimpse.materials.Material
+import glimpse.materials.Plastic
 import glimpse.materials.Textured
 import glimpse.models.sphere
 import glimpse.textures.Texture
@@ -44,7 +43,10 @@ fun main(args: Array<String>) {
 
 	val textures = mutableMapOf<Textured.TextureType, Texture>()
 
-	val material = Textured { textureType -> textures[textureType]!! }
+	val texturedMaterial = Textured { textureType -> textures[textureType]!! }
+	val plasticMaterial = Plastic(Color.GREEN)
+
+	var material: Material = plasticMaterial
 
 	glimpseFrame("Glimpse Framework Preview") {
 		menuBar {
@@ -54,10 +56,16 @@ fun main(args: Array<String>) {
 				menuItem("Cube") {
 				}
 			}
-			menu("Shader") {
-				menuItem("Plain") {
+			menu("Material") {
+				menuItem("Plastic") {
+					onClick {
+						material = plasticMaterial
+					}
 				}
 				menuItem("Textured") {
+					onClick {
+						material = texturedMaterial
+					}
 				}
 			}
 			menu("Textures") {
@@ -80,6 +88,7 @@ fun main(args: Array<String>) {
 			}
 		}
 		onInit {
+			Plastic.init(this)
 			Textured.init(this)
 			clearColor = Color.BLACK
 			clearDepth = 1f
@@ -104,7 +113,8 @@ fun main(args: Array<String>) {
 			material.render(model, camera)
 		}
 		onDispose {
-			material.dispose()
+			Plastic.dispose()
+			Textured.dispose()
 		}
 	}
 }
