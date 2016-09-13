@@ -18,6 +18,7 @@ class Texture(val gles: GLES, val handle: TextureHandle) {
 	 * Applies a [Texture] with the given [index] to a uniform [location] of a shader program.
 	 */
 	fun apply(location: UniformLocation, index: Int) {
+		assert(!deleted) { "Texture deleted" }
 		gles.activeTexture(index)
 		gles.bindTexture2D(handle)
 		gles.uniformInt(location, index)
