@@ -11,6 +11,7 @@ import glimpse.jogl.gles.delegates.EnableDisableDelegate
 import glimpse.shaders.ProgramHandle
 import glimpse.shaders.ShaderHandle
 import glimpse.shaders.ShaderType
+import glimpse.textures.*
 import java.io.InputStream
 import java.nio.Buffer
 import java.nio.ByteBuffer
@@ -205,7 +206,7 @@ class GLES(val gles: GL2ES2) : GLES {
 	}
 
 	override fun textureImage2D(inputStream: InputStream, fileName: String, withMipmap: Boolean) {
-		val fileType = fileName.split('.').last()
+		val fileType = "." + fileName.split('.').last().toLowerCase()
 		val textureData = TextureIO.newTextureData(gles.glProfile, inputStream, withMipmap, fileType)
 		gles.glTexImage2D(GL2ES2.GL_TEXTURE_2D, 0, GL2ES2.GL_RGBA,
 				textureData.getWidth(), textureData.getHeight(), 0,

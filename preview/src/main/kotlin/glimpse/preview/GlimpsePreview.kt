@@ -1,15 +1,24 @@
 package glimpse.preview
 
-import glimpse.*
+import glimpse.Color
 import glimpse.Vector
 import glimpse.cameras.camera
 import glimpse.cameras.perspective
 import glimpse.cameras.targeted
+import glimpse.degrees
 import glimpse.gles.BlendFactor
 import glimpse.gles.DepthTestFunction
-import glimpse.jogl.*
-import glimpse.materials.Plastic
+import glimpse.io.resource
+import glimpse.jogl.glimpseFrame
+import glimpse.jogl.menu
+import glimpse.jogl.menuBar
+import glimpse.jogl.menuItem
+import glimpse.materials.Textured
 import glimpse.models.sphere
+import glimpse.textures.Texture
+import glimpse.textures.TextureMagnificationFilter
+import glimpse.textures.TextureMinificationFilter
+import glimpse.textures.readTexture
 import java.util.*
 
 fun main(args: Array<String>) {
@@ -21,18 +30,21 @@ fun main(args: Array<String>) {
 			position { Vector(5f, 60.degrees, 0.degrees).toPoint() }
 		}
 		perspective {
-			fov { 45.degrees }
+			fov { 30.degrees }
 			aspect { aspect }
 			distanceRange(1f to 20f)
 		}
 	}
 
-	val model = sphere(16).transform {
-		val time = (Date().time / 30L) % 360L
+	val model = sphere(12).transform {
+		val time = (Date().time / 50L) % 360L
 		rotateZ(time.degrees)
+		rotateX(-23.5.degrees)
 	}
 
-	val material = Plastic(Color.RED)
+	val textures = mutableMapOf<Textured.TextureType, Texture>()
+
+	val material = Textured { textureType -> textures[textureType]!! }
 
 	glimpseFrame("Glimpse Framework Preview") {
 		menuBar {
@@ -68,7 +80,7 @@ fun main(args: Array<String>) {
 			}
 		}
 		onInit {
-			Plastic.init(this)
+			Textured.init(this)
 			clearColor = Color.BLACK
 			clearDepth = 1f
 			isDepthTest = true
@@ -76,6 +88,11 @@ fun main(args: Array<String>) {
 			isBlend = true
 			blendFunction = BlendFactor.SRC_ALPHA to BlendFactor.ONE_MINUS_SRC_ALPHA
 			isCullFace = false
+			textureMagnificationFilter = TextureMagnificationFilter.LINEAR
+			textureMinificationFilter = TextureMinificationFilter.LINEAR_MIPMAP_LINEAR
+			textures[Textured.TextureType.AMBIENT] = Context.resource("ambient.png").readTexture(this) { withMipmap() }
+			textures[Textured.TextureType.SPECULAR] = Context.resource("specular.png").readTexture(this) { withMipmap() }
+			textures[Textured.TextureType.DIFFUSE] = Context.resource("diffuse.png").readTexture(this) { withMipmap() }
 		}
 		onResize { v ->
 			viewport = v
@@ -91,3 +108,5 @@ fun main(args: Array<String>) {
 		}
 	}
 }
+
+object Context

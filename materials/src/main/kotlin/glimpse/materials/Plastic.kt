@@ -12,7 +12,7 @@ import glimpse.shaders.shaderProgram
 /**
  * Plastic material.
  */
-class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Color = Color.WHITE, val shininess: Float = 1000f) : Material {
+class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Color = Color.WHITE, val shininess: Float = 100f) : Material {
 
 	companion object {
 		fun init(gles: GLES) {
@@ -22,7 +22,8 @@ class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Co
 
 	override fun render(model: Model, camera: Camera) {
 		val mvpMatrix = camera.cameraMatrix * model.transformation()
-		val modelViewMatrix = camera.view.viewMatrix * model.transformation()
+		val viewMatrix = camera.view.viewMatrix
+		val modelViewMatrix = viewMatrix * model.transformation()
 		PlasticShaderHelper.use()
 		PlasticShaderHelper["u_DiffuseColor"] = diffuse
 		PlasticShaderHelper["u_AmbientColor"] = ambient
@@ -30,9 +31,9 @@ class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Co
 		PlasticShaderHelper["u_Shininess"] = shininess
 		PlasticShaderHelper["u_MVPMatrix"] = mvpMatrix
 		PlasticShaderHelper["u_MVMatrix"] = modelViewMatrix
-		PlasticShaderHelper["u_NormalMatrix"] = modelViewMatrix.inverse().transpose()
-		PlasticShaderHelper["u_LightDirection"] = camera.view.viewMatrix * Vector(1f, 0f, 1f)
-		PlasticShaderHelper["u_CameraPosition"] = camera.view.viewMatrix * camera.position
+		PlasticShaderHelper["u_LightMatrix"] = viewMatrix.trimmed
+		PlasticShaderHelper["u_NormalMatrix"] = modelViewMatrix.trimmed
+		PlasticShaderHelper["u_LightDirection"] = Vector(-1f, -1f, -1f)
 		PlasticShaderHelper.drawMesh(model.mesh)
 	}
 

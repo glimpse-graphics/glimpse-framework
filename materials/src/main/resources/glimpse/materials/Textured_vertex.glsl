@@ -9,6 +9,7 @@ attribute vec2 a_TextureCoordinates;
 
 varying vec3 v_VertexPosition;
 varying vec4 v_VertexNormal;
+varying vec2 v_TextureCoordinates;
 
 varying mat4 v_LightMatrix;
 varying mat4 v_NormalMatrix;
@@ -19,4 +20,5 @@ void main() {
 	v_VertexNormal = a_VertexNormal;
 	v_LightMatrix = u_LightMatrix;
 	v_NormalMatrix = u_NormalMatrix;
+	v_TextureCoordinates = a_TextureCoordinates;
 }

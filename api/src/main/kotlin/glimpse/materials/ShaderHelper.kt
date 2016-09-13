@@ -7,6 +7,7 @@ import glimpse.gles.GLES
 import glimpse.gles.UniformLocation
 import glimpse.models.Mesh
 import glimpse.shaders.Program
+import glimpse.textures.Texture
 import java.nio.FloatBuffer
 
 /**
@@ -94,6 +95,11 @@ abstract class ShaderHelper {
 	 * Sets [color] shader uniform value of a given [name].
 	 */
 	operator fun set(name: String, color: Color): Unit = gles.uniformColor(name.uniformLocation, color)
+
+	/**
+	 * Sets [texture] shader uniform value of a given [name].
+	 */
+	operator fun set(name: String, index: Int, texture: Texture): Unit = texture.apply(name.uniformLocation, index)
 
 	/**
 	 * Draws a [mesh] using the shader [program].

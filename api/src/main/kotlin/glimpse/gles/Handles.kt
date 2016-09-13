@@ -1,17 +1,6 @@
 package glimpse.gles
 
 /**
- * Texture handle.
- *
- * @property value Handle value.
- */
-data class TextureHandle(val value: Int) {
-	init {
-		require(value != 0) { "Invalid texture handle: $value" }
-	}
-}
-
-/**
  * Buffer handle.
  *
  * @property value Handle value.

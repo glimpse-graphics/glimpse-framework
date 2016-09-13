@@ -8,7 +8,7 @@ import glimpse.*
 fun revolution(steps: Int, curve: Curve) = mesh {
 	fun Vertex.rotate(matrix: Matrix, angle: Angle): Vertex = Vertex(
 			(matrix * position.toVector()).toPoint(),
-			textureCoordinates.copy(u = textureCoordinates.u + Angle.FULL / angle),
+			textureCoordinates.copy(u = textureCoordinates.u + angle / Angle.FULL),
 			matrix * normal)
 
 	val segments = (Angle.NULL..Angle.FULL partition steps).map { angle ->
@@ -38,7 +38,7 @@ fun sphere(curveSteps: Int, rotateSteps: Int = curveSteps * 2, radius: Float = 1
 	curve {
 		val vertices = (Angle.NULL..Angle.STRAIGHT partition curveSteps).map { angle ->
 			val normal = rotationMatrixY(angle) * Vector.Z_UNIT
-			Vertex((normal * radius).toPoint(), TextureCoordinates(0f, Angle.STRAIGHT / angle), normal)
+			Vertex((normal * radius).toPoint(), TextureCoordinates(0f, angle / Angle.STRAIGHT), normal)
 		}
 		vertices.dropLast(1).zip(vertices.drop(1)).forEach {
 			segment(it)

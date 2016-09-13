@@ -4,6 +4,7 @@ import glimpse.Angle
 import glimpse.Matrix
 import glimpse.Point
 import glimpse.Vector
+import io.kotlintest.matchers.BeWrapper
 import io.kotlintest.properties.Gen
 import io.kotlintest.specs.WordSpec
 
@@ -64,4 +65,5 @@ abstract class GlimpseSpec : WordSpec(), FloatMatchers {
 		this isRoughly other shouldBe true
 	}
 
+	protected infix fun <T : Comparable<T>> BeWrapper<T>.inRange(range: ClosedRange<T>): Boolean = range.contains(value)
 }

@@ -1,6 +1,7 @@
 package glimpse
 
 import glimpse.test.GlimpseSpec
+import io.kotlintest.properties.Gen
 
 class MatrixSpec : GlimpseSpec() {
 
@@ -85,6 +86,29 @@ class MatrixSpec : GlimpseSpec() {
 			"give identity matrix when multiplied by the original matrix" {
 				forAll(matrices) { matrix ->
 					matrix.squareMatrix.det == 0f || matrix * matrix.inverse() isRoughly Matrix.IDENTITY
+				}
+			}
+		}
+
+		"Trimmed matrix" should {
+			"contain the same elements as the original matrix, for first 3 rows and columns" {
+				forAll(matrices, Gen.choose(0, 3), Gen.choose(0, 3)) { matrix, row, col ->
+					matrix[row, col] == matrix.trimmed[row, col]
+				}
+			}
+			"contain the same elements as identity matrix, for last column" {
+				forAll(matrices, Gen.choose(0, 3), Gen.choose(0, 3)) { matrix, row, col ->
+					matrix[row, col] == matrix.trimmed[row, col]
+				}
+			}
+			"contain the same elements as identity matrix, for last column" {
+				forAll(matrices, Gen.choose(0, 4)) { matrix, row ->
+					Matrix.IDENTITY[row, 3] == matrix.trimmed[row, 3]
+				}
+			}
+			"contain the same elements as identity matrix, for last row" {
+				forAll(matrices, Gen.choose(0, 4)) { matrix, col ->
+					Matrix.IDENTITY[3, col] == matrix.trimmed[3, col]
 				}
 			}
 		}

@@ -1,6 +1,6 @@
-uniform vec4 u_DiffuseColor;
-uniform vec4 u_AmbientColor;
-uniform vec4 u_SpecularColor;
+uniform sampler2D u_DiffuseTexture;
+uniform sampler2D u_AmbientTexture;
+uniform sampler2D u_SpecularTexture;
 
 uniform float u_Shininess;
 
@@ -30,9 +30,13 @@ void main() {
 	float diffuseValue = positiveDot(normal, light);
 	float specularValue = pow(positiveDot(halfVector, normal), u_Shininess);
 
-	vec3 ambient = u_AmbientColor.rgb * 0.2;
-	vec3 diffuse = u_DiffuseColor.rgb * diffuseValue * 0.8;
-	vec3 specular = u_SpecularColor.rgb * specularValue;
+	vec4 ambientColor = texture2D(u_AmbientTexture, v_TextureCoordinates);
+	vec4 diffuseColor = texture2D(u_DiffuseTexture, v_TextureCoordinates);
+	vec4 specularColor = texture2D(u_SpecularTexture, v_TextureCoordinates);
 
-	gl_FragColor = vec4(specular + diffuse + ambient, u_DiffuseColor.a);
+	vec3 ambient = ambientColor.rgb;
+	vec3 diffuse = diffuseColor.rgb * diffuseValue;
+	vec3 specular = specularColor.rgb * specularValue;
+
+	gl_FragColor = vec4(specular + diffuse + ambient, diffuseColor.a);
 }
