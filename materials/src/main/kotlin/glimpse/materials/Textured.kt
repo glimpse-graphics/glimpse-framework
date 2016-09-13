@@ -21,6 +21,10 @@ class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Textur
 		fun init(gles: GLES) {
 			TexturedShaderHelper.init(gles)
 		}
+
+		fun dispose() {
+			TexturedShaderHelper.dispose()
+		}
 	}
 
 	override fun render(model: Model, camera: Camera) {

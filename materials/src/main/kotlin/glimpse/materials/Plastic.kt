@@ -18,6 +18,10 @@ class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Co
 		fun init(gles: GLES) {
 			PlasticShaderHelper.init(gles)
 		}
+
+		fun dispose() {
+			PlasticShaderHelper.dispose()
+		}
 	}
 
 	override fun render(model: Model, camera: Camera) {
