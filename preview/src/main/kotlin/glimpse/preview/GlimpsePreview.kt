@@ -68,24 +68,6 @@ fun main(args: Array<String>) {
 					}
 				}
 			}
-			menu("Textures") {
-				menuItem("Ambient…") {
-				}
-				menuItem("Diffuse…") {
-				}
-				menuItem("Specular…") {
-				}
-				menuItem("Normal map…") {
-				}
-			}
-			menu("Lenses") {
-				menuItem("Frustum") {
-				}
-				menuItem("Perspective") {
-				}
-				menuItem("Orthographic") {
-				}
-			}
 		}
 		onInit {
 			Plastic.init(this)
