@@ -15,7 +15,7 @@ OpenGL made easy
 * points, vectors, matrices
 * models and model builders
 * colors
-* textures – planned
+* textures
 * materials
 * shaders
 * cameras
