@@ -83,5 +83,40 @@ class CurveSpec : GlimpseSpec() {
 			}
 		}
 
+		"Flat curve" should {
+			"have the same Z coordinate for all points" {
+				Curve(positions, textureCoordinates, normals).toFlatCurve(123.45f).positions.forEach {
+					it.z shouldBe 123.45f
+				}
+			}
+			"have X and Y coordinates the same as the original curve" {
+				(Curve(positions, textureCoordinates, normals).toFlatCurve(123.45f).positions zip positions).forEach {
+					it.first.x shouldBe it.second.x
+					it.first.y shouldBe it.second.y
+				}
+			}
+			"have normals the same as the original curve" {
+				(Curve(positions, textureCoordinates, normals).toFlatCurve(123.45f).normals zip normals).forEach {
+					it.first shouldBe it.second
+				}
+			}
+			"have texture coordinates the same as the original curve" {
+				(Curve(positions, textureCoordinates, normals).toFlatCurve(123.45f).textureCoordinates zip textureCoordinates).forEach {
+					it.first shouldBe it.second
+				}
+			}
+		}
+
+		"Polygon bounded by a curve" should {
+			"have this curve as its boundary" {
+				val curve = Curve(positions, textureCoordinates, normals)
+				curve.polygon { emptyList() }.curve shouldBe curve
+			}
+			"have given faces" {
+				val curve = Curve(positions, textureCoordinates, normals)
+				curve.polygon { listOf(Triple(0, 1, 2), Triple(2, 3, 0)) }.faces shouldBe listOf(Triple(0, 1, 2), Triple(2, 3, 0))
+			}
+		}
+
 	}
 }
