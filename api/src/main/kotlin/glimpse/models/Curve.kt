@@ -35,4 +35,13 @@ class Curve(val positions: List<Point>, val textureCoordinates: List<TextureCoor
 				else extractSegments(vertices.drop(2), segments + (vertices[0] to vertices[1]))
 		extractSegments(vertices, emptyList<Pair<Vertex, Vertex>>())
 	}
+
+	/**
+	 * Returns a polygon bounded by this curve and filled with given [faces].
+	 */
+	fun polygon(faces: () -> List<Triple<Int, Int, Int>>) =
+			Polygon(this, faces())
+
+	internal fun toFlatCurve(z: Float = 0f) =
+			Curve(positions.map { it.copy(z = z) }, textureCoordinates, normals)
 }

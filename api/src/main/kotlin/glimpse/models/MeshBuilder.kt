@@ -15,7 +15,7 @@ class MeshBuilder {
 
 	internal fun toMesh() = Mesh(positions.toList(), textureCoordinates.toList(), normals.toList())
 
-	private fun push(vertex: Vertex) {
+	internal fun push(vertex: Vertex) {
 		positions.add(vertex.position)
 		textureCoordinates.add(vertex.textureCoordinates)
 		normals.add(vertex.normal)
