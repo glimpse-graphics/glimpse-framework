@@ -13,10 +13,7 @@ import glimpse.jogl.*
 import glimpse.materials.Material
 import glimpse.materials.Plastic
 import glimpse.materials.Textured
-import glimpse.models.Mesh
-import glimpse.models.Model
-import glimpse.models.sphere
-import glimpse.models.tetrahedron
+import glimpse.models.*
 import glimpse.textures.Texture
 import glimpse.textures.TextureMagnificationFilter
 import glimpse.textures.TextureMinificationFilter
@@ -32,7 +29,7 @@ fun main(args: Array<String>) {
 			position { Vector(5f, 60.degrees, 0.degrees).toPoint() }
 		}
 		perspective {
-			fov { 30.degrees }
+			fov { 45.degrees }
 			aspect { aspect }
 			distanceRange(1f to 20f)
 		}
@@ -64,6 +61,11 @@ fun main(args: Array<String>) {
 				menuItem("Tetrahedron") {
 					onClick {
 						model = transform(tetrahedron())
+					}
+				}
+				menuItem("Cube") {
+					onClick {
+						model = transform(cube())
 					}
 				}
 			}
