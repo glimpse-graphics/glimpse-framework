@@ -16,8 +16,3 @@ dependencies {
 
 	testCompile "io.kotlintest:kotlintest:${kotlintest_version}"
 }
-
-dokka {
-	moduleName = 'GlimpseFramework Preview'
-	outputFormat = 'jekyll'
-}

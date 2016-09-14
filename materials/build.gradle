@@ -7,6 +7,21 @@ dependencies {
 }
 
 dokka {
-	moduleName = 'GlimpseFramework Materials'
-	outputFormat = 'jekyll'
+	moduleName = 'Glimpse Framework Materials'
+	outputFormat = 'javadoc'
+}
+
+task sourcesJar(type: Jar, dependsOn: project.classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+task dokkaJar(type: Jar, dependsOn: project.dokka) {
+	classifier = 'javadoc'
+	from dokka
+}
+
+artifacts {
+	archives sourcesJar
+	archives dokkaJar
 }
