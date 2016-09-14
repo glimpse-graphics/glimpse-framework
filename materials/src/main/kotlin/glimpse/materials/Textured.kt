@@ -9,6 +9,9 @@ import glimpse.shaders.Program
 import glimpse.shaders.shaderProgram
 import glimpse.textures.Texture
 
+/**
+ * Textured material.
+ */
 class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Texture) : Material {
 
 	enum class TextureType {
