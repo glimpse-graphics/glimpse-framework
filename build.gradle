@@ -19,7 +19,7 @@ allprojects  {
 	apply plugin: 'maven'
 
 	group = 'org.glimpseframework'
-	version = '0.2-SNAPSHOT'
+	version = '0.3-SNAPSHOT'
 }
 
 subprojects {
