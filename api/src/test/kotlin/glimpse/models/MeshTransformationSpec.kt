@@ -3,6 +3,7 @@ package glimpse.models
 import glimpse.Angle
 import glimpse.Vector
 import glimpse.test.GlimpseSpec
+import glimpse.translationMatrix
 import io.kotlintest.properties.Gen
 
 class MeshTransformationSpec : GlimpseSpec() {
@@ -25,6 +26,14 @@ class MeshTransformationSpec : GlimpseSpec() {
 				model.transformation() * Vector.NULL shouldBeRoughly Vector.X_UNIT
 				translation = Vector.Z_UNIT
 				model.transformation() * Vector.NULL shouldBeRoughly Vector.Z_UNIT
+			}
+		}
+
+		"Mesh translation matrix" should {
+			"give results consistent with sum of vectors" {
+				forAll(vectors, vectors) { vector, translation ->
+					mesh { }.transform(translationMatrix(translation)).transformation() * vector isRoughly vector + translation
+				}
 			}
 		}
 
