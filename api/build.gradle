@@ -1,0 +1,27 @@
+description = 'Glimpse Framework API'
+
+dependencies {
+	compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
+	testCompile "io.kotlintest:kotlintest:${kotlintest_version}"
+	testCompile "com.nhaarman:mockito-kotlin:${mockito_kotlin_version}"
+}
+
+dokka {
+	moduleName = 'Glimpse Framework API'
+	outputFormat = 'javadoc'
+}
+
+task sourcesJar(type: Jar, dependsOn: project.classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+task dokkaJar(type: Jar, dependsOn: project.dokka) {
+	classifier = 'javadoc'
+	from dokka
+}
+
+artifacts {
+	archives sourcesJar
+	archives dokkaJar
+}

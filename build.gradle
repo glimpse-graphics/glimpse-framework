@@ -1,0 +1,46 @@
+buildscript {
+	ext.kotlin_version = '1.0.3'
+	ext.kotlintest_version = '1.3.3'
+	ext.mockito_kotlin_version = '0.6.1'
+	ext.dokka_version = '0.9.9'
+
+	repositories {
+		jcenter()
+		mavenCentral()
+	}
+
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
+		classpath "org.jetbrains.dokka:dokka-gradle-plugin:${dokka_version}"
+	}
+}
+
+allprojects  {
+	apply plugin: 'maven'
+
+	group = 'org.glimpseframework'
+	version = '0.2'
+}
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'kotlin'
+	apply plugin: 'org.jetbrains.dokka'
+	apply plugin: 'jacoco'
+
+	sourceCompatibility = 1.6
+	targetCompatibility = 1.6
+
+	repositories {
+		jcenter()
+	}
+
+	jacocoTestReport {
+		reports {
+			xml.enabled = true
+			html.enabled = true
+		}
+	}
+
+	check.dependsOn jacocoTestReport
+}

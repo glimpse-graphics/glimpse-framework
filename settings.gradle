@@ -1,0 +1,11 @@
+rootProject.name = 'glimpse-framework'
+
+include ':glimpse-framework-api'
+include ':glimpse-framework-materials'
+include ':glimpse-framework-jogl'
+include ':glimpse-framework-preview'
+
+project(':glimpse-framework-api').projectDir = "$rootDir/api" as File
+project(':glimpse-framework-materials').projectDir = "$rootDir/materials" as File
+project(':glimpse-framework-jogl').projectDir = "$rootDir/jogl" as File
+project(':glimpse-framework-preview').projectDir = "$rootDir/preview" as File
