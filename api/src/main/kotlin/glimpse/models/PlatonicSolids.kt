@@ -4,7 +4,10 @@ import glimpse.Point
 import glimpse.TextureCoordinates
 import glimpse.Vector
 
-fun tetrahedron(size: Float = 1f) = mesh {
+/**
+ * Returns a tetrahedron mesh of a given [size].
+ */
+fun tetrahedron(size: Float = 1f): Mesh = mesh {
 	val vectors = arrayOf(Vector(-1f, -1f, -1f), Vector(-1f, 1f, 1f), Vector(1f, -1f, 1f), Vector(1f, 1f, -1f))
 	val normals = vectors.map { it.normalize }
 	val textureCoordinates = vectors.map { TextureCoordinates(Math.max(it.x, 0f), Math.max(-it.y, 0f)) }
@@ -16,6 +19,9 @@ fun tetrahedron(size: Float = 1f) = mesh {
 	}
 }
 
+/**
+ * Returns a cube mesh of a given [size].
+ */
 fun cube(size: Float = 1f): Mesh = prism {
 	val positions = arrayOf(Point(-size, -size), Point(size, -size), Point(size, size), Point(-size, size))
 	val textureCoordinates = positions.map { TextureCoordinates(Math.max(it.x, 0f), Math.max(-it.y, 0f)) }
