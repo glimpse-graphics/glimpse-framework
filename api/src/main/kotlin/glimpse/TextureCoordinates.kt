@@ -10,6 +10,29 @@ import glimpse.buffers.toDirectFloatBuffer
  */
 data class TextureCoordinates(val u: Float, val v: Float) {
 
+	companion object {
+
+		/**
+		 * Top left corner of a texture.
+		 */
+		val TOP_LEFT = TextureCoordinates(0f, 0f)
+
+		/**
+		 * Top right corner of a texture.
+		 */
+		val TOP_RIGHT = TextureCoordinates(1f, 0f)
+
+		/**
+		 * Bottom left corner of a texture.
+		 */
+		val BOTTOM_LEFT = TextureCoordinates(0f, 1f)
+
+		/**
+		 * Bottom right corner of a texture.
+		 */
+		val BOTTOM_RIGHT = TextureCoordinates(1f, 1f)
+	}
+
 	internal val _2f: Array<Float> by lazy { arrayOf(u, v) }
 
 	/**

@@ -13,7 +13,7 @@ import glimpse.jogl.*
 import glimpse.materials.Material
 import glimpse.materials.Plastic
 import glimpse.materials.Textured
-import glimpse.models.sphere
+import glimpse.models.*
 import glimpse.textures.Texture
 import glimpse.textures.TextureMagnificationFilter
 import glimpse.textures.TextureMinificationFilter
@@ -29,17 +29,19 @@ fun main(args: Array<String>) {
 			position { Vector(5f, 60.degrees, 0.degrees).toPoint() }
 		}
 		perspective {
-			fov { 30.degrees }
+			fov { 45.degrees }
 			aspect { aspect }
 			distanceRange(1f to 20f)
 		}
 	}
 
-	val model = sphere(12).transform {
+	fun transform(mesh: Mesh): Model = mesh.transform {
 		val time = (Date().time / 50L) % 360L
 		rotateZ(time.degrees)
 		rotateX(-23.5.degrees)
 	}
+
+	var model = transform(sphere(16))
 
 	val textures = mutableMapOf<Textured.TextureType, Texture>()
 
@@ -52,8 +54,19 @@ fun main(args: Array<String>) {
 		menuBar {
 			menu("Mesh") {
 				menuItem("Sphere") {
+					onClick {
+						model = transform(sphere(16))
+					}
+				}
+				menuItem("Tetrahedron") {
+					onClick {
+						model = transform(tetrahedron())
+					}
 				}
 				menuItem("Cube") {
+					onClick {
+						model = transform(cube())
+					}
 				}
 			}
 			menu("Material") {
