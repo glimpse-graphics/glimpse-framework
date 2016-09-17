@@ -13,7 +13,7 @@ class TargetedCameraViewBuilderSpec : GlimpseSpec() {
 			"create an instance of targeted camera view" {
 				TargetedCameraViewBuilder().build() should be a TargetedCameraView::class
 			}
-			"create a projection with updatable position" {
+			"create a view with updatable position" {
 				var position = Point(1f, 2f, 3f)
 				val builder = TargetedCameraViewBuilder()
 				builder.position { position }
@@ -24,7 +24,7 @@ class TargetedCameraViewBuilderSpec : GlimpseSpec() {
 				position = Point(4f, 5f, 6f)
 				view.position shouldBe Point(4f, 5f, 6f)
 			}
-			"create a projection with updatable target" {
+			"create a view with updatable target" {
 				var target = Point(1f, 2f, 3f)
 				val builder = TargetedCameraViewBuilder()
 				builder.target { target }
@@ -35,7 +35,7 @@ class TargetedCameraViewBuilderSpec : GlimpseSpec() {
 				target = Point(4f, 5f, 6f)
 				view.target() shouldBe Point(4f, 5f, 6f)
 			}
-			"create a projection with updatable up vector" {
+			"create a view with updatable up vector" {
 				var up = Vector.Z_UNIT
 				val builder = TargetedCameraViewBuilder()
 				builder.up { up }

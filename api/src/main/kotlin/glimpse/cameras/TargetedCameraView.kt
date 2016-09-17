@@ -8,7 +8,7 @@ import glimpse.lookAtViewMatrix
 /**
  * Targeted camera view.
  *
- * @property position Camera position lambda.
+ * @property cameraPosition Camera position lambda.
  * @property target Camera target lambda.
  * @property up Camera up vector lambda.
  */
