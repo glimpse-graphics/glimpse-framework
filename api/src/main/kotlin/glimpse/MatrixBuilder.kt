@@ -67,3 +67,21 @@ class MatrixBuilder(internal var matrix: Matrix = Matrix.IDENTITY) {
 		transform(reflectionMatrix(normal, point))
 	}
 }
+
+/**
+ * Builds an affine [transformation] matrix function.
+ */
+fun matrix(transformation: MatrixBuilder.() -> Unit): () -> Matrix = {
+	val builder = MatrixBuilder()
+	builder.transformation()
+	builder.matrix
+}
+
+/**
+ * Builds an affine [transformation] matrix function, starting from given [transformationMatrix].
+ */
+fun matrix(transformationMatrix: Matrix, transformation: MatrixBuilder.() -> Unit): () -> Matrix = {
+	val builder = MatrixBuilder(transformationMatrix)
+	builder.transformation()
+	builder.matrix
+}
