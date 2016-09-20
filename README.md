@@ -8,7 +8,7 @@
 
 # GlimpseFramework
 
-OpenGL made easy
+OpenGL made simple
 
 ## Key features
 
