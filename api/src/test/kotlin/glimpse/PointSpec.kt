@@ -31,10 +31,10 @@ class PointSpec : GlimpseSpec() {
 		"Direct buffer of points" should {
 			val buffer = listOf(Point(1f, 2f, 3f), Point(4f, 5f, 6f), Point(7f, 8f, 9f)).toDirectBuffer()
 			"be direct" {
-				buffer.isDirect
+				buffer.isDirect shouldBe true
 			}
 			"contain a number of elements equal to the number of points times 3" {
-				buffer.capacity() == 9
+				buffer.capacity() shouldBe 9
 			}
 			"contain subsequent X, Y, Z points coordinates" {
 				val array = FloatArray(9)
@@ -47,10 +47,10 @@ class PointSpec : GlimpseSpec() {
 		"Direct buffer of augmented points" should {
 			val buffer = listOf(Point(1f, 2f, 3f), Point(4f, 5f, 6f), Point(7f, 8f, 9f)).toDirectBufferAugmented()
 			"be direct" {
-				buffer.isDirect
+				buffer.isDirect shouldBe true
 			}
 			"contain a number of elements equal to the number of points times 4" {
-				buffer.capacity() == 12
+				buffer.capacity() shouldBe 12
 			}
 			"contain subsequent X, Y, Z, 1 points coordinates" {
 				val array = FloatArray(12)

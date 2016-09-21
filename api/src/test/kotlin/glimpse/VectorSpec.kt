@@ -200,10 +200,10 @@ class VectorSpec : GlimpseSpec() {
 		"Direct buffer of vectors" should {
 			val buffer = listOf(Vector(1f, 2f, 3f), Vector(4f, 5f, 6f), Vector(7f, 8f, 9f)).toDirectBuffer()
 			"be direct" {
-				buffer.isDirect
+				buffer.isDirect shouldBe true
 			}
 			"contain a number of elements equal to the number of vectors times 3" {
-				buffer.capacity() == 9
+				buffer.capacity() shouldBe 9
 			}
 			"contain subsequent X, Y, Z vectors coordinates" {
 				val array = FloatArray(9)
@@ -216,10 +216,10 @@ class VectorSpec : GlimpseSpec() {
 		"Direct buffer of augmented vectors" should {
 			val buffer = listOf(Vector(1f, 2f, 3f), Vector(4f, 5f, 6f), Vector(7f, 8f, 9f)).toDirectBufferAugmented()
 			"be direct" {
-				buffer.isDirect
+				buffer.isDirect shouldBe true
 			}
 			"contain a number of elements equal to the number of vectors times 4" {
-				buffer.capacity() == 12
+				buffer.capacity() shouldBe 12
 			}
 			"contain subsequent X, Y, Z, 1 vectors coordinates" {
 				val array = FloatArray(12)
