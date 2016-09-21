@@ -138,11 +138,11 @@ fun scalingMatrix(scale: Float): Matrix = scalingMatrix(scale, scale, scale)
 /**
  * Returns a transformation [Matrix] for scaling.
  */
-fun scalingMatrix(scaleX: Float, scaleY: Float, scaleZ: Float): Matrix =
+fun scalingMatrix(x: Float = 1f, y: Float = 1f, z: Float = 1f): Matrix =
 		Matrix(listOf(
-				scaleX, 0f, 0f, 0f,
-				0f, scaleY, 0f, 0f,
-				0f, 0f, scaleZ, 0f,
+				x, 0f, 0f, 0f,
+				0f, y, 0f, 0f,
+				0f, 0f, z, 0f,
 				0f, 0f, 0f, 1f))
 
 /**

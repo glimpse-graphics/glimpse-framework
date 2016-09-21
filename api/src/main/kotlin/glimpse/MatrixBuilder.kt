@@ -56,8 +56,8 @@ class MatrixBuilder(internal var matrix: Matrix = Matrix.IDENTITY) {
 	/**
 	 * Scales by a [scaleX], [scaleY], [scaleZ] factors along X, Y and Z axes.
 	 */
-	fun scale(scaleX: Float, scaleY: Float, scaleZ: Float) {
-		transform(scalingMatrix(scaleX, scaleY, scaleZ))
+	fun scale(x: Float = 1f, y: Float = 1f, z: Float = 1f) {
+		transform(scalingMatrix(x, y, z))
 	}
 
 	/**
