@@ -1,5 +1,6 @@
 package glimpse
 
+import glimpse.buffers.toList
 import glimpse.test.GlimpseSpec
 
 class TextureCoordinatesSpec : GlimpseSpec() {
@@ -21,10 +22,7 @@ class TextureCoordinatesSpec : GlimpseSpec() {
 				buffer.capacity() shouldBe 6
 			}
 			"contain subsequent UV coordinates" {
-				val array = FloatArray(6)
-				buffer.rewind()
-				buffer.get(array)
-				array.asList() shouldBe listOf(0f, 1f, 1f, 1f, 1f, 0f)
+				buffer.toList() shouldBe listOf(0f, 1f, 1f, 1f, 1f, 0f)
 			}
 		}
 

@@ -12,3 +12,10 @@ internal fun directFloatBuffer(size: Int): FloatBuffer =
 
 internal fun <T> List<T>.toDirectFloatBuffer(size: Int, transform: (T) -> Array<Float>): FloatBuffer =
 		directFloatBuffer(size).put(fold(emptyList<Float>()) { list, next -> list + transform(next) }.toFloatArray())
+
+internal fun FloatBuffer.toList(): List<Float> {
+	rewind()
+	val array = FloatArray(capacity())
+	get(array)
+	return array.toList()
+}

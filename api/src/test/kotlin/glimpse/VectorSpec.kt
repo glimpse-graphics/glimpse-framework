@@ -1,5 +1,6 @@
 package glimpse
 
+import glimpse.buffers.toList
 import glimpse.test.GlimpseSpec
 
 class VectorSpec : GlimpseSpec() {
@@ -206,10 +207,7 @@ class VectorSpec : GlimpseSpec() {
 				buffer.capacity() shouldBe 9
 			}
 			"contain subsequent X, Y, Z vectors coordinates" {
-				val array = FloatArray(9)
-				buffer.rewind()
-				buffer.get(array)
-				array.asList() shouldBe listOf(1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f)
+				buffer.toList() shouldBe listOf(1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f)
 			}
 		}
 
@@ -222,10 +220,7 @@ class VectorSpec : GlimpseSpec() {
 				buffer.capacity() shouldBe 12
 			}
 			"contain subsequent X, Y, Z, 1 vectors coordinates" {
-				val array = FloatArray(12)
-				buffer.rewind()
-				buffer.get(array)
-				array.asList() shouldBe listOf(1f, 2f, 3f, 1f, 4f, 5f, 6f, 1f, 7f, 8f, 9f, 1f)
+				buffer.toList() shouldBe listOf(1f, 2f, 3f, 1f, 4f, 5f, 6f, 1f, 7f, 8f, 9f, 1f)
 			}
 		}
 

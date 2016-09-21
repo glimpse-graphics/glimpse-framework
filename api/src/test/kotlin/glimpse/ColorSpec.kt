@@ -1,5 +1,6 @@
 package glimpse
 
+import glimpse.buffers.toList
 import glimpse.test.GlimpseSpec
 
 class ColorSpec : GlimpseSpec() {
@@ -27,10 +28,7 @@ class ColorSpec : GlimpseSpec() {
 				buffer.capacity() shouldBe 9
 			}
 			"contain subsequent RGB color channels" {
-				val array = FloatArray(9)
-				buffer.rewind()
-				buffer.get(array)
-				array.asList() shouldBe listOf(0f, 1f, 0f, 0f, 0f, 1f, 1f, 0f, 1f)
+				buffer.toList() shouldBe listOf(0f, 1f, 0f, 0f, 0f, 1f, 1f, 0f, 1f)
 			}
 		}
 
@@ -43,10 +41,7 @@ class ColorSpec : GlimpseSpec() {
 				buffer.capacity() shouldBe 12
 			}
 			"contain subsequent RGBA color channels" {
-				val array = FloatArray(12)
-				buffer.rewind()
-				buffer.get(array)
-				array.asList() shouldBe listOf(1f, 0f, 0f, 1f, 1f, 1f, 0f, 1f, 0f, 1f, 1f, 1f)
+				buffer.toList() shouldBe listOf(1f, 0f, 0f, 1f, 1f, 1f, 0f, 1f, 0f, 1f, 1f, 1f)
 			}
 		}
 
