@@ -105,9 +105,9 @@ abstract class ShaderHelper {
 	 * Draws a [mesh] using the shader [program].
 	 */
 	fun drawMesh(mesh: Mesh) {
-		val positionBuffer = vertexPositionAttributeName?.attributeLocation?.set(mesh.positions.toDirectBufferAugmented(), 4)
-		val textureCoordinatesBuffer = vertexTextureCoordinatesAttributeName?.attributeLocation?.set(mesh.textureCoordinates.toDirectBuffer(), 2)
-		val normalBuffer = vertexNormalAttributeName?.attributeLocation?.set(mesh.normals.toDirectBufferAugmented(), 4)
+		val positionBuffer = vertexPositionAttributeName?.attributeLocation?.set(mesh.augmentedPositionsBuffer, 4)
+		val textureCoordinatesBuffer = vertexTextureCoordinatesAttributeName?.attributeLocation?.set(mesh.textureCoordinatesBuffer, 2)
+		val normalBuffer = vertexNormalAttributeName?.attributeLocation?.set(mesh.augmentedNormalsBuffer, 4)
 
 		gles.drawTriangles(mesh.count)
 
