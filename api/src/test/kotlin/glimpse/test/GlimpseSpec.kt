@@ -1,9 +1,13 @@
 package glimpse.test
 
+import com.nhaarman.mockito_kotlin.KStubbing
+import com.nhaarman.mockito_kotlin.mock
 import glimpse.Angle
 import glimpse.Matrix
 import glimpse.Point
 import glimpse.Vector
+import glimpse.gles.GLES
+import glimpse.materials.GLESDelegate
 import io.kotlintest.matchers.BeWrapper
 import io.kotlintest.properties.Gen
 import io.kotlintest.specs.WordSpec
@@ -66,4 +70,10 @@ abstract class GlimpseSpec : WordSpec(), FloatMatchers {
 	}
 
 	protected infix fun <T : Comparable<T>> BeWrapper<T>.inRange(range: ClosedRange<T>): Boolean = range.contains(value)
+
+	protected fun glesMock(stubbing: KStubbing<GLES>.() -> Unit): GLES {
+		val glesMock: GLES = mock(stubbing)
+		GLESDelegate(glesMock)
+		return glesMock
+	}
 }

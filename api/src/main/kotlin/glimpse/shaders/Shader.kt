@@ -1,15 +1,17 @@
 package glimpse.shaders
 
 import glimpse.gles.GLES
+import glimpse.materials.GLESDelegate
 
 /**
  * GLSL shader.
  *
- * @property gles GLES implementation.
  * @property type Shader type.
  * @property handle Shader handle.
  */
-class Shader(val gles: GLES, val type: ShaderType, val handle: ShaderHandle) {
+class Shader(val type: ShaderType, val handle: ShaderHandle) {
+
+	internal val gles: GLES by GLESDelegate
 
 	internal var deleted = false
 

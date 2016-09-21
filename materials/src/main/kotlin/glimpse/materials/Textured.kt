@@ -2,7 +2,6 @@ package glimpse.materials
 
 import glimpse.Vector
 import glimpse.cameras.Camera
-import glimpse.gles.GLES
 import glimpse.io.resource
 import glimpse.models.Model
 import glimpse.shaders.Program
@@ -21,10 +20,6 @@ class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Textur
 	}
 
 	companion object {
-		fun init(gles: GLES) {
-			TexturedShaderHelper.init(gles)
-		}
-
 		fun dispose() {
 			TexturedShaderHelper.dispose()
 		}
@@ -55,7 +50,7 @@ class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Textur
 internal object TexturedShaderHelper : ShaderHelper() {
 
 	override val program: Program by lazy {
-		shaderProgram(gles) {
+		shaderProgram() {
 			vertexShader {
 				TexturedShaderHelper.resource("Textured_vertex.glsl").lines.joinToString(separator = "\n") { it }
 			}

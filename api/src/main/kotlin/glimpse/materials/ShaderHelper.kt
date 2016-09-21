@@ -18,7 +18,7 @@ abstract class ShaderHelper {
 	/**
 	 * GLES implementation.
 	 */
-	protected var gles: GLES by GLESDelegate()
+	protected var gles: GLES by GLESDelegate
 
 	/**
 	 * Shader program.

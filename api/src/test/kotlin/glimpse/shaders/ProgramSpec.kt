@@ -1,6 +1,5 @@
 package glimpse.shaders
 
-import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import glimpse.gles.GLES
 import glimpse.test.GlimpseSpec
@@ -11,22 +10,22 @@ class ProgramSpec : GlimpseSpec() {
 
 		"Using a program" should {
 			"succeed if program is not deleted" {
-				val glesMock = createGLESMock()
-				val program = Program(glesMock, ProgramHandle(3), createShaders(glesMock))
+				val glesMock = glesMock()
+				val program = Program(ProgramHandle(3), createShaders())
 				program.use()
-				verify(glesMock).useProgram(ProgramHandle(3));
+				verify(glesMock).useProgram(ProgramHandle(3))
 			}
 			"cause an exception if program is deleted" {
-				val glesMock = createGLESMock()
-				val program = Program(glesMock, ProgramHandle(3), createShaders(glesMock))
+				glesMock()
+				val program = Program(ProgramHandle(3), createShaders())
 				program.deleted = true
 				shouldThrow<AssertionError> {
 					program.use()
 				}
 			}
 			"cause an exception if any shader is deleted" {
-				val glesMock = createGLESMock()
-				val program = Program(glesMock, ProgramHandle(3), createShaders(glesMock))
+				glesMock()
+				val program = Program(ProgramHandle(3), createShaders())
 				program.shaders[0].deleted = true
 				shouldThrow<AssertionError> {
 					program.use()
@@ -36,18 +35,18 @@ class ProgramSpec : GlimpseSpec() {
 
 		"Deleting a program" should {
 			"succeed" {
-				val glesMock = createGLESMock()
-				val program = Program(glesMock, ProgramHandle(3), createShaders(glesMock))
+				val glesMock = glesMock()
+				val program = Program(ProgramHandle(3), createShaders())
 				program.delete()
-				verify(glesMock).deleteProgram(ProgramHandle(3));
+				verify(glesMock).deleteProgram(ProgramHandle(3))
 				program.deleted shouldBe true
 			}
 			"cause deleting both shaders" {
-				val glesMock = createGLESMock()
-				val program = Program(glesMock, ProgramHandle(3), createShaders(glesMock))
+				val glesMock = glesMock()
+				val program = Program(ProgramHandle(3), createShaders())
 				program.delete()
-				verify(glesMock).deleteShader(ShaderHandle(1));
-				verify(glesMock).deleteShader(ShaderHandle(2));
+				verify(glesMock).deleteShader(ShaderHandle(1))
+				verify(glesMock).deleteShader(ShaderHandle(2))
 				forAll(program.shaders) { program ->
 					program.deleted shouldBe true
 				}
@@ -56,11 +55,9 @@ class ProgramSpec : GlimpseSpec() {
 
 	}
 
-	private fun createGLESMock(): GLES {
-		return mock<GLES>()
-	}
+	private fun glesMock(): GLES = glesMock {}
 
-	private fun createShaders(gles: GLES) = listOf(
-			Shader(gles, ShaderType.VERTEX, ShaderHandle(1)),
-			Shader(gles, ShaderType.FRAGMENT, ShaderHandle(2)))
+	private fun createShaders() = listOf(
+			Shader(ShaderType.VERTEX, ShaderHandle(1)),
+			Shader(ShaderType.FRAGMENT, ShaderHandle(2)))
 }

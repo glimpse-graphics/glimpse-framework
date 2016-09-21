@@ -83,8 +83,6 @@ fun main(args: Array<String>) {
 			}
 		}
 		onInit {
-			Plastic.init(this)
-			Textured.init(this)
 			clearColor = Color.BLACK
 			clearDepth = 1f
 			isDepthTest = true
@@ -94,9 +92,9 @@ fun main(args: Array<String>) {
 			isCullFace = false
 			textureMagnificationFilter = TextureMagnificationFilter.LINEAR
 			textureMinificationFilter = TextureMinificationFilter.LINEAR_MIPMAP_LINEAR
-			textures[Textured.TextureType.AMBIENT] = Context.resource("ambient.png").readTexture(this) { withMipmap() }
-			textures[Textured.TextureType.SPECULAR] = Context.resource("specular.png").readTexture(this) { withMipmap() }
-			textures[Textured.TextureType.DIFFUSE] = Context.resource("diffuse.png").readTexture(this) { withMipmap() }
+			textures[Textured.TextureType.AMBIENT] = Context.resource("ambient.png").readTexture { withMipmap() }
+			textures[Textured.TextureType.SPECULAR] = Context.resource("specular.png").readTexture { withMipmap() }
+			textures[Textured.TextureType.DIFFUSE] = Context.resource("diffuse.png").readTexture { withMipmap() }
 		}
 		onResize { v ->
 			viewport = v

@@ -3,7 +3,7 @@ package glimpse.jogl
 import com.jogamp.opengl.util.FPSAnimator
 import glimpse.gles.GLES
 import glimpse.gles.Viewport
-import java.awt.event.WindowEvent
+import glimpse.materials.GLESDelegate
 import javax.media.opengl.GLAutoDrawable
 import javax.media.opengl.GLEventListener
 import javax.media.opengl.awt.GLJPanel
@@ -19,7 +19,7 @@ import javax.swing.JFrame
  */
 class GlimpseFrame(title: String = "",  width: Int = 640, height: Int = 480, fps: Int = 30) : JFrame(title) {
 
-	private var gles: GLES? = null
+	private var gles: GLES by GLESDelegate
 
 	private var init: GLES.() -> Unit = {}
 	private var reshape: GLES.(viewport: Viewport) -> Unit = {}
@@ -60,10 +60,8 @@ class GlimpseFrame(title: String = "",  width: Int = 640, height: Int = 480, fps
 
 	/**
 	 * GL resize lambda.
-	 *
-	 * @param viewport Rendering viewport.
 	 */
-	fun onResize(reshape: GLES.(viewport: Viewport) -> Unit) {
+	fun onResize(reshape: GLES.(Viewport) -> Unit) {
 		this.reshape = reshape
 	}
 
@@ -88,20 +86,20 @@ class GlimpseFrame(title: String = "",  width: Int = 640, height: Int = 480, fps
 			requireNotNull(drawable!!.gl)
 			require(drawable.gl.isGL2ES2)
 			requireNotNull(drawable.gl.gL2ES2)
-			gles = glimpse.jogl.gles.GLES(drawable.gl.gL2ES2)
-			gles?.init()
+			GLESDelegate(glimpse.jogl.gles.GLES(drawable.gl.gL2ES2))
+			gles.init()
 		}
 
 		override fun reshape(drawable: GLAutoDrawable?, x: Int, y: Int, width: Int, height: Int) {
-			gles?.reshape(Viewport(width, height))
+			gles.reshape(Viewport(width, height))
 		}
 
 		override fun display(drawable: GLAutoDrawable?) {
-			gles?.display()
+			gles.display()
 		}
 
 		override fun dispose(drawable: GLAutoDrawable?) {
-			gles?.dispose()
+			gles.dispose()
 		}
 	}
 }

@@ -1,15 +1,17 @@
 package glimpse.shaders
 
 import glimpse.gles.GLES
+import glimpse.materials.GLESDelegate
 
 /**
  * GLSL shader program.
  *
- * @property gles GLES implementation.
  * @property handle Program handle.
  * @property shaders Vertex and fragment shaders linked into the program.
  */
-class Program(val gles: GLES, val handle: ProgramHandle, val shaders: List<Shader>) {
+class Program(val handle: ProgramHandle, val shaders: List<Shader>) {
+
+	internal val gles: GLES by GLESDelegate
 
 	internal var deleted = false
 
