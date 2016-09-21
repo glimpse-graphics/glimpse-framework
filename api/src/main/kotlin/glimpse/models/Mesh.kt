@@ -1,6 +1,7 @@
 package glimpse.models
 
 import glimpse.*
+import java.nio.FloatBuffer
 
 /**
  * A three-dimensional mesh.
@@ -16,6 +17,31 @@ class Mesh(val positions: List<Point>, val textureCoordinates: List<TextureCoord
 		require(positions.size == textureCoordinates.size) { "Positions and textures coordinates should have the same size" }
 		require(positions.size == normals.size) { "Positions and normals should have the same size" }
 	}
+
+	/**
+	 * Direct buffer containing coordinates of positions.
+	 */
+	val positionsBuffer: FloatBuffer by lazy { positions.toDirectBuffer() }
+
+	/**
+	 * Direct buffer containing augmented coordinates of positions.
+	 */
+	val augmentedPositionsBuffer: FloatBuffer by lazy { positions.toDirectBufferAugmented() }
+
+	/**
+	 * Direct buffer containing texture coordinates.
+	 */
+	val textureCoordinatesBuffer: FloatBuffer by lazy { textureCoordinates.toDirectBuffer() }
+
+	/**
+	 * Direct buffer containing augmented coordinates of normals.
+	 */
+	val normalsBuffer: FloatBuffer by lazy { normals.toDirectBuffer() }
+
+	/**
+	 * Direct buffer containing augmented coordinates of normals.
+	 */
+	val augmentedNormalsBuffer: FloatBuffer by lazy { normals.toDirectBufferAugmented() }
 
 	/**
 	 * Mesh vertices counter.
