@@ -92,5 +92,100 @@ class MeshSpec : GlimpseSpec() {
 			}
 		}
 
+		"Positions buffer" should {
+			"be a direct buffer" {
+				Mesh(positions, textureCoordinates, normals).positionsBuffer.isDirect shouldBe true
+			}
+			"have correct size" {
+				Mesh(positions, textureCoordinates, normals).positionsBuffer.capacity() shouldBe 27
+			}
+			"contain correct values" {
+				val buffer = Mesh(positions, textureCoordinates, normals).positionsBuffer
+				buffer.rewind()
+				val array = FloatArray(27)
+				buffer.get(array)
+				array.toList() shouldBe listOf(
+						1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f,
+						11f, 12f, 13f, 14f, 15f, 16f, 17f, 18f, 19f,
+						21f, 22f, 23f, 24f, 25f, 26f, 27f, 28f, 29f)
+			}
+		}
+
+		"Augmented positions buffer" should {
+			"be a direct buffer" {
+				Mesh(positions, textureCoordinates, normals).augmentedPositionsBuffer.isDirect shouldBe true
+			}
+			"have correct size" {
+				Mesh(positions, textureCoordinates, normals).augmentedPositionsBuffer.capacity() shouldBe 36
+			}
+			"contain correct values" {
+				val buffer = Mesh(positions, textureCoordinates, normals).augmentedPositionsBuffer
+				buffer.rewind()
+				val array = FloatArray(36)
+				buffer.get(array)
+				array.toList() shouldBe listOf(
+						1f, 2f, 3f, 1f, 4f, 5f, 6f, 1f, 7f, 8f, 9f, 1f,
+						11f, 12f, 13f, 1f, 14f, 15f, 16f, 1f, 17f, 18f, 19f, 1f,
+						21f, 22f, 23f, 1f, 24f, 25f, 26f, 1f, 27f, 28f, 29f, 1f)
+			}
+		}
+
+		"Texture coordinates buffer" should {
+			"be a direct buffer" {
+				Mesh(positions, textureCoordinates, normals).textureCoordinatesBuffer.isDirect shouldBe true
+			}
+			"have correct size" {
+				Mesh(positions, textureCoordinates, normals).textureCoordinatesBuffer.capacity() shouldBe 18
+			}
+			"contain correct values" {
+				val buffer = Mesh(positions, textureCoordinates, normals).textureCoordinatesBuffer
+				buffer.rewind()
+				val array = FloatArray(18)
+				buffer.get(array)
+				array.toList() shouldBe listOf(
+						1f, 2f, 3f, 4f, 5f, 6f,
+						11f, 12f, 13f, 14f, 15f, 16f,
+						21f, 22f, 23f, 24f, 25f, 26f)
+			}
+		}
+
+		"Normals buffer" should {
+			"be a direct buffer" {
+				Mesh(positions, textureCoordinates, normals).normalsBuffer.isDirect shouldBe true
+			}
+			"have correct size" {
+				Mesh(positions, textureCoordinates, normals).normalsBuffer.capacity() shouldBe 27
+			}
+			"contain correct values" {
+				val buffer = Mesh(positions, textureCoordinates, normals).normalsBuffer
+				buffer.rewind()
+				val array = FloatArray(27)
+				buffer.get(array)
+				array.toList() shouldBe listOf(
+						1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 9f,
+						11f, 12f, 13f, 14f, 15f, 16f, 17f, 18f, 19f,
+						21f, 22f, 23f, 24f, 25f, 26f, 27f, 28f, 29f)
+			}
+		}
+
+		"Augmented normals buffer" should {
+			"be a direct buffer" {
+				Mesh(positions, textureCoordinates, normals).augmentedNormalsBuffer.isDirect shouldBe true
+			}
+			"have correct size" {
+				Mesh(positions, textureCoordinates, normals).augmentedNormalsBuffer.capacity() shouldBe 36
+			}
+			"contain correct values" {
+				val buffer = Mesh(positions, textureCoordinates, normals).augmentedNormalsBuffer
+				buffer.rewind()
+				val array = FloatArray(36)
+				buffer.get(array)
+				array.toList() shouldBe listOf(
+						1f, 2f, 3f, 1f, 4f, 5f, 6f, 1f, 7f, 8f, 9f, 1f,
+						11f, 12f, 13f, 1f, 14f, 15f, 16f, 1f, 17f, 18f, 19f, 1f,
+						21f, 22f, 23f, 1f, 24f, 25f, 26f, 1f, 27f, 28f, 29f, 1f)
+			}
+		}
+
 	}
 }
