@@ -2,7 +2,7 @@ package glimpse.textures
 
 import glimpse.gles.GLES
 import glimpse.gles.UniformLocation
-import glimpse.materials.GLESDelegate
+import glimpse.gles.delegates.GLESDelegate
 
 /**
  * Texture.

@@ -1,9 +1,10 @@
 package glimpse.jogl
 
 import com.jogamp.opengl.util.FPSAnimator
+import glimpse.gles.Disposables
 import glimpse.gles.GLES
 import glimpse.gles.Viewport
-import glimpse.materials.GLESDelegate
+import glimpse.gles.delegates.GLESDelegate
 import javax.media.opengl.GLAutoDrawable
 import javax.media.opengl.GLEventListener
 import javax.media.opengl.awt.GLJPanel
@@ -100,6 +101,7 @@ class GlimpseFrame(title: String = "",  width: Int = 640, height: Int = 480, fps
 
 		override fun dispose(drawable: GLAutoDrawable?) {
 			gles.dispose()
+			Disposables.disposeAll()
 		}
 	}
 }

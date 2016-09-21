@@ -12,9 +12,4 @@ interface Material {
 	 * Renders a [Model] using this [Material].
 	 */
 	fun render(model: Model, camera: Camera)
-
-	/**
-	 * Disposes material.
-	 */
-	fun dispose()
 }

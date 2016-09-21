@@ -1,7 +1,7 @@
 package glimpse.shaders
 
 import glimpse.gles.GLES
-import glimpse.materials.GLESDelegate
+import glimpse.gles.delegates.GLESDelegate
 
 /**
  * GLSL shader program.

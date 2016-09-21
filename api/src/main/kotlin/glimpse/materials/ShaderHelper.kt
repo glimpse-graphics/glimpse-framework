@@ -1,10 +1,11 @@
 package glimpse.materials
 
-import glimpse.*
-import glimpse.gles.AttributeLocation
-import glimpse.gles.BufferHandle
-import glimpse.gles.GLES
-import glimpse.gles.UniformLocation
+import glimpse.Color
+import glimpse.Matrix
+import glimpse.Point
+import glimpse.Vector
+import glimpse.gles.*
+import glimpse.gles.delegates.GLESDelegate
 import glimpse.models.Mesh
 import glimpse.shaders.Program
 import glimpse.textures.Texture
@@ -13,7 +14,7 @@ import java.nio.FloatBuffer
 /**
  * Common superclass for shader helpers.
  */
-abstract class ShaderHelper {
+abstract class ShaderHelper : Disposable {
 
 	/**
 	 * GLES implementation.
@@ -136,7 +137,7 @@ abstract class ShaderHelper {
 	/**
 	 * Disposes shader helper.
 	 */
-	fun dispose() {
+	override fun dispose() {
 		program.delete()
 	}
 }

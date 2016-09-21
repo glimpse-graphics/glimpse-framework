@@ -106,8 +106,6 @@ fun main(args: Array<String>) {
 			material.render(model, camera)
 		}
 		onDispose {
-			Plastic.dispose()
-			Textured.dispose()
 		}
 	}
 }

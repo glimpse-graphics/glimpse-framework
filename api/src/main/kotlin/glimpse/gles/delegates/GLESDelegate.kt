@@ -1,4 +1,4 @@
-package glimpse.materials
+package glimpse.gles.delegates
 
 import glimpse.gles.GLES
 import kotlin.reflect.KProperty

@@ -2,7 +2,7 @@ package glimpse.textures
 
 import glimpse.gles.GLES
 import glimpse.io.Resource
-import glimpse.materials.GLESDelegate
+import glimpse.gles.delegates.GLESDelegate
 import java.io.InputStream
 
 /**

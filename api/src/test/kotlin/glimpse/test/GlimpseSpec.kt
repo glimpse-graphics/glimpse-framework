@@ -7,7 +7,7 @@ import glimpse.Matrix
 import glimpse.Point
 import glimpse.Vector
 import glimpse.gles.GLES
-import glimpse.materials.GLESDelegate
+import glimpse.gles.delegates.GLESDelegate
 import io.kotlintest.matchers.BeWrapper
 import io.kotlintest.properties.Gen
 import io.kotlintest.specs.WordSpec

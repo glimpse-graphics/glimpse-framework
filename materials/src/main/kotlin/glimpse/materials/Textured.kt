@@ -19,10 +19,8 @@ class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Textur
 		SPECULAR
 	}
 
-	companion object {
-		fun dispose() {
-			TexturedShaderHelper.dispose()
-		}
+	init {
+		TexturedShaderHelper.registerDisposable()
 	}
 
 	override fun render(model: Model, camera: Camera) {
@@ -41,16 +39,12 @@ class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Textur
 		TexturedShaderHelper["u_LightDirection"] = Vector(-1f, -1f, 0f)
 		TexturedShaderHelper.drawMesh(model.mesh)
 	}
-
-	override fun dispose() {
-		TexturedShaderHelper.dispose()
-	}
 }
 
 internal object TexturedShaderHelper : ShaderHelper() {
 
 	override val program: Program by lazy {
-		shaderProgram() {
+		shaderProgram {
 			vertexShader {
 				TexturedShaderHelper.resource("Textured_vertex.glsl").lines.joinToString(separator = "\n") { it }
 			}
