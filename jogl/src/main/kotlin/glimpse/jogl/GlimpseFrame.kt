@@ -20,7 +20,7 @@ import javax.swing.JFrame
  */
 class GlimpseFrame(title: String = "",  width: Int = 640, height: Int = 480, fps: Int = 30) : JFrame(title) {
 
-	private var gles: GLES by GLESDelegate
+	private val gles: GLES by GLESDelegate
 
 	private var init: GLES.() -> Unit = {}
 	private var reshape: GLES.(viewport: Viewport) -> Unit = {}
@@ -83,10 +83,7 @@ class GlimpseFrame(title: String = "",  width: Int = 640, height: Int = 480, fps
 	private inner class EventListener : GLEventListener {
 
 		override fun init(drawable: GLAutoDrawable?) {
-			requireNotNull(drawable)
-			requireNotNull(drawable!!.gl)
-			require(drawable.gl.isGL2ES2)
-			requireNotNull(drawable.gl.gL2ES2)
+			require(drawable!!.gl.isGL2ES2) { "OpenGL does not conform to GL2ES2 profile." }
 			GLESDelegate(glimpse.jogl.gles.GLES(drawable.gl.gL2ES2))
 			gles.init()
 		}

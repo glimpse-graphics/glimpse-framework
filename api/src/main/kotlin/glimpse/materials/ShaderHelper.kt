@@ -19,7 +19,7 @@ abstract class ShaderHelper : Disposable {
 	/**
 	 * GLES implementation.
 	 */
-	protected var gles: GLES by GLESDelegate
+	protected val gles: GLES by GLESDelegate
 
 	/**
 	 * Shader program.
@@ -52,13 +52,6 @@ abstract class ShaderHelper : Disposable {
 	 * Name of a shader attribute containing vertex normal.
 	 */
 	protected abstract val vertexNormalAttributeName: String?
-
-	/**
-	 * Initializes shader helper with [GLES] implementation.
-	 */
-	fun init(gles: GLES) {
-		this.gles = gles
-	}
 
 	/**
 	 * Tells GLES implementation to use this program.
