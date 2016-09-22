@@ -35,5 +35,6 @@ object Disposables {
 	 */
 	fun disposeAll() {
 		disposables.forEach { it.dispose() }
+		disposables.clear()
 	}
 }
