@@ -6,6 +6,7 @@ import glimpse.Angle
 import glimpse.Matrix
 import glimpse.Point
 import glimpse.Vector
+import glimpse.cameras.Camera
 import glimpse.gles.GLES
 import glimpse.gles.delegates.GLESDelegate
 import io.kotlintest.matchers.BeWrapper
@@ -76,4 +77,28 @@ abstract class GlimpseSpec : WordSpec(), FloatMatchers {
 		GLESDelegate(glesMock)
 		return glesMock
 	}
+
+	protected infix fun Point.isVisibleIn(camera: Camera): Boolean =
+			isVisibleIn(camera.cameraMatrix)
+
+	protected infix fun Vector.isVisibleIn(camera: Camera): Boolean =
+			isVisibleIn(camera.cameraMatrix)
+
+	protected infix fun Point.isNotVisibleIn(camera: Camera): Boolean =
+			isNotVisibleIn(camera.cameraMatrix)
+
+	protected infix fun Vector.isNotVisibleIn(camera: Camera): Boolean =
+			isNotVisibleIn(camera.cameraMatrix)
+
+	protected infix fun Point.isVisibleIn(mvpMatrix: Matrix): Boolean =
+			(mvpMatrix * this)._3f.all { it in -1f..1f}
+
+	protected infix fun Vector.isVisibleIn(mvpMatrix: Matrix): Boolean =
+			(mvpMatrix * this)._3f.all { it in -1f..1f}
+
+	protected infix fun Point.isNotVisibleIn(mvpMatrix: Matrix): Boolean =
+			(mvpMatrix * this)._3f.any { it !in -1f..1f}
+
+	protected infix fun Vector.isNotVisibleIn(mvpMatrix: Matrix): Boolean =
+			(mvpMatrix * this)._3f.any { it !in -1f..1f}
 }

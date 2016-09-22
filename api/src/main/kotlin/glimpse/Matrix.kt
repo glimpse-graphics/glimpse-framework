@@ -70,12 +70,14 @@ data class Matrix(private val matrix: List<Float>) {
 		return Vector(v[0], v[1], v[2])
 	}
 
-	private fun timesArray(array: Array<Float>): List<Float> =
-			(0..3).map { row ->
-				(0..3).map { col ->
-					this[row, col] * array[col]
-				}.sum()
-			}
+	private fun timesArray(array: Array<Float>): List<Float> {
+		val result = (0..3).map { row ->
+			(0..3).map { col ->
+				this[row, col] * array[col]
+			}.sum()
+		}
+		return result.map { it / result[3] }
+	}
 
 	/**
 	 * Multiplies this matrix by a [point].

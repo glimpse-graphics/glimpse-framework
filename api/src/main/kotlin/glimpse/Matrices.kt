@@ -44,7 +44,7 @@ fun orthographicProjectionMatrix(left: Float, right: Float, bottom: Float, top: 
 	return Matrix(listOf(
 			2f / width, 0f, 0f, 0f,
 			0f, 2f / height, 0f, 0f,
-			0f, 0f, 2f / depth, 0f,
+			0f, 0f, -2f / depth, 0f,
 			-(right + left) / width, -(top + bottom) / height, -(near + far) / depth, 1f))
 }
 
