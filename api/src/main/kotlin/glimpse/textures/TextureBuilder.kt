@@ -2,21 +2,22 @@ package glimpse.textures
 
 import glimpse.gles.GLES
 import glimpse.io.Resource
+import glimpse.gles.delegates.GLESDelegate
 import java.io.InputStream
 
 /**
  * Texture builder.
- *
- * @property gles GLES implementation.
  */
-class TextureBuilder(val gles: GLES) {
+class TextureBuilder {
+
+	private val gles: GLES by GLESDelegate
 
 	/**
 	 * Name of the texture.
 	 */
-	var name: String = "";
+	var name: String = ""
 
-	internal var isMipmap: Boolean = false;
+	internal var isMipmap: Boolean = false
 
 	/**
 	 * Sets texture with [mipmap].
@@ -49,10 +50,10 @@ class TextureBuilder(val gles: GLES) {
 	}
 
 	internal fun build(inputStream: InputStream): Texture {
-		val handle = gles.generateTexture();
+		val handle = gles.generateTexture()
 		gles.bindTexture2D(handle)
 		gles.textureImage2D(inputStream, name, isMipmap)
-		return Texture(gles, handle)
+		return Texture(handle)
 	}
 }
 
@@ -64,8 +65,8 @@ object mipmap
 /**
  * Builds texture initialized with an [init] function.
  */
-fun InputStream.readTexture(gles: GLES, init: TextureBuilder.() -> Unit = {}): Texture {
-	val builder = TextureBuilder(gles)
+fun InputStream.readTexture(init: TextureBuilder.() -> Unit = {}): Texture {
+	val builder = TextureBuilder()
 	builder.init()
 	val texture = builder.build(this)
 	close()
@@ -75,8 +76,8 @@ fun InputStream.readTexture(gles: GLES, init: TextureBuilder.() -> Unit = {}): T
 /**
  * Builds texture initialized with an [init] function.
  */
-fun Resource.readTexture(gles: GLES, init: TextureBuilder.() -> Unit = {}): Texture =
-		inputStream.readTexture(gles) {
+fun Resource.readTexture(init: TextureBuilder.() -> Unit = {}): Texture =
+		inputStream.readTexture {
 			name = this@readTexture.name
 			init()
 		}

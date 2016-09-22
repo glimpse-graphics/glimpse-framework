@@ -3,7 +3,6 @@ package glimpse.materials
 import glimpse.Color
 import glimpse.Vector
 import glimpse.cameras.Camera
-import glimpse.gles.GLES
 import glimpse.io.resource
 import glimpse.models.Model
 import glimpse.shaders.Program
@@ -14,14 +13,8 @@ import glimpse.shaders.shaderProgram
  */
 class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Color = Color.WHITE, val shininess: Float = 100f) : Material {
 
-	companion object {
-		fun init(gles: GLES) {
-			PlasticShaderHelper.init(gles)
-		}
-
-		fun dispose() {
-			PlasticShaderHelper.dispose()
-		}
+	init {
+		PlasticShaderHelper.registerDisposable()
 	}
 
 	override fun render(model: Model, camera: Camera) {
@@ -40,16 +33,12 @@ class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Co
 		PlasticShaderHelper["u_LightDirection"] = Vector(-1f, -1f, -1f)
 		PlasticShaderHelper.drawMesh(model.mesh)
 	}
-
-	override fun dispose() {
-		PlasticShaderHelper.dispose()
-	}
 }
 
 internal object PlasticShaderHelper : ShaderHelper() {
 
 	override val program: Program by lazy {
-		shaderProgram(gles) {
+		shaderProgram {
 			vertexShader {
 				PlasticShaderHelper.resource("Plastic_vertex.glsl").lines.joinToString(separator = "\n") { it }
 			}

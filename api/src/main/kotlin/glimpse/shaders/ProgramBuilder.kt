@@ -1,11 +1,14 @@
 package glimpse.shaders
 
 import glimpse.gles.GLES
+import glimpse.gles.delegates.GLESDelegate
 
 /**
  * GLSL shader program builder.
  */
-class ProgramBuilder(private val gles: GLES) {
+class ProgramBuilder {
+
+	private val gles: GLES by GLESDelegate
 
 	private val shaders = mutableListOf<Shader>()
 
@@ -15,7 +18,7 @@ class ProgramBuilder(private val gles: GLES) {
 		if (!gles.getShaderCompileStatus(handle)) {
 			throw ShaderCompileException(gles.getShaderLog(handle))
 		}
-		shaders.add(Shader(gles, this, handle))
+		shaders.add(Shader(this, handle))
 	}
 
 	/**
@@ -45,15 +48,15 @@ class ProgramBuilder(private val gles: GLES) {
 		if (!gles.getProgramLinkStatus(handle)) {
 			throw ProgramLinkException(gles.getProgramLog(handle))
 		}
-		return Program(gles, handle, shaders.toList())
+		return Program(handle, shaders.toList())
 	}
 }
 
 /**
- * Returns a [Program], initialized with an [init] function and linked using given [gles] implementation.
+ * Returns a [Program], initialized with an [init] function.
  */
-fun shaderProgram(gles: GLES, init: ProgramBuilder.() -> Unit): Program {
-	val builder = ProgramBuilder(gles)
+fun shaderProgram(init: ProgramBuilder.() -> Unit): Program {
+	val builder = ProgramBuilder()
 	builder.init()
 	return builder.build()
 }

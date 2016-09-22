@@ -2,15 +2,16 @@ package glimpse.textures
 
 import glimpse.gles.GLES
 import glimpse.gles.UniformLocation
+import glimpse.gles.delegates.GLESDelegate
 
 /**
  * Texture.
  *
- * @property gles GLES implementation.
  * @property handle Texture handle.
- * @property index Texture index in rendering.
  */
-class Texture(val gles: GLES, val handle: TextureHandle) {
+class Texture(val handle: TextureHandle) {
+
+	internal val gles: GLES by GLESDelegate
 
 	internal var deleted = false
 
