@@ -15,7 +15,7 @@ class ProjectionMatrixSpec : GlimpseSpec() {
 
 		"Orthographic projection" should {
 			"be consistent with identity matrix" {
-				orthographicProjectionMatrix(-1f, 1f, -1f, 1f, -1f, 1f) shouldBeRoughly Matrix.IDENTITY
+				orthographicProjectionMatrix(-1f, 1f, -1f, 1f, 1f, -1f) shouldBeRoughly Matrix.IDENTITY
 			}
 		}
 
