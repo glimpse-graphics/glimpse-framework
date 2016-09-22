@@ -155,9 +155,19 @@ interface GLES {
 	fun uniformFloat(location: UniformLocation, float: Float): Unit
 
 	/**
+	 * Sets uniform [floats].
+	 */
+	fun uniformFloats(location: UniformLocation, floats: FloatArray): Unit
+
+	/**
 	 * Sets a uniform [int] value.
 	 */
 	fun uniformInt(location: UniformLocation, int: Int): Unit
+
+	/**
+	 * Sets uniform [ints].
+	 */
+	fun uniformInts(location: UniformLocation, ints: IntArray): Unit
 
 	/**
 	 * Sets a uniform [matrix] value.
@@ -175,9 +185,21 @@ interface GLES {
 	fun uniformVector(location: UniformLocation, vector: Vector): Unit = uniform4f(location, vector._4f)
 
 	/**
+	 * Sets a uniform [vectors] value.
+	 */
+	fun uniformVectors(location: UniformLocation, vectors: List<Vector>): Unit =
+			uniform4f(location, vectors.flatMap { it._4f.toList() }.toTypedArray(), vectors.size)
+
+	/**
 	 * Sets a uniform [point] value.
 	 */
 	fun uniformPoint(location: UniformLocation, point: Point): Unit = uniform4f(location, point._4f)
+
+	/**
+	 * Sets a uniform [points] value.
+	 */
+	fun uniformPoints(location: UniformLocation, points: List<Point>): Unit =
+			uniform4f(location, points.flatMap { it._4f.toList() }.toTypedArray(), points.size)
 
 	/**
 	 * Sets a uniform [color] value.
@@ -185,9 +207,15 @@ interface GLES {
 	fun uniformColor(location: UniformLocation, color: Color): Unit = uniform4f(location, color._4f)
 
 	/**
-	 * Sets a uniform `vec4` value.
+	 * Sets a uniform [colors] value.poinpointsts
 	 */
-	fun uniform4f(location: UniformLocation, _4f: Array<Float>): Unit
+	fun uniformColors(location: UniformLocation, colors: List<Color>): Unit =
+			uniform4f(location, colors.flatMap { it._4f.toList() }.toTypedArray(), colors.size)
+
+	/**
+	 * Sets a [count] number of uniform `vec4` values.
+	 */
+	fun uniform4f(location: UniformLocation, _4f: Array<Float>, count: Int = 1): Unit
 
 	/**
 	 * Creates a shader attribute buffer with floats arranged in vectors of [vectorSize].

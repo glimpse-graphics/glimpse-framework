@@ -1,9 +1,11 @@
 package glimpse.materials
 
 import glimpse.Color
+import glimpse.Point
 import glimpse.Vector
 import glimpse.cameras.Camera
 import glimpse.io.resource
+import glimpse.lights.Light
 import glimpse.models.Model
 import glimpse.shaders.Program
 import glimpse.shaders.shaderProgram
@@ -17,7 +19,7 @@ class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Co
 		PlasticShaderHelper.registerDisposable()
 	}
 
-	override fun render(model: Model, camera: Camera) {
+	override fun render(model: Model, camera: Camera, lights: List<Light>) {
 		val mvpMatrix = camera.cameraMatrix * model.transformation()
 		val viewMatrix = camera.view.viewMatrix
 		val modelViewMatrix = viewMatrix * model.transformation()
@@ -28,9 +30,25 @@ class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Co
 		PlasticShaderHelper["u_Shininess"] = shininess
 		PlasticShaderHelper["u_MVPMatrix"] = mvpMatrix
 		PlasticShaderHelper["u_MVMatrix"] = modelViewMatrix
+		PlasticShaderHelper["u_ModelMatrix"] = model.transformation()
 		PlasticShaderHelper["u_LightMatrix"] = viewMatrix.trimmed
 		PlasticShaderHelper["u_NormalMatrix"] = modelViewMatrix.trimmed
-		PlasticShaderHelper["u_LightDirection"] = Vector(-1f, -1f, -1f)
+		PlasticShaderHelper["u_LightsCount"] = lights.size
+		PlasticShaderHelper["u_LightType"] = lights.map { light -> light.type }.toIntArray()
+		PlasticShaderHelper.setColors("u_LightColor", lights.map { light -> light.color })
+		PlasticShaderHelper.setVectors("u_LightDirection", lights.map { light ->
+			when(light) {
+				is Light.DirectionLight -> light.direction
+				else -> Vector.NULL
+			}
+		})
+		PlasticShaderHelper.setPoints("u_LightPosition", lights.map { light ->
+			when(light) {
+				is Light.OmniLight -> light.position
+				is Light.Spotlight -> light.position
+				else -> Point.ORIGIN
+			}
+		})
 		PlasticShaderHelper.drawMesh(model.mesh)
 	}
 }

@@ -66,9 +66,19 @@ abstract class ShaderHelper : Disposable {
 	operator fun set(name: String, float: Float): Unit = gles.uniformFloat(name.uniformLocation, float)
 
 	/**
+	 * Sets [floats] shader uniform values of a given [name].
+	 */
+	operator fun set(name: String, floats: FloatArray): Unit = gles.uniformFloats(name.uniformLocation, floats)
+
+	/**
 	 * Sets [int] shader uniform value of a given [name].
 	 */
 	operator fun set(name: String, int: Int): Unit = gles.uniformInt(name.uniformLocation, int)
+
+	/**
+	 * Sets [ints] shader uniform values of a given [name].
+	 */
+	operator fun set(name: String, ints: IntArray): Unit = gles.uniformInts(name.uniformLocation, ints)
 
 	/**
 	 * Sets [matrix] shader uniform value of a given [name].
@@ -81,14 +91,29 @@ abstract class ShaderHelper : Disposable {
 	operator fun set(name: String, vector: Vector): Unit = gles.uniformVector(name.uniformLocation, vector)
 
 	/**
+	 * Sets [vectors] shader uniform values of a given [name].
+	 */
+	fun setVectors(name: String, vectors: List<Vector>): Unit = gles.uniformVectors(name.uniformLocation, vectors)
+
+	/**
 	 * Sets [point] shader uniform value of a given [name].
 	 */
 	operator fun set(name: String, point: Point): Unit = gles.uniformPoint(name.uniformLocation, point)
 
 	/**
+	 * Sets [points] shader uniform values of a given [name].
+	 */
+	fun setPoints(name: String, points: List<Point>): Unit = gles.uniformPoints(name.uniformLocation, points)
+
+	/**
 	 * Sets [color] shader uniform value of a given [name].
 	 */
 	operator fun set(name: String, color: Color): Unit = gles.uniformColor(name.uniformLocation, color)
+
+	/**
+	 * Sets [colors] shader uniform values of a given [name].
+	 */
+	fun setColors(name: String, colors: List<Color>): Unit = gles.uniformColors(name.uniformLocation, colors)
 
 	/**
 	 * Sets [texture] shader uniform value of a given [name].

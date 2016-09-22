@@ -1,6 +1,7 @@
 package glimpse.preview
 
 import glimpse.Color
+import glimpse.Point
 import glimpse.Vector
 import glimpse.cameras.camera
 import glimpse.cameras.perspective
@@ -10,6 +11,7 @@ import glimpse.gles.BlendFactor
 import glimpse.gles.DepthTestFunction
 import glimpse.io.resource
 import glimpse.jogl.*
+import glimpse.lights.Light
 import glimpse.materials.Material
 import glimpse.materials.Plastic
 import glimpse.materials.Textured
@@ -46,9 +48,14 @@ fun main(args: Array<String>) {
 	val textures = mutableMapOf<Textured.TextureType, Texture>()
 
 	val texturedMaterial = Textured { textureType -> textures[textureType]!! }
-	val plasticMaterial = Plastic(Color.GREEN)
+	val plasticMaterial = Plastic(Color.WHITE)
 
 	var material: Material = plasticMaterial
+
+	var lights = listOf<Light>(
+			Light.DirectionLight(Vector(0f, 0f, -1f), Color.RED),
+			Light.DirectionLight(Vector(-1f, 1f, 0f), Color.GREEN),
+			Light.DirectionLight(Vector(-1f, -1f, 0f), Color.BLUE))
 
 	glimpseFrame("Glimpse Framework Preview") {
 		menuBar {
@@ -81,6 +88,24 @@ fun main(args: Array<String>) {
 					}
 				}
 			}
+			menu("Lights") {
+				menuItem("Direction") {
+					onClick {
+						lights = listOf(
+								Light.DirectionLight(Vector(0f, 0f, -1f), Color.RED),
+								Light.DirectionLight(Vector(-1f, 1f, 0f), Color.GREEN),
+								Light.DirectionLight(Vector(-1f, -1f, 0f), Color.BLUE))
+					}
+				}
+				menuItem("Omni") {
+					onClick {
+						lights = listOf(
+								Light.OmniLight(Point(0f, 0f, 2f), Color.RED),
+								Light.OmniLight(Point(2f, -2f, 0f), Color.GREEN),
+								Light.OmniLight(Point(2f, 2f, 0f), Color.BLUE))
+					}
+				}
+			}
 		}
 		onInit {
 			clearColor = Color.BLACK
@@ -103,7 +128,7 @@ fun main(args: Array<String>) {
 		onRender {
 			clearColorBuffer()
 			clearDepthBuffer()
-			material.render(model, camera)
+			material.render(model, camera, lights)
 		}
 		onDispose {
 		}

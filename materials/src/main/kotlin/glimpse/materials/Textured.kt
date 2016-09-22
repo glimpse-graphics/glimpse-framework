@@ -1,8 +1,10 @@
 package glimpse.materials
 
+import glimpse.Point
 import glimpse.Vector
 import glimpse.cameras.Camera
 import glimpse.io.resource
+import glimpse.lights.Light
 import glimpse.models.Model
 import glimpse.shaders.Program
 import glimpse.shaders.shaderProgram
@@ -23,7 +25,7 @@ class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Textur
 		TexturedShaderHelper.registerDisposable()
 	}
 
-	override fun render(model: Model, camera: Camera) {
+	override fun render(model: Model, camera: Camera, lights: List<Light>) {
 		val mvpMatrix = camera.cameraMatrix * model.transformation()
 		val viewMatrix = camera.view.viewMatrix
 		val modelViewMatrix = viewMatrix * model.transformation()
@@ -34,9 +36,25 @@ class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Textur
 		TexturedShaderHelper["u_Shininess"] = shininess
 		TexturedShaderHelper["u_MVPMatrix"] = mvpMatrix
 		TexturedShaderHelper["u_MVMatrix"] = modelViewMatrix
+		TexturedShaderHelper["u_ModelMatrix"] = model.transformation()
 		TexturedShaderHelper["u_LightMatrix"] = viewMatrix.trimmed
 		TexturedShaderHelper["u_NormalMatrix"] = modelViewMatrix.trimmed
-		TexturedShaderHelper["u_LightDirection"] = Vector(-1f, -1f, 0f)
+		TexturedShaderHelper["u_LightsCount"] = lights.size
+		TexturedShaderHelper["u_LightType"] = lights.map { light -> light.type }.toIntArray()
+		TexturedShaderHelper.setColors("u_LightColor", lights.map { light -> light.color })
+		TexturedShaderHelper.setVectors("u_LightDirection", lights.map { light ->
+			when(light) {
+				is Light.DirectionLight -> light.direction
+				else -> Vector.NULL
+			}
+		})
+		TexturedShaderHelper.setPoints("u_LightPosition", lights.map { light ->
+			when(light) {
+				is Light.OmniLight -> light.position
+				is Light.Spotlight -> light.position
+				else -> Point.ORIGIN
+			}
+		})
 		TexturedShaderHelper.drawMesh(model.mesh)
 	}
 }
