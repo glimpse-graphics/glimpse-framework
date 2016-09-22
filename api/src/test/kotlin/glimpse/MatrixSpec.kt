@@ -56,7 +56,7 @@ class MatrixSpec : GlimpseSpec() {
 				Matrix.IDENTITY * v shouldBe v
 			}
 			"be correctly calculated" {
-				m * v shouldBe Vector(51f, 58f, 65f)
+				m * v shouldBeRoughly Vector(51f / 72f, 58f / 72f, 65f / 72f)
 			}
 		}
 
