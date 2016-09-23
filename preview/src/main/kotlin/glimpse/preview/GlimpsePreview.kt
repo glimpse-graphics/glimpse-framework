@@ -100,9 +100,9 @@ fun main(args: Array<String>) {
 				menuItem("Omni") {
 					onClick {
 						lights = listOf(
-								Light.OmniLight(Point(0f, 0f, 2f), Color.RED),
-								Light.OmniLight(Point(2f, -2f, 0f), Color.GREEN),
-								Light.OmniLight(Point(2f, 2f, 0f), Color.BLUE))
+								Light.OmniLight(Point(0f, 0f, 6f), 20f, Color.MAGENTA),
+								Light.OmniLight(Point(12f, -12f, 0f), 20f, Color.YELLOW),
+								Light.OmniLight(Point(2f, 2f, 0f), 20f, Color.CYAN))
 					}
 				}
 			}

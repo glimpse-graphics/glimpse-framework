@@ -49,6 +49,13 @@ class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Co
 				else -> Point.ORIGIN
 			}
 		})
+		PlasticShaderHelper["u_LightDistance"] = lights.map { light ->
+			when(light) {
+				is Light.OmniLight -> light.distance
+				is Light.Spotlight -> light.distance
+				else -> Float.MAX_VALUE
+			}
+		}.toFloatArray()
 		PlasticShaderHelper.drawMesh(model.mesh)
 	}
 }

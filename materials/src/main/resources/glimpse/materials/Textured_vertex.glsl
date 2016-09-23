@@ -17,37 +17,47 @@ uniform int u_LightsCount;
 uniform int u_LightType[MAX_LIGHTS_COUNT];
 uniform vec4 u_LightDirection[MAX_LIGHTS_COUNT];
 uniform vec4 u_LightPosition[MAX_LIGHTS_COUNT];
+uniform float u_LightDistance[MAX_LIGHTS_COUNT];
 
 varying vec3 v_LightVector[MAX_LIGHTS_COUNT];
+varying float v_LightPower[MAX_LIGHTS_COUNT];
 
 varying vec3 v_VertexPosition;
 varying vec4 v_VertexNormal;
 varying vec2 v_TextureCoordinates;
 
-vec3 directionLightVector(int index) {
-	return normalize((u_LightMatrix * -u_LightDirection[index]).xyz);
+void setupDirectionLight(int index) {
+	v_LightVector[index] = normalize((u_LightMatrix * -u_LightDirection[index]).xyz);
+	v_LightPower[index] = 1.0;
 }
 
-vec3 omniLightVector(int index) {
-	return normalize((u_LightMatrix * (u_LightPosition[index] - u_ModelMatrix * a_VertexPosition)).xyz);
+void setupOmniLight(int index) {
+	vec3 lightVector = (u_LightMatrix * (u_LightPosition[index] - u_ModelMatrix * a_VertexPosition)).xyz;
+	v_LightVector[index] = normalize(lightVector);
+	v_LightPower[index] = max(0.0, (u_LightDistance[index] - length(lightVector)) / u_LightDistance[index]);
 }
 
-vec3 lightVector(int index) {
-	if (DIRECTION_LIGHT == u_LightType[index]) { // Direction light:
-		return directionLightVector(index);
-	} else if (OMNI_LIGHT == u_LightType[index]) { // Omni light:
-		return omniLightVector(index);
-	} else if (SPOTLIGHT == u_LightType[index]) { // Spotlight:
-		// TODO
+void setupSpotlight(int index) {
+	vec3 lightVector = (u_LightMatrix * (u_LightPosition[index] - u_ModelMatrix * a_VertexPosition)).xyz;
+	v_LightVector[index] = normalize(lightVector);
+	v_LightPower[index] = max(0.0, (u_LightDistance[index] - length(lightVector)) / u_LightDistance[index]);
+}
+
+void setupLight(int index) {
+	if (DIRECTION_LIGHT == u_LightType[index]) {
+		setupDirectionLight(index);
+	} else if (OMNI_LIGHT == u_LightType[index]) {
+		setupOmniLight(index);
+	} else if (SPOTLIGHT == u_LightType[index]) {
+		setupSpotlight(index);
 	}
-	return vec3(0.0, 0.0, 0.0);
 }
 
 void main() {
 	gl_Position = u_MVPMatrix * a_VertexPosition;
 
 	for (int index = 0; index < u_LightsCount; index++) {
-		v_LightVector[index] = lightVector(index);
+		setupLight(index);
 	}
 
 	v_VertexPosition = (u_MVMatrix * a_VertexPosition).xyz;

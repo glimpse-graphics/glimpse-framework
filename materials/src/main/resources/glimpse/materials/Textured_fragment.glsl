@@ -13,6 +13,7 @@ uniform int u_LightType[MAX_LIGHTS_COUNT];
 uniform vec4 u_LightColor[MAX_LIGHTS_COUNT];
 
 varying vec3 v_LightVector[MAX_LIGHTS_COUNT];
+varying float v_LightPower[MAX_LIGHTS_COUNT];
 
 varying vec3 v_VertexPosition;
 varying vec4 v_VertexNormal;
@@ -36,8 +37,8 @@ void main() {
 	for (int index = 0; index < u_LightsCount; index++) {
 		vec3 lightVector = v_LightVector[index];
 		vec3 halfVector = normalize(vec3(camera + lightVector));
-		diffuseLightValue += u_LightColor[index].rgb * positiveDot(normal, lightVector);
-		specularLightValue += u_LightColor[index].rgb * pow(positiveDot(halfVector, normal), u_Shininess);
+		diffuseLightValue += u_LightColor[index].rgb * positiveDot(normal, lightVector) * v_LightPower[index];
+		specularLightValue += u_LightColor[index].rgb * pow(positiveDot(halfVector, normal), u_Shininess * (2.0 - v_LightPower[index]));
 	}
 
 	vec4 ambientColor = texture2D(u_AmbientTexture, v_TextureCoordinates);

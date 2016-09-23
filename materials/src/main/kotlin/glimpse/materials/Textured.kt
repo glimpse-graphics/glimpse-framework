@@ -55,6 +55,13 @@ class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Textur
 				else -> Point.ORIGIN
 			}
 		})
+		PlasticShaderHelper["u_LightDistance"] = lights.map { light ->
+			when(light) {
+				is Light.OmniLight -> light.distance
+				is Light.Spotlight -> light.distance
+				else -> Float.MAX_VALUE
+			}
+		}.toFloatArray()
 		TexturedShaderHelper.drawMesh(model.mesh)
 	}
 }
