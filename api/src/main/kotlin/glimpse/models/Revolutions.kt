@@ -38,7 +38,7 @@ fun sphere(curveSteps: Int, rotateSteps: Int = curveSteps * 2, radius: Float = 1
 	curve {
 		val vertices = (Angle.NULL..Angle.STRAIGHT partition curveSteps).map { angle ->
 			val normal = rotationMatrixY(angle) * Vector.Z_UNIT
-			Vertex((normal * radius).toPoint(), TextureCoordinates(0f, angle / Angle.STRAIGHT), normal)
+			Vertex((normal * radius).toPoint(), TextureCoordinates(0f, 1f - angle / Angle.STRAIGHT), normal)
 		}
 		vertices.dropLast(1).zip(vertices.drop(1)).forEach {
 			segment(it)
