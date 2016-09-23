@@ -5,8 +5,10 @@ target/
 
 # Gradle
 .gradle/
+build/
 */build/
 
 # IntelliJ IDEA
 *.iml
 .idea/
+classes/

@@ -1,13 +1,13 @@
 package glimpse.jogl
 
+import com.jogamp.opengl.GLAutoDrawable
+import com.jogamp.opengl.GLEventListener
+import com.jogamp.opengl.awt.GLJPanel
 import com.jogamp.opengl.util.FPSAnimator
 import glimpse.gles.Disposables
 import glimpse.gles.GLES
 import glimpse.gles.Viewport
 import glimpse.gles.delegates.GLESDelegate
-import javax.media.opengl.GLAutoDrawable
-import javax.media.opengl.GLEventListener
-import javax.media.opengl.awt.GLJPanel
 import javax.swing.JFrame
 
 /**

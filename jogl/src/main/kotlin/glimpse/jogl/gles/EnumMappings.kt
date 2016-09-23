@@ -1,11 +1,11 @@
 package glimpse.jogl.gles
 
+import com.jogamp.opengl.GL2ES2
 import glimpse.gles.*
 import glimpse.shaders.ShaderType
 import glimpse.textures.TextureMagnificationFilter
 import glimpse.textures.TextureMinificationFilter
 import glimpse.textures.TextureWrapping
-import javax.media.opengl.GL2ES2
 
 internal val depthTestFunctionMapping = mapOf(
 		DepthTestFunction.NEVER to GL2ES2.GL_NEVER,
