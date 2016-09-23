@@ -27,7 +27,7 @@ class ObjMeshBuilderSpec : GlimpseSpec() {
 			}
 			"have correct texture coordinates" {
 				val result = loadObjTriangle()
-				result[0].textureCoordinates shouldBe listOf(TextureCoordinates.TOP_LEFT, TextureCoordinates.TOP_RIGHT, TextureCoordinates.BOTTOM_LEFT)
+				result[0].textureCoordinates shouldBe listOf(TextureCoordinates.BOTTOM_LEFT, TextureCoordinates.BOTTOM_RIGHT, TextureCoordinates.TOP_LEFT)
 			}
 			"have correct normals" {
 				val result = loadObjTriangle()
@@ -51,7 +51,7 @@ class ObjMeshBuilderSpec : GlimpseSpec() {
 			}
 			"always have (0, 0) texture coordinates" {
 				val result = loadObjTriangleNoTextures()
-				result[0].textureCoordinates shouldBe listOf(TextureCoordinates.TOP_LEFT, TextureCoordinates.TOP_LEFT, TextureCoordinates.TOP_LEFT)
+				result[0].textureCoordinates shouldBe listOf(TextureCoordinates.BOTTOM_LEFT, TextureCoordinates.BOTTOM_LEFT, TextureCoordinates.BOTTOM_LEFT)
 			}
 			"have correct normals" {
 				val result = loadObjTriangleNoTextures()
@@ -78,8 +78,8 @@ class ObjMeshBuilderSpec : GlimpseSpec() {
 			}
 			"both have correct texture coordinates" {
 				val result = loadObjTwoTriangles()
-				result[0].textureCoordinates shouldBe listOf(TextureCoordinates.TOP_LEFT, TextureCoordinates.TOP_RIGHT, TextureCoordinates.BOTTOM_LEFT)
-				result[1].textureCoordinates shouldBe listOf(TextureCoordinates.TOP_RIGHT, TextureCoordinates.TOP_LEFT, TextureCoordinates.BOTTOM_RIGHT)
+				result[0].textureCoordinates shouldBe listOf(TextureCoordinates.BOTTOM_LEFT, TextureCoordinates.BOTTOM_RIGHT, TextureCoordinates.TOP_LEFT)
+				result[1].textureCoordinates shouldBe listOf(TextureCoordinates.BOTTOM_RIGHT, TextureCoordinates.BOTTOM_LEFT, TextureCoordinates.TOP_RIGHT)
 			}
 			"both have correct normals" {
 				val result = loadObjTwoTriangles()

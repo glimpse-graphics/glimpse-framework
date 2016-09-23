@@ -1,5 +1,6 @@
 package glimpse.jogl.gles
 
+import com.jogamp.opengl.GL2ES2
 import com.jogamp.opengl.util.texture.TextureIO
 import glimpse.Color
 import glimpse.gles.*
@@ -17,7 +18,6 @@ import java.nio.Buffer
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.nio.IntBuffer
-import javax.media.opengl.GL2ES2
 
 /**
  * JOGL implementation of GLES facade.

@@ -61,7 +61,7 @@ internal class ObjMeshBuilder(lines: List<String>) {
 			else positions[index]
 
 	private fun textureCoordinates(index: Int): TextureCoordinates =
-			if (index < 0) TextureCoordinates.TOP_LEFT
+			if (index < 0) TextureCoordinates.BOTTOM_LEFT
 			else textureCoordinates[index]
 
 	private fun normals(index: Int): Vector =
