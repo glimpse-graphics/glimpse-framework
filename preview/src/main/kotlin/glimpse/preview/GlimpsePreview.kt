@@ -87,7 +87,7 @@ fun main(args: Array<String>) {
 				}
 			}
 			menu("Lights") {
-				menuItem("Direction") {
+				menuItem("Direction light") {
 					onClick {
 						lights = listOf(
 								Light.DirectionLight(Vector(0f, 0f, -1f), Color.RED),
@@ -95,12 +95,12 @@ fun main(args: Array<String>) {
 								Light.DirectionLight(Vector(-1f, -1f, 0f), Color.BLUE))
 					}
 				}
-				menuItem("Omni") {
+				menuItem("Point light") {
 					onClick {
 						lights = listOf(
-								Light.OmniLight(Point(0f, 0f, 6f), 20f, Color.MAGENTA),
-								Light.OmniLight(Point(12f, -12f, 0f), 20f, Color.YELLOW),
-								Light.OmniLight(Point(2f, 2f, 0f), 20f, Color.CYAN))
+								Light.PointLight(Point(0f, 0f, 6f), 20f, Color.MAGENTA),
+								Light.PointLight(Point(12f, -12f, 0f), 20f, Color.YELLOW),
+								Light.PointLight(Point(2f, 2f, 0f), 20f, Color.CYAN))
 					}
 				}
 				menuItem("Spotlight") {

@@ -23,14 +23,14 @@ abstract class AbstractMaterial : Material {
 		})
 		this.setPoints("${name}Position", lights.map { light ->
 			when(light) {
-				is Light.OmniLight -> light.position
+				is Light.PointLight -> light.position
 				is Light.Spotlight -> light.position
 				else -> Point.ORIGIN
 			}
 		})
 		this["${name}Distance"] = lights.map { light ->
 			when(light) {
-				is Light.OmniLight -> light.distance
+				is Light.PointLight -> light.distance
 				is Light.Spotlight -> light.distance
 				else -> Float.MAX_VALUE
 			}

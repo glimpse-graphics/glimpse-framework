@@ -1,7 +1,7 @@
 #define MAX_LIGHTS_COUNT 8
 
 #define DIRECTION_LIGHT 1
-#define OMNI_LIGHT 2
+#define POINT_LIGHT 2
 #define SPOTLIGHT 3
 
 uniform mat4 u_LightMatrix;
@@ -41,7 +41,7 @@ void setupDirectionLight(int index) {
 	lightPower = 1.0;
 }
 
-void setupOmniLight(int index) {
+void setupPointLight(int index) {
 	vec3 longLightVector = (u_LightMatrix * (u_LightPosition[index] - v_VertexModelPosition)).xyz;
 	lightVector = normalize(longLightVector);
 	lightPower = max(0.0, (u_LightDistance[index] - length(longLightVector)) / u_LightDistance[index]);
@@ -59,8 +59,8 @@ void setupSpotlight(int index) {
 void setupLight(int index) {
 	if (DIRECTION_LIGHT == u_LightType[index]) {
 		setupDirectionLight(index);
-	} else if (OMNI_LIGHT == u_LightType[index]) {
-		setupOmniLight(index);
+	} else if (POINT_LIGHT == u_LightType[index]) {
+		setupPointLight(index);
 	} else if (SPOTLIGHT == u_LightType[index]) {
 		setupSpotlight(index);
 	}
