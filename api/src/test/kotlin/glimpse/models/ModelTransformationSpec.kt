@@ -20,7 +20,7 @@ class ModelTransformationSpec : GlimpseSpec() {
 					Model(mesh { }).transform(translationMatrix(translation)).transformation() * vector isRoughly vector + translation
 				}
 			}
-			"change in time" {
+			"change over time" {
 				var translation = Vector.X_UNIT
 				val model = Model(mesh { }).transform {
 					translate(translation)
@@ -28,6 +28,18 @@ class ModelTransformationSpec : GlimpseSpec() {
 				model.transformation() * Vector.NULL shouldBeRoughly Vector.X_UNIT
 				translation = Vector.Z_UNIT
 				model.transformation() * Vector.NULL shouldBeRoughly Vector.Z_UNIT
+			}
+			"keep mesh transformation changes over time" {
+				var translation = Vector.X_UNIT
+				val model = mesh {
+				}.transform {
+					translate(translation)
+				}.transform {
+					translate(Vector.Y_UNIT)
+				}
+				model.transformation() * Vector.NULL shouldBeRoughly Vector(1f, 1f, 0f)
+				translation = Vector.Z_UNIT
+				model.transformation() * Vector.NULL shouldBeRoughly Vector(0f, 1f, 1f)
 			}
 		}
 
