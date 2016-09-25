@@ -6,6 +6,8 @@
 [![Waffle.io: Open](https://badge.waffle.io/GlimpseFramework/glimpse-framework.svg?label=open&title=open)](http://waffle.io/GlimpseFramework/glimpse-framework)
 [![Waffle.io: In Progress](https://badge.waffle.io/GlimpseFramework/glimpse-framework.svg?label=in progress&title=in progress)](http://waffle.io/GlimpseFramework/glimpse-framework)
 
+[![Twitter Follow](https://img.shields.io/twitter/follow/glimpse_fw.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/intent/follow?screen_name=glimpse_fw)
+
 # GlimpseFramework
 
 **OpenGL made simple**
