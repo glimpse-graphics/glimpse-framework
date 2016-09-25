@@ -1,8 +1,6 @@
 package glimpse.materials
 
 import glimpse.Color
-import glimpse.Point
-import glimpse.Vector
 import glimpse.cameras.Camera
 import glimpse.io.resource
 import glimpse.lights.Light
@@ -13,7 +11,7 @@ import glimpse.shaders.shaderProgram
 /**
  * Plastic material.
  */
-class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Color = Color.WHITE, val shininess: Float = 100f) : Material {
+class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Color = Color.WHITE, val shininess: Float = 100f) : AbstractMaterial() {
 
 	init {
 		PlasticShaderHelper.registerDisposable()
@@ -33,29 +31,7 @@ class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Co
 		PlasticShaderHelper["u_ModelMatrix"] = model.transformation()
 		PlasticShaderHelper["u_LightMatrix"] = viewMatrix.trimmed
 		PlasticShaderHelper["u_NormalMatrix"] = modelViewMatrix.trimmed
-		PlasticShaderHelper["u_LightsCount"] = lights.size
-		PlasticShaderHelper["u_LightType"] = lights.map { light -> light.type }.toIntArray()
-		PlasticShaderHelper.setColors("u_LightColor", lights.map { light -> light.color })
-		PlasticShaderHelper.setVectors("u_LightDirection", lights.map { light ->
-			when(light) {
-				is Light.DirectionLight -> light.direction
-				else -> Vector.NULL
-			}
-		})
-		PlasticShaderHelper.setPoints("u_LightPosition", lights.map { light ->
-			when(light) {
-				is Light.OmniLight -> light.position
-				is Light.Spotlight -> light.position
-				else -> Point.ORIGIN
-			}
-		})
-		PlasticShaderHelper["u_LightDistance"] = lights.map { light ->
-			when(light) {
-				is Light.OmniLight -> light.distance
-				is Light.Spotlight -> light.distance
-				else -> Float.MAX_VALUE
-			}
-		}.toFloatArray()
+		PlasticShaderHelper["u_Light"] = lights
 		PlasticShaderHelper.drawMesh(model.mesh)
 	}
 }

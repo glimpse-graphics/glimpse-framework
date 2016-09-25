@@ -1,7 +1,5 @@
 package glimpse.materials
 
-import glimpse.Point
-import glimpse.Vector
 import glimpse.cameras.Camera
 import glimpse.io.resource
 import glimpse.lights.Light
@@ -13,7 +11,7 @@ import glimpse.textures.Texture
 /**
  * Textured material.
  */
-class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Texture) : Material {
+class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Texture) : AbstractMaterial() {
 
 	enum class TextureType {
 		AMBIENT,
@@ -39,29 +37,7 @@ class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Textur
 		TexturedShaderHelper["u_ModelMatrix"] = model.transformation()
 		TexturedShaderHelper["u_LightMatrix"] = viewMatrix.trimmed
 		TexturedShaderHelper["u_NormalMatrix"] = modelViewMatrix.trimmed
-		TexturedShaderHelper["u_LightsCount"] = lights.size
-		TexturedShaderHelper["u_LightType"] = lights.map { light -> light.type }.toIntArray()
-		TexturedShaderHelper.setColors("u_LightColor", lights.map { light -> light.color })
-		TexturedShaderHelper.setVectors("u_LightDirection", lights.map { light ->
-			when(light) {
-				is Light.DirectionLight -> light.direction
-				else -> Vector.NULL
-			}
-		})
-		TexturedShaderHelper.setPoints("u_LightPosition", lights.map { light ->
-			when(light) {
-				is Light.OmniLight -> light.position
-				is Light.Spotlight -> light.position
-				else -> Point.ORIGIN
-			}
-		})
-		PlasticShaderHelper["u_LightDistance"] = lights.map { light ->
-			when(light) {
-				is Light.OmniLight -> light.distance
-				is Light.Spotlight -> light.distance
-				else -> Float.MAX_VALUE
-			}
-		}.toFloatArray()
+		TexturedShaderHelper["u_Light"] = lights
 		TexturedShaderHelper.drawMesh(model.mesh)
 	}
 }

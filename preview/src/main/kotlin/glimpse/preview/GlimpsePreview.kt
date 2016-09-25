@@ -1,12 +1,10 @@
 package glimpse.preview
 
-import glimpse.Color
-import glimpse.Point
+import glimpse.*
 import glimpse.Vector
 import glimpse.cameras.camera
 import glimpse.cameras.perspective
 import glimpse.cameras.targeted
-import glimpse.degrees
 import glimpse.gles.BlendFactor
 import glimpse.gles.DepthTestFunction
 import glimpse.io.resource
@@ -103,6 +101,14 @@ fun main(args: Array<String>) {
 								Light.OmniLight(Point(0f, 0f, 6f), 20f, Color.MAGENTA),
 								Light.OmniLight(Point(12f, -12f, 0f), 20f, Color.YELLOW),
 								Light.OmniLight(Point(2f, 2f, 0f), 20f, Color.CYAN))
+					}
+				}
+				menuItem("Spotlight") {
+					onClick {
+						lights = listOf(
+								Light.Spotlight(Vector(5f, 23.5.degrees, Angle.RIGHT).toPoint(), Point.ORIGIN, 20.degrees, 100f, Color.RED),
+								Light.Spotlight(Point(5f, -5f, 5f), Point.ORIGIN, 10.degrees, 100f, Color.GREEN),
+								Light.Spotlight(Point(5f, 5f, -5f), Point.ORIGIN, 180.degrees, 100f, Color.BLUE))
 					}
 				}
 			}
