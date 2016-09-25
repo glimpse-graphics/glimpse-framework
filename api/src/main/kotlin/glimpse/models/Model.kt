@@ -2,6 +2,7 @@ package glimpse.models
 
 import glimpse.Matrix
 import glimpse.MatrixBuilder
+import glimpse.matrix
 
 /**
  * A three-dimensional model.
@@ -14,16 +15,12 @@ class Model(val mesh: Mesh, val transformation: () -> Matrix = { Matrix.IDENTITY
 	/**
 	 * Returns a [Model], transformed with the [transformationMatrix].
 	 */
-	fun transform(transformationMatrix: Matrix) = Model(mesh) { transformationMatrix * transformation() }
+	fun transform(transformationMatrix: Matrix) =
+			Model(mesh) { transformationMatrix * transformation() }
 
 	/**
 	 * Returns a [Model], transformed with the [transformation].
 	 */
-	fun transform(transformation: MatrixBuilder.() -> Unit): Model {
-		return Model(mesh) {
-			val builder = MatrixBuilder(this.transformation())
-			builder.transformation()
-			builder.matrix
-		}
-	}
+	fun transform(transformation: MatrixBuilder.() -> Unit) =
+			Model(mesh, matrix(this.transformation, transformation))
 }

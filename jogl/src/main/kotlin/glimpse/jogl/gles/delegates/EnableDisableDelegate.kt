@@ -1,6 +1,6 @@
 package glimpse.jogl.gles.delegates
 
-import javax.media.opengl.GL2ES2
+import com.jogamp.opengl.GL2ES2
 import kotlin.reflect.KProperty
 
 /**

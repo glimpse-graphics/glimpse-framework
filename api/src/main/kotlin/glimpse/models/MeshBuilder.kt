@@ -13,7 +13,7 @@ class MeshBuilder {
 	private val textureCoordinates = mutableListOf<TextureCoordinates>()
 	private val normals = mutableListOf<Vector>()
 
-	internal fun toMesh() = Mesh(positions.toList(), textureCoordinates.toList(), normals.toList())
+	internal fun build() = Mesh(positions.toList(), textureCoordinates.toList(), normals.toList())
 
 	internal fun push(vertex: Vertex) {
 		positions.add(vertex.position)
@@ -47,5 +47,5 @@ class MeshBuilder {
 fun mesh(init: MeshBuilder.() -> Unit): Mesh {
 	val builder = MeshBuilder()
 	builder.init()
-	return builder.toMesh()
+	return builder.build()
 }

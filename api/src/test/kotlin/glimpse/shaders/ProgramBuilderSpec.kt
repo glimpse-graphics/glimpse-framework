@@ -10,47 +10,47 @@ class ProgramBuilderSpec : GlimpseSpec() {
 
 		"Program builder" should {
 			"create both shaders" {
-				val glesMock = createGLESMock()
-				buildShaderProgram(glesMock)
+				val glesMock = glesMock()
+				buildShaderProgram()
 				verify(glesMock).createShader(ShaderType.VERTEX)
 				verify(glesMock).createShader(ShaderType.FRAGMENT)
 			}
 			"compile both shaders" {
-				val glesMock = createGLESMock()
-				buildShaderProgram(glesMock)
+				val glesMock = glesMock()
+				buildShaderProgram()
 				verify(glesMock).compileShader(ShaderHandle(1), "vertex shader code")
 				verify(glesMock).compileShader(ShaderHandle(2), "fragment shader code")
 			}
 			"cause exception if compilation fails" {
-				val glesMock = mock<GLES> {
+				glesMock {
 					on { createShader(any()) } doReturn ShaderHandle(1) doReturn ShaderHandle(2)
 					on { getShaderCompileStatus(ShaderHandle(1)) } doReturn true
 					on { getShaderCompileStatus(ShaderHandle(2)) } doReturn false
 					on { getShaderLog(ShaderHandle(2)) } doReturn "Error"
 				}
 				shouldThrow<ShaderCompileException> {
-					buildShaderProgram(glesMock)
+					buildShaderProgram()
 				}
 			}
 			"create a program" {
-				val glesMock = createGLESMock()
-				buildShaderProgram(glesMock)
+				val glesMock = glesMock()
+				buildShaderProgram()
 				verify(glesMock).createProgram()
 			}
 			"attach both shaders to program" {
-				val glesMock = createGLESMock()
-				buildShaderProgram(glesMock)
+				val glesMock = glesMock()
+				buildShaderProgram()
 				verify(glesMock).attachShader(ProgramHandle(3), ShaderHandle(1))
 				verify(glesMock).attachShader(ProgramHandle(3), ShaderHandle(2))
 			}
 			"link a program" {
-				val glesMock = createGLESMock()
-				buildShaderProgram(glesMock)
+				val glesMock = glesMock()
+				buildShaderProgram()
 				verify(glesMock).linkProgram(ProgramHandle(3))
 			}
 			"return a program with correct data" {
-				val glesMock = createGLESMock()
-				val program = buildShaderProgram(glesMock)
+				val glesMock = glesMock()
+				val program = buildShaderProgram()
 				program.gles shouldBe glesMock
 				program.handle shouldBe ProgramHandle(3)
 				program.shaders should haveSize(2)
@@ -59,7 +59,7 @@ class ProgramBuilderSpec : GlimpseSpec() {
 				program.shaders.map { it.handle } should containInAnyOrder(ShaderHandle(1), ShaderHandle(2))
 			}
 			"cause exception if linking fails" {
-				val glesMock = mock<GLES> {
+				glesMock {
 					on { createShader(any()) } doReturn ShaderHandle(1) doReturn ShaderHandle(2)
 					on { getShaderCompileStatus(ShaderHandle(1)) } doReturn true
 					on { getShaderCompileStatus(ShaderHandle(2)) } doReturn true
@@ -68,31 +68,27 @@ class ProgramBuilderSpec : GlimpseSpec() {
 					on { getProgramLog(ProgramHandle(3)) } doReturn "Error"
 				}
 				shouldThrow<ProgramLinkException> {
-					buildShaderProgram(glesMock)
+					buildShaderProgram()
 				}
 			}
 		}
 
 	}
 
-	private fun createGLESMock(): GLES {
-		return mock<GLES> {
-			on { createShader(any()) } doReturn ShaderHandle(1) doReturn ShaderHandle(2)
-			on { getShaderCompileStatus(ShaderHandle(1)) } doReturn true
-			on { getShaderCompileStatus(ShaderHandle(2)) } doReturn true
-			on { createProgram() } doReturn ProgramHandle(3)
-			on { getProgramLinkStatus(ProgramHandle(3)) } doReturn true
-		}
+	private fun glesMock(): GLES = glesMock {
+		on { createShader(any()) } doReturn ShaderHandle(1) doReturn ShaderHandle(2)
+		on { getShaderCompileStatus(ShaderHandle(1)) } doReturn true
+		on { getShaderCompileStatus(ShaderHandle(2)) } doReturn true
+		on { createProgram() } doReturn ProgramHandle(3)
+		on { getProgramLinkStatus(ProgramHandle(3)) } doReturn true
 	}
 
-	private fun buildShaderProgram(glesMock: GLES): Program {
-		return shaderProgram(glesMock) {
-			vertexShader {
-				"vertex shader code"
-			}
-			fragmentShader {
-				"fragment shader code"
-			}
+	private fun buildShaderProgram(): Program = shaderProgram {
+		vertexShader {
+			"vertex shader code"
+		}
+		fragmentShader {
+			"fragment shader code"
 		}
 	}
 }

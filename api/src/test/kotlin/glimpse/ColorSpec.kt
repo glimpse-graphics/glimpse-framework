@@ -1,5 +1,6 @@
 package glimpse
 
+import glimpse.buffers.toList
 import glimpse.test.GlimpseSpec
 
 class ColorSpec : GlimpseSpec() {
@@ -21,32 +22,26 @@ class ColorSpec : GlimpseSpec() {
 		"Direct buffer of colors" should {
 			val buffer = listOf(Color.GREEN, Color.BLUE, Color.MAGENTA).toDirectBuffer()
 			"be direct" {
-				buffer.isDirect
+				buffer.isDirect shouldBe true
 			}
 			"contain a number of elements equal to the number of colors times 3" {
-				buffer.capacity() == 9
+				buffer.capacity() shouldBe 9
 			}
 			"contain subsequent RGB color channels" {
-				val array = FloatArray(9)
-				buffer.rewind()
-				buffer.get(array)
-				array.asList() shouldBe listOf(0f, 1f, 0f, 0f, 0f, 1f, 1f, 0f, 1f)
+				buffer.toList() shouldBe listOf(0f, 1f, 0f, 0f, 0f, 1f, 1f, 0f, 1f)
 			}
 		}
 
 		"Direct buffer of colors with alpha channel" should {
 			val buffer = listOf(Color.RED, Color.YELLOW, Color.CYAN).toDirectBufferWithAlpha()
 			"be direct" {
-				buffer.isDirect
+				buffer.isDirect shouldBe true
 			}
 			"contain a number of elements equal to the number of colors times 4" {
-				buffer.capacity() == 12
+				buffer.capacity() shouldBe 12
 			}
 			"contain subsequent RGBA color channels" {
-				val array = FloatArray(12)
-				buffer.rewind()
-				buffer.get(array)
-				array.asList() shouldBe listOf(1f, 0f, 0f, 1f, 1f, 1f, 0f, 1f, 0f, 1f, 1f, 1f)
+				buffer.toList() shouldBe listOf(1f, 0f, 0f, 1f, 1f, 1f, 0f, 1f, 0f, 1f, 1f, 1f)
 			}
 		}
 

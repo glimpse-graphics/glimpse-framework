@@ -54,10 +54,10 @@ class MatrixBuilder(internal var matrix: Matrix = Matrix.IDENTITY) {
 	}
 
 	/**
-	 * Scales by a [scaleX], [scaleY], [scaleZ] factors along X, Y and Z axes.
+	 * Scales by a [x], [y], [z] factors along X, Y and Z axes.
 	 */
-	fun scale(scaleX: Float, scaleY: Float, scaleZ: Float) {
-		transform(scalingMatrix(scaleX, scaleY, scaleZ))
+	fun scale(x: Float = 1f, y: Float = 1f, z: Float = 1f) {
+		transform(scalingMatrix(x, y, z))
 	}
 
 	/**
@@ -66,4 +66,31 @@ class MatrixBuilder(internal var matrix: Matrix = Matrix.IDENTITY) {
 	fun reflect(normal: Vector, point: Point) {
 		transform(reflectionMatrix(normal, point))
 	}
+}
+
+/**
+ * Builds an affine [transformation] matrix function.
+ */
+fun matrix(transformation: MatrixBuilder.() -> Unit): () -> Matrix = {
+	val builder = MatrixBuilder()
+	builder.transformation()
+	builder.matrix
+}
+
+/**
+ * Builds an affine [transformation] matrix function, starting from given [transformationMatrix].
+ */
+fun matrix(transformationMatrix: Matrix, transformation: MatrixBuilder.() -> Unit): () -> Matrix = {
+	val builder = MatrixBuilder(transformationMatrix)
+	builder.transformation()
+	builder.matrix
+}
+
+/**
+ * Builds an affine [transformation] matrix function, starting from given [transformationMatrix] lambda.
+ */
+fun matrix(transformationMatrix: () -> Matrix, transformation: MatrixBuilder.() -> Unit): () -> Matrix = {
+	val builder = MatrixBuilder(transformationMatrix())
+	builder.transformation()
+	builder.matrix
 }

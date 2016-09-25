@@ -1,9 +1,8 @@
 package glimpse.materials
 
-import glimpse.Vector
 import glimpse.cameras.Camera
-import glimpse.gles.GLES
 import glimpse.io.resource
+import glimpse.lights.Light
 import glimpse.models.Model
 import glimpse.shaders.Program
 import glimpse.shaders.shaderProgram
@@ -12,7 +11,7 @@ import glimpse.textures.Texture
 /**
  * Textured material.
  */
-class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Texture) : Material {
+class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Texture) : AbstractMaterial() {
 
 	enum class TextureType {
 		AMBIENT,
@@ -20,17 +19,11 @@ class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Textur
 		SPECULAR
 	}
 
-	companion object {
-		fun init(gles: GLES) {
-			TexturedShaderHelper.init(gles)
-		}
-
-		fun dispose() {
-			TexturedShaderHelper.dispose()
-		}
+	init {
+		TexturedShaderHelper.registerDisposable()
 	}
 
-	override fun render(model: Model, camera: Camera) {
+	override fun render(model: Model, camera: Camera, lights: List<Light>) {
 		val mvpMatrix = camera.cameraMatrix * model.transformation()
 		val viewMatrix = camera.view.viewMatrix
 		val modelViewMatrix = viewMatrix * model.transformation()
@@ -41,21 +34,18 @@ class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Textur
 		TexturedShaderHelper["u_Shininess"] = shininess
 		TexturedShaderHelper["u_MVPMatrix"] = mvpMatrix
 		TexturedShaderHelper["u_MVMatrix"] = modelViewMatrix
+		TexturedShaderHelper["u_ModelMatrix"] = model.transformation()
 		TexturedShaderHelper["u_LightMatrix"] = viewMatrix.trimmed
 		TexturedShaderHelper["u_NormalMatrix"] = modelViewMatrix.trimmed
-		TexturedShaderHelper["u_LightDirection"] = Vector(-1f, -1f, 0f)
+		TexturedShaderHelper["u_Light"] = lights
 		TexturedShaderHelper.drawMesh(model.mesh)
-	}
-
-	override fun dispose() {
-		TexturedShaderHelper.dispose()
 	}
 }
 
 internal object TexturedShaderHelper : ShaderHelper() {
 
 	override val program: Program by lazy {
-		shaderProgram(gles) {
+		shaderProgram {
 			vertexShader {
 				TexturedShaderHelper.resource("Textured_vertex.glsl").lines.joinToString(separator = "\n") { it }
 			}

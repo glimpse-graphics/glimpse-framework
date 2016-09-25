@@ -1,10 +1,11 @@
 package glimpse.materials
 
-import glimpse.*
-import glimpse.gles.AttributeLocation
-import glimpse.gles.BufferHandle
-import glimpse.gles.GLES
-import glimpse.gles.UniformLocation
+import glimpse.Color
+import glimpse.Matrix
+import glimpse.Point
+import glimpse.Vector
+import glimpse.gles.*
+import glimpse.gles.delegates.GLESDelegate
 import glimpse.models.Mesh
 import glimpse.shaders.Program
 import glimpse.textures.Texture
@@ -13,12 +14,12 @@ import java.nio.FloatBuffer
 /**
  * Common superclass for shader helpers.
  */
-abstract class ShaderHelper {
+abstract class ShaderHelper : Disposable {
 
 	/**
 	 * GLES implementation.
 	 */
-	protected var gles: GLES by GLESDelegate()
+	protected val gles: GLES by GLESDelegate
 
 	/**
 	 * Shader program.
@@ -53,13 +54,6 @@ abstract class ShaderHelper {
 	protected abstract val vertexNormalAttributeName: String?
 
 	/**
-	 * Initializes shader helper with [GLES] implementation.
-	 */
-	fun init(gles: GLES) {
-		this.gles = gles
-	}
-
-	/**
 	 * Tells GLES implementation to use this program.
 	 */
 	fun use() {
@@ -72,9 +66,19 @@ abstract class ShaderHelper {
 	operator fun set(name: String, float: Float): Unit = gles.uniformFloat(name.uniformLocation, float)
 
 	/**
+	 * Sets [floats] shader uniform values of a given [name].
+	 */
+	operator fun set(name: String, floats: FloatArray): Unit = gles.uniformFloats(name.uniformLocation, floats)
+
+	/**
 	 * Sets [int] shader uniform value of a given [name].
 	 */
 	operator fun set(name: String, int: Int): Unit = gles.uniformInt(name.uniformLocation, int)
+
+	/**
+	 * Sets [ints] shader uniform values of a given [name].
+	 */
+	operator fun set(name: String, ints: IntArray): Unit = gles.uniformInts(name.uniformLocation, ints)
 
 	/**
 	 * Sets [matrix] shader uniform value of a given [name].
@@ -87,14 +91,29 @@ abstract class ShaderHelper {
 	operator fun set(name: String, vector: Vector): Unit = gles.uniformVector(name.uniformLocation, vector)
 
 	/**
+	 * Sets [vectors] shader uniform values of a given [name].
+	 */
+	fun setVectors(name: String, vectors: List<Vector>): Unit = gles.uniformVectors(name.uniformLocation, vectors)
+
+	/**
 	 * Sets [point] shader uniform value of a given [name].
 	 */
 	operator fun set(name: String, point: Point): Unit = gles.uniformPoint(name.uniformLocation, point)
 
 	/**
+	 * Sets [points] shader uniform values of a given [name].
+	 */
+	fun setPoints(name: String, points: List<Point>): Unit = gles.uniformPoints(name.uniformLocation, points)
+
+	/**
 	 * Sets [color] shader uniform value of a given [name].
 	 */
 	operator fun set(name: String, color: Color): Unit = gles.uniformColor(name.uniformLocation, color)
+
+	/**
+	 * Sets [colors] shader uniform values of a given [name].
+	 */
+	fun setColors(name: String, colors: List<Color>): Unit = gles.uniformColors(name.uniformLocation, colors)
 
 	/**
 	 * Sets [texture] shader uniform value of a given [name].
@@ -105,9 +124,9 @@ abstract class ShaderHelper {
 	 * Draws a [mesh] using the shader [program].
 	 */
 	fun drawMesh(mesh: Mesh) {
-		val positionBuffer = vertexPositionAttributeName?.attributeLocation?.set(mesh.positions.toDirectBufferAugmented(), 4)
-		val textureCoordinatesBuffer = vertexTextureCoordinatesAttributeName?.attributeLocation?.set(mesh.textureCoordinates.toDirectBuffer(), 2)
-		val normalBuffer = vertexNormalAttributeName?.attributeLocation?.set(mesh.normals.toDirectBufferAugmented(), 4)
+		val positionBuffer = vertexPositionAttributeName?.attributeLocation?.set(mesh.augmentedPositionsBuffer, 4)
+		val textureCoordinatesBuffer = vertexTextureCoordinatesAttributeName?.attributeLocation?.set(mesh.textureCoordinatesBuffer, 2)
+		val normalBuffer = vertexNormalAttributeName?.attributeLocation?.set(mesh.augmentedNormalsBuffer, 4)
 
 		gles.drawTriangles(mesh.count)
 
@@ -136,7 +155,7 @@ abstract class ShaderHelper {
 	/**
 	 * Disposes shader helper.
 	 */
-	fun dispose() {
+	override fun dispose() {
 		program.delete()
 	}
 }

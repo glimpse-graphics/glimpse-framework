@@ -1,12 +1,13 @@
 package glimpse.jogl
 
+import com.jogamp.opengl.GLAutoDrawable
+import com.jogamp.opengl.GLEventListener
+import com.jogamp.opengl.awt.GLJPanel
 import com.jogamp.opengl.util.FPSAnimator
+import glimpse.gles.Disposables
 import glimpse.gles.GLES
 import glimpse.gles.Viewport
-import java.awt.event.WindowEvent
-import javax.media.opengl.GLAutoDrawable
-import javax.media.opengl.GLEventListener
-import javax.media.opengl.awt.GLJPanel
+import glimpse.gles.delegates.GLESDelegate
 import javax.swing.JFrame
 
 /**
@@ -19,7 +20,7 @@ import javax.swing.JFrame
  */
 class GlimpseFrame(title: String = "",  width: Int = 640, height: Int = 480, fps: Int = 30) : JFrame(title) {
 
-	private var gles: GLES? = null
+	private val gles: GLES by GLESDelegate
 
 	private var init: GLES.() -> Unit = {}
 	private var reshape: GLES.(viewport: Viewport) -> Unit = {}
@@ -60,10 +61,8 @@ class GlimpseFrame(title: String = "",  width: Int = 640, height: Int = 480, fps
 
 	/**
 	 * GL resize lambda.
-	 *
-	 * @param viewport Rendering viewport.
 	 */
-	fun onResize(reshape: GLES.(viewport: Viewport) -> Unit) {
+	fun onResize(reshape: GLES.(Viewport) -> Unit) {
 		this.reshape = reshape
 	}
 
@@ -84,24 +83,22 @@ class GlimpseFrame(title: String = "",  width: Int = 640, height: Int = 480, fps
 	private inner class EventListener : GLEventListener {
 
 		override fun init(drawable: GLAutoDrawable?) {
-			requireNotNull(drawable)
-			requireNotNull(drawable!!.gl)
-			require(drawable.gl.isGL2ES2)
-			requireNotNull(drawable.gl.gL2ES2)
-			gles = glimpse.jogl.gles.GLES(drawable.gl.gL2ES2)
-			gles?.init()
+			require(drawable!!.gl.isGL2ES2) { "OpenGL does not conform to GL2ES2 profile." }
+			GLESDelegate(glimpse.jogl.gles.GLES(drawable.gl.gL2ES2))
+			gles.init()
 		}
 
 		override fun reshape(drawable: GLAutoDrawable?, x: Int, y: Int, width: Int, height: Int) {
-			gles?.reshape(Viewport(width, height))
+			gles.reshape(Viewport(width, height))
 		}
 
 		override fun display(drawable: GLAutoDrawable?) {
-			gles?.display()
+			gles.display()
 		}
 
 		override fun dispose(drawable: GLAutoDrawable?) {
-			gles?.dispose()
+			gles.dispose()
+			Disposables.disposeAll()
 		}
 	}
 }

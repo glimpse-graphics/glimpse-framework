@@ -1,9 +1,14 @@
 package glimpse.test
 
+import com.nhaarman.mockito_kotlin.KStubbing
+import com.nhaarman.mockito_kotlin.mock
 import glimpse.Angle
 import glimpse.Matrix
 import glimpse.Point
 import glimpse.Vector
+import glimpse.cameras.Camera
+import glimpse.gles.GLES
+import glimpse.gles.delegates.GLESDelegate
 import io.kotlintest.matchers.BeWrapper
 import io.kotlintest.properties.Gen
 import io.kotlintest.specs.WordSpec
@@ -27,7 +32,7 @@ abstract class GlimpseSpec : WordSpec(), FloatMatchers {
 	}
 
 	protected infix fun Float.isRoughly(other: Float) =
-			Math.abs(other - this) < delta
+			Math.abs(other - this) < Math.max(delta, this * delta)
 
 	protected infix fun Float.shouldBeRoughly(other: Float) {
 		this isRoughly other shouldBe true
@@ -66,4 +71,34 @@ abstract class GlimpseSpec : WordSpec(), FloatMatchers {
 	}
 
 	protected infix fun <T : Comparable<T>> BeWrapper<T>.inRange(range: ClosedRange<T>): Boolean = range.contains(value)
+
+	protected fun glesMock(stubbing: KStubbing<GLES>.() -> Unit): GLES {
+		val glesMock: GLES = mock(stubbing)
+		GLESDelegate(glesMock)
+		return glesMock
+	}
+
+	protected infix fun Point.isVisibleIn(camera: Camera): Boolean =
+			isVisibleIn(camera.cameraMatrix)
+
+	protected infix fun Vector.isVisibleIn(camera: Camera): Boolean =
+			isVisibleIn(camera.cameraMatrix)
+
+	protected infix fun Point.isNotVisibleIn(camera: Camera): Boolean =
+			isNotVisibleIn(camera.cameraMatrix)
+
+	protected infix fun Vector.isNotVisibleIn(camera: Camera): Boolean =
+			isNotVisibleIn(camera.cameraMatrix)
+
+	protected infix fun Point.isVisibleIn(mvpMatrix: Matrix): Boolean =
+			(mvpMatrix * this)._3f.all { it in -1f..1f}
+
+	protected infix fun Vector.isVisibleIn(mvpMatrix: Matrix): Boolean =
+			(mvpMatrix * this)._3f.all { it in -1f..1f}
+
+	protected infix fun Point.isNotVisibleIn(mvpMatrix: Matrix): Boolean =
+			(mvpMatrix * this)._3f.any { it !in -1f..1f}
+
+	protected infix fun Vector.isNotVisibleIn(mvpMatrix: Matrix): Boolean =
+			(mvpMatrix * this)._3f.any { it !in -1f..1f}
 }

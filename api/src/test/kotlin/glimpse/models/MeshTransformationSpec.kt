@@ -18,7 +18,7 @@ class MeshTransformationSpec : GlimpseSpec() {
 					}.transformation() * vector isRoughly vector + translation
 				}
 			}
-			"change in time" {
+			"change over time" {
 				var translation = Vector.X_UNIT
 				val model = mesh { }.transform {
 					translate(translation)

@@ -1,10 +1,9 @@
 package glimpse.materials
 
 import glimpse.Color
-import glimpse.Vector
 import glimpse.cameras.Camera
-import glimpse.gles.GLES
 import glimpse.io.resource
+import glimpse.lights.Light
 import glimpse.models.Model
 import glimpse.shaders.Program
 import glimpse.shaders.shaderProgram
@@ -12,19 +11,13 @@ import glimpse.shaders.shaderProgram
 /**
  * Plastic material.
  */
-class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Color = Color.WHITE, val shininess: Float = 100f) : Material {
+class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Color = Color.WHITE, val shininess: Float = 100f) : AbstractMaterial() {
 
-	companion object {
-		fun init(gles: GLES) {
-			PlasticShaderHelper.init(gles)
-		}
-
-		fun dispose() {
-			PlasticShaderHelper.dispose()
-		}
+	init {
+		PlasticShaderHelper.registerDisposable()
 	}
 
-	override fun render(model: Model, camera: Camera) {
+	override fun render(model: Model, camera: Camera, lights: List<Light>) {
 		val mvpMatrix = camera.cameraMatrix * model.transformation()
 		val viewMatrix = camera.view.viewMatrix
 		val modelViewMatrix = viewMatrix * model.transformation()
@@ -35,21 +28,18 @@ class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Co
 		PlasticShaderHelper["u_Shininess"] = shininess
 		PlasticShaderHelper["u_MVPMatrix"] = mvpMatrix
 		PlasticShaderHelper["u_MVMatrix"] = modelViewMatrix
+		PlasticShaderHelper["u_ModelMatrix"] = model.transformation()
 		PlasticShaderHelper["u_LightMatrix"] = viewMatrix.trimmed
 		PlasticShaderHelper["u_NormalMatrix"] = modelViewMatrix.trimmed
-		PlasticShaderHelper["u_LightDirection"] = Vector(-1f, -1f, -1f)
+		PlasticShaderHelper["u_Light"] = lights
 		PlasticShaderHelper.drawMesh(model.mesh)
-	}
-
-	override fun dispose() {
-		PlasticShaderHelper.dispose()
 	}
 }
 
 internal object PlasticShaderHelper : ShaderHelper() {
 
 	override val program: Program by lazy {
-		shaderProgram(gles) {
+		shaderProgram {
 			vertexShader {
 				PlasticShaderHelper.resource("Plastic_vertex.glsl").lines.joinToString(separator = "\n") { it }
 			}

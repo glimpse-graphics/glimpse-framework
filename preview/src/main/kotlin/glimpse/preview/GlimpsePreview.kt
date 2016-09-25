@@ -1,15 +1,15 @@
 package glimpse.preview
 
-import glimpse.Color
+import glimpse.*
 import glimpse.Vector
 import glimpse.cameras.camera
 import glimpse.cameras.perspective
 import glimpse.cameras.targeted
-import glimpse.degrees
 import glimpse.gles.BlendFactor
 import glimpse.gles.DepthTestFunction
 import glimpse.io.resource
 import glimpse.jogl.*
+import glimpse.lights.Light
 import glimpse.materials.Material
 import glimpse.materials.Plastic
 import glimpse.materials.Textured
@@ -46,9 +46,14 @@ fun main(args: Array<String>) {
 	val textures = mutableMapOf<Textured.TextureType, Texture>()
 
 	val texturedMaterial = Textured { textureType -> textures[textureType]!! }
-	val plasticMaterial = Plastic(Color.GREEN)
+	val plasticMaterial = Plastic(Color.WHITE)
 
 	var material: Material = plasticMaterial
+
+	var lights = listOf<Light>(
+			Light.DirectionLight(Vector(0f, 0f, -1f), Color.RED),
+			Light.DirectionLight(Vector(-1f, 1f, 0f), Color.GREEN),
+			Light.DirectionLight(Vector(-1f, -1f, 0f), Color.BLUE))
 
 	glimpseFrame("Glimpse Framework Preview") {
 		menuBar {
@@ -81,10 +86,34 @@ fun main(args: Array<String>) {
 					}
 				}
 			}
+			menu("Lights") {
+				menuItem("Direction light") {
+					onClick {
+						lights = listOf(
+								Light.DirectionLight(Vector(0f, 0f, -1f), Color.RED),
+								Light.DirectionLight(Vector(-1f, 1f, 0f), Color.GREEN),
+								Light.DirectionLight(Vector(-1f, -1f, 0f), Color.BLUE))
+					}
+				}
+				menuItem("Point light") {
+					onClick {
+						lights = listOf(
+								Light.PointLight(Point(0f, 0f, 6f), 20f, Color.MAGENTA),
+								Light.PointLight(Point(12f, -12f, 0f), 20f, Color.YELLOW),
+								Light.PointLight(Point(2f, 2f, 0f), 20f, Color.CYAN))
+					}
+				}
+				menuItem("Spotlight") {
+					onClick {
+						lights = listOf(
+								Light.Spotlight(Vector(5f, 23.5.degrees, Angle.RIGHT).toPoint(), Point.ORIGIN, 20.degrees, 100f, Color.RED),
+								Light.Spotlight(Point(5f, -5f, 5f), Point.ORIGIN, 10.degrees, 100f, Color.GREEN),
+								Light.Spotlight(Point(5f, 5f, -5f), Point.ORIGIN, 180.degrees, 100f, Color.BLUE))
+					}
+				}
+			}
 		}
 		onInit {
-			Plastic.init(this)
-			Textured.init(this)
 			clearColor = Color.BLACK
 			clearDepth = 1f
 			isDepthTest = true
@@ -94,9 +123,9 @@ fun main(args: Array<String>) {
 			isCullFace = false
 			textureMagnificationFilter = TextureMagnificationFilter.LINEAR
 			textureMinificationFilter = TextureMinificationFilter.LINEAR_MIPMAP_LINEAR
-			textures[Textured.TextureType.AMBIENT] = Context.resource("ambient.png").readTexture(this) { withMipmap() }
-			textures[Textured.TextureType.SPECULAR] = Context.resource("specular.png").readTexture(this) { withMipmap() }
-			textures[Textured.TextureType.DIFFUSE] = Context.resource("diffuse.png").readTexture(this) { withMipmap() }
+			textures[Textured.TextureType.AMBIENT] = Context.resource("ambient.png").readTexture { withMipmap() }
+			textures[Textured.TextureType.SPECULAR] = Context.resource("specular.png").readTexture { withMipmap() }
+			textures[Textured.TextureType.DIFFUSE] = Context.resource("diffuse.png").readTexture { withMipmap() }
 		}
 		onResize { v ->
 			viewport = v
@@ -105,11 +134,9 @@ fun main(args: Array<String>) {
 		onRender {
 			clearColorBuffer()
 			clearDepthBuffer()
-			material.render(model, camera)
+			material.render(model, camera, lights)
 		}
 		onDispose {
-			Plastic.dispose()
-			Textured.dispose()
 		}
 	}
 }

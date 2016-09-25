@@ -85,27 +85,27 @@ class AffineTransformationSpec : GlimpseSpec() {
 		"Directional scaling" should {
 			"change a unit vector in the direction of the same axis" {
 				forAll(bigFloats) { scale ->
-					scalingMatrix(scale, 1f, 1f) * Vector.X_UNIT isRoughly Vector.X_UNIT * scale
+					scalingMatrix(x = scale) * Vector.X_UNIT isRoughly Vector.X_UNIT * scale
 				}
 				forAll(bigFloats) { scale ->
-					scalingMatrix(1f, scale, 1f) * Vector.Y_UNIT isRoughly Vector.Y_UNIT * scale
+					scalingMatrix(y = scale) * Vector.Y_UNIT isRoughly Vector.Y_UNIT * scale
 				}
 				forAll(bigFloats) { scale ->
-					scalingMatrix(1f, 1f, scale) * Vector.Z_UNIT isRoughly Vector.Z_UNIT * scale
+					scalingMatrix(z = scale) * Vector.Z_UNIT isRoughly Vector.Z_UNIT * scale
 				}
 			}
 			"not change a vector perpendicular to the direction of stretching" {
 				forAll(vectors, bigFloats) { vector, scale ->
 					val perpendicularVector = Vector.X_UNIT * vector
-					scalingMatrix(scale, 1f, 1f) * perpendicularVector isRoughly perpendicularVector
+					scalingMatrix(x = scale) * perpendicularVector isRoughly perpendicularVector
 				}
 				forAll(vectors, bigFloats) { vector, scale ->
 					val perpendicularVector = Vector.Y_UNIT * vector
-					scalingMatrix(1f, scale, 1f) * perpendicularVector isRoughly perpendicularVector
+					scalingMatrix(y = scale) * perpendicularVector isRoughly perpendicularVector
 				}
 				forAll(vectors, bigFloats) { vector, scale ->
 					val perpendicularVector = Vector.Z_UNIT * vector
-					scalingMatrix(1f, 1f, scale) * perpendicularVector isRoughly perpendicularVector
+					scalingMatrix(z = scale) * perpendicularVector isRoughly perpendicularVector
 				}
 			}
 		}
