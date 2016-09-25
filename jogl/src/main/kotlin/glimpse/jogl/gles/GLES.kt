@@ -137,16 +137,24 @@ class GLES(val gles: GL2ES2) : GLES {
 		gles.glUniform1f(location.value, float)
 	}
 
+	override fun uniformFloats(location: UniformLocation, floats: FloatArray) {
+		gles.glUniform1fv(location.value, floats.size, floats, 0)
+	}
+
 	override fun uniformInt(location: UniformLocation, int: Int) {
 		gles.glUniform1i(location.value, int)
+	}
+
+	override fun uniformInts(location: UniformLocation, ints: IntArray) {
+		gles.glUniform1iv(location.value, ints.size, ints, 0)
 	}
 
 	override fun uniformMatrix16f(location: UniformLocation, _16f: Array<Float>) {
 		gles.glUniformMatrix4fv(location.value, 1, false, _16f.toFloatArray(), 0)
 	}
 
-	override fun uniform4f(location: UniformLocation, _4f: Array<Float>) {
-		gles.glUniform4fv(location.value, 1, _4f.toFloatArray(), 0)
+	override fun uniform4f(location: UniformLocation, _4f: Array<Float>, count: Int) {
+		gles.glUniform4fv(location.value, count, _4f.toFloatArray(), 0)
 	}
 
 	override fun createAttributeFloatArray(location: AttributeLocation, buffer: FloatBuffer, vectorSize: Int) =

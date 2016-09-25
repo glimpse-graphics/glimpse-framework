@@ -37,12 +37,26 @@ class ShaderHelperSpec : GlimpseSpec() {
 				verify(glesMock).getUniformLocation(ProgramHandle(3), "uniform")
 				verify(glesMock).uniformFloat(UniformLocation(10), 12.345f)
 			}
+			"set uniform array of floats" {
+				val glesMock = glesMock()
+				val helper = ConcreteShaderHelper()
+				helper["uniform"] = floatArrayOf(1.2f, 3.4f)
+				verify(glesMock).getUniformLocation(ProgramHandle(3), "uniform")
+				verify(glesMock).uniformFloats(eq(UniformLocation(10)), any())
+			}
 			"set uniform int" {
 				val glesMock = glesMock()
 				val helper = ConcreteShaderHelper()
 				helper["uniform"] = 123
 				verify(glesMock).getUniformLocation(ProgramHandle(3), "uniform")
 				verify(glesMock).uniformInt(UniformLocation(10), 123)
+			}
+			"set uniform array of ints" {
+				val glesMock = glesMock()
+				val helper = ConcreteShaderHelper()
+				helper["uniform"] = intArrayOf(12, 34)
+				verify(glesMock).getUniformLocation(ProgramHandle(3), "uniform")
+				verify(glesMock).uniformInts(eq(UniformLocation(10)), any())
 			}
 			"set uniform matrix" {
 				val glesMock = glesMock()
@@ -58,6 +72,13 @@ class ShaderHelperSpec : GlimpseSpec() {
 				verify(glesMock).getUniformLocation(ProgramHandle(3), "uniform")
 				verify(glesMock).uniformVector(UniformLocation(10), Vector.X_UNIT)
 			}
+			"set uniform vectors" {
+				val glesMock = glesMock()
+				val helper = ConcreteShaderHelper()
+				helper.setVectors("uniform", listOf(Vector.X_UNIT, Vector.Y_UNIT))
+				verify(glesMock).getUniformLocation(ProgramHandle(3), "uniform")
+				verify(glesMock).uniformVectors(UniformLocation(10), listOf(Vector.X_UNIT, Vector.Y_UNIT))
+			}
 			"set uniform point" {
 				val glesMock = glesMock()
 				val helper = ConcreteShaderHelper()
@@ -65,12 +86,26 @@ class ShaderHelperSpec : GlimpseSpec() {
 				verify(glesMock).getUniformLocation(ProgramHandle(3), "uniform")
 				verify(glesMock).uniformPoint(UniformLocation(10), Point(1f, 2f, 3f))
 			}
+			"set uniform points" {
+				val glesMock = glesMock()
+				val helper = ConcreteShaderHelper()
+				helper.setPoints("uniform", listOf(Point(1f, 2f, 3f), Point(4f, 5f, 6f)))
+				verify(glesMock).getUniformLocation(ProgramHandle(3), "uniform")
+				verify(glesMock).uniformPoints(UniformLocation(10), listOf(Point(1f, 2f, 3f), Point(4f, 5f, 6f)))
+			}
 			"set uniform color" {
 				val glesMock = glesMock()
 				val helper = ConcreteShaderHelper()
 				helper["uniform"] = Color.MAGENTA
 				verify(glesMock).getUniformLocation(ProgramHandle(3), "uniform")
 				verify(glesMock).uniformColor(UniformLocation(10), Color.MAGENTA)
+			}
+			"set uniform colors" {
+				val glesMock = glesMock()
+				val helper = ConcreteShaderHelper()
+				helper.setColors("uniform", listOf(Color.MAGENTA, Color.CYAN, Color.YELLOW))
+				verify(glesMock).getUniformLocation(ProgramHandle(3), "uniform")
+				verify(glesMock).uniformColors(UniformLocation(10), listOf(Color.MAGENTA, Color.CYAN, Color.YELLOW))
 			}
 			"draw a mesh with positions only" {
 				val glesMock = glesMock()
