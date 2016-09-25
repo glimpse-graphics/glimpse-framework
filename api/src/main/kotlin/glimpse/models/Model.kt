@@ -22,5 +22,5 @@ class Model(val mesh: Mesh, val transformation: () -> Matrix = { Matrix.IDENTITY
 	 * Returns a [Model], transformed with the [transformation].
 	 */
 	fun transform(transformation: MatrixBuilder.() -> Unit) =
-			Model(mesh, matrix(this.transformation(), transformation))
+			Model(mesh, matrix(this.transformation, transformation))
 }
