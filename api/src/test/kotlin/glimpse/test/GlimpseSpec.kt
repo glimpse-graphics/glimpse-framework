@@ -32,7 +32,7 @@ abstract class GlimpseSpec : WordSpec(), FloatMatchers {
 	}
 
 	protected infix fun Float.isRoughly(other: Float) =
-			Math.abs(other - this) < delta
+			Math.abs(other - this) < Math.max(delta, this * delta)
 
 	protected infix fun Float.shouldBeRoughly(other: Float) {
 		this isRoughly other shouldBe true
