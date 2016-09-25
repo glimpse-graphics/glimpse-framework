@@ -10,6 +10,9 @@ import glimpse.lights.Light
  */
 abstract class AbstractMaterial : Material {
 
+	/**
+	 * Sets shader uniforms containing number and properties of the [lights].
+	 */
 	protected operator fun ShaderHelper.set(name: String, lights: List<Light>) {
 		this["${name}sCount"] = lights.size
 		this["${name}Type"] = lights.map { light -> light.type }.toIntArray()
