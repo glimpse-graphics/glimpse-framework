@@ -8,7 +8,7 @@
 
 # GlimpseFramework
 
-OpenGL made simple
+**OpenGL made simple**
 
 ## Key features
 
@@ -19,67 +19,11 @@ OpenGL made simple
 * materials
 * shaders
 * cameras
-* lights – planned
+* lights
 * animations – planned
-* Blender OBJ file support – planned
+* Blender OBJ file support
 * **Android support** – planned
 
-## Example
+## Examples
 
-### JOGL – desktop
-
-```kotlin
-fun main(args: Array<String>) {
-
-	var aspect: Float = 1.333f
-
-	val camera = camera {
-		targeted {
-			position {
-				val time = (Date().time / 30L) % 360L
-				Vector(10f, 60.degrees, time.degrees).toPoint()
-			}
-			target { Point.ORIGIN }
-			up { Vector.Z_UNIT }
-		}
-		perspective {
-			fov { 120.degrees }
-			aspect { aspect }
-			distanceRange(1f to 20f)
-		}
-	}
-
-	val model = sphere(20, 30).transform {}
-
-	val material = Plastic(Color.RED)
-
-	glimpseFrame("Glimpse Framework") {
-		onInit {
-			Plastic.init(this)
-			clearColor = Color.BLACK
-			clearDepth = 1f
-			isDepthTest = true
-			depthTestFunction = DepthTestFunction.LESS_OR_EQUAL
-			isBlend = true
-			blendFunction = BlendFactor.SRC_ALPHA to BlendFactor.ONE_MINUS_SRC_ALPHA
-			isCullFace = false
-		}
-		onResize { v ->
-			viewport = v
-			aspect = viewport.aspect
-		}
-		onRender {
-			clearColorBuffer()
-			clearDepthBuffer()
-			material.render(model, camera)
-		}
-		onDispose {
-			material.dispose()
-		}
-	}
-}
-```
-
-### Android
-
-Stay tuned…
+See our [examples wiki page](https://github.com/GlimpseFramework/glimpse-framework/wiki/Examples).
