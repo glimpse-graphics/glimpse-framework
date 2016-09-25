@@ -3,8 +3,8 @@
 [![Download](https://api.bintray.com/packages/glimpse-framework/org.glimpseframework/glimpse-framework/images/download.svg) ](https://bintray.com/glimpse-framework/org.glimpseframework/glimpse-framework/_latestVersion)
 [![License](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
-[![Stories Ready](https://badge.waffle.io/GlimpseFramework/glimpse-framework.svg?label=open&title=Open)](http://waffle.io/GlimpseFramework/glimpse-framework)
-[![Stories In Progress](https://badge.waffle.io/GlimpseFramework/glimpse-framework.svg?label=in progress&title=In Progress)](http://waffle.io/GlimpseFramework/glimpse-framework)
+[![Waffle.io: Open](https://img.shields.io/waffle/label/evancohen/smart-mirror/open.svg?maxAge=2592000)](http://waffle.io/GlimpseFramework/glimpse-framework)
+[![Waffle.io: In Progress](https://img.shields.io/waffle/label/evancohen/smart-mirror/in%20progress.svg?maxAge=2592000)](http://waffle.io/GlimpseFramework/glimpse-framework)
 
 # GlimpseFramework
 
