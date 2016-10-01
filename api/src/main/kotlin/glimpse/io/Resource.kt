@@ -1,6 +1,5 @@
 package glimpse.io
 
-import java.io.BufferedReader
 import java.io.InputStream
 
 /**
@@ -19,16 +18,7 @@ data class Resource(val context: Class<out Any>, val name: String) {
 	/**
 	 * Lines in the resource file.
 	 */
-	val lines: List<String> by lazy {
-		tailrec fun readLines(reader: BufferedReader, lines: List<String>): List<String> {
-			val line = reader.readLine()
-			return if (line == null) lines else readLines(reader, lines + line)
-		}
-		val reader = inputStream.bufferedReader()
-		val lines = readLines(context.getResourceAsStream(name).bufferedReader(), emptyList())
-		reader.close()
-		lines
-	}
+	val lines: List<String> by lazy { inputStream.reader().readLines() }
 }
 
 /**
