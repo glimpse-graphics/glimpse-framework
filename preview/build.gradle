@@ -1,17 +1,19 @@
 description = 'Glimpse Framework Preview'
 
-def propertiesFile = new File("$buildDir/resources/main/app.properties")
-propertiesFile.parentFile.mkdirs()
-propertiesFile.createNewFile()
-def properties = new Properties()
-properties.setProperty("APP_NAME", description)
-properties.setProperty("APP_VERSION", "$version")
-properties.store(propertiesFile.newWriter(), "$description v.$version")
+task(generateResources) << {
+	def propertiesFile = new File("$buildDir/resources/main/app.properties")
+	propertiesFile.parentFile.mkdirs()
+	propertiesFile.createNewFile()
+	def properties = new Properties()
+	properties.setProperty("APP_NAME", project.description)
+	properties.setProperty("APP_VERSION", project.version)
+	properties.store(propertiesFile.newWriter(), "${project.description} v.${project.version}")
+}
+
+processResources.dependsOn generateResources
 
 apply plugin: 'application'
-
-apply plugin: 'com.github.johnrengelman.shadow'
-apply plugin: "edu.sc.seis.launch4j"
+apply plugin: 'edu.sc.seis.launch4j'
 
 def mainClass = 'glimpse.preview.GlimpsePreviewKt'
 
@@ -25,8 +27,6 @@ launch4j {
 	companyName = 'Glimpse Framework'
 	description = project.description
 	productName = project.description
-	copyConfigurable = project.tasks.shadowJar.outputs.files
-	jar = "lib/${project.tasks.shadowJar.archiveName}"
 }
 
 dependencies {
