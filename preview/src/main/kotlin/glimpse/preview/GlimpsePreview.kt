@@ -7,10 +7,11 @@ import glimpse.cameras.perspective
 import glimpse.cameras.targeted
 import glimpse.gles.BlendFactor
 import glimpse.gles.DepthTestFunction
+import glimpse.io.properties
 import glimpse.io.resource
 import glimpse.jogl.*
-import glimpse.jogl.io.openOBJFile
 import glimpse.jogl.io.openImageFile
+import glimpse.jogl.io.openOBJFile
 import glimpse.lights.Light
 import glimpse.materials.Material
 import glimpse.materials.Plastic
@@ -18,6 +19,16 @@ import glimpse.materials.Textured
 import glimpse.models.*
 import glimpse.textures.*
 import java.util.*
+
+object Context {
+
+	val appName = "APP_NAME"
+	val appVersion = "APP_VERSION"
+
+	val properties = Context.properties("/app.properties")
+
+	val title = "${properties[appName]} v.${properties[appVersion]}"
+}
 
 fun main(args: Array<String>) {
 
@@ -51,7 +62,7 @@ fun main(args: Array<String>) {
 
 	var lights = listOf<Light>(Light.DirectionLight(Vector(-1f, 0f, 0f), Color.WHITE))
 
-	glimpseFrame("Glimpse Framework Preview") {
+	glimpseFrame(Context.title) {
 		menuBar {
 			menu("Mesh") {
 				menuItem("Sphere") {
@@ -161,5 +172,3 @@ fun main(args: Array<String>) {
 		}
 	}
 }
-
-object Context

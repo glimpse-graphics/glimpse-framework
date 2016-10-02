@@ -1,5 +1,13 @@
 description = 'Glimpse Framework Preview'
 
+def propertiesFile = new File("$buildDir/resources/main/app.properties")
+propertiesFile.parentFile.mkdirs()
+propertiesFile.createNewFile()
+def properties = new Properties()
+properties.setProperty("APP_NAME", description)
+properties.setProperty("APP_VERSION", "$version")
+properties.store(propertiesFile.newWriter(), "$description v.$version")
+
 apply plugin: 'application'
 
 mainClassName = 'glimpse.preview.GlimpsePreviewKt'
