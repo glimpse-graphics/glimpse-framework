@@ -8,6 +8,7 @@ import glimpse.gles.Disposables
 import glimpse.gles.GLES
 import glimpse.gles.Viewport
 import glimpse.gles.delegates.GLESDelegate
+import java.util.concurrent.BlockingQueue
 import javax.swing.JFrame
 
 /**
@@ -31,6 +32,9 @@ class GlimpseFrame(title: String = "",  width: Int = 640, height: Int = 480, fps
 	private val animator = FPSAnimator(canvas, fps)
 
 	private val eventListener = EventListener()
+
+	private val actions: BlockingQueue<GLES.() -> Unit> =
+			java.util.concurrent.LinkedBlockingQueue()
 
 	init {
 		contentPane.add(canvas)
@@ -80,12 +84,20 @@ class GlimpseFrame(title: String = "",  width: Int = 640, height: Int = 480, fps
 		this.dispose = dispose
 	}
 
+	/**
+	 * Enqueues an [action] to be run in GLES context.
+	 */
+	fun runInGLESContext(action: GLES.() -> Unit) {
+		actions.put(action)
+	}
+
 	private inner class EventListener : GLEventListener {
 
 		override fun init(drawable: GLAutoDrawable?) {
 			require(drawable!!.gl.isGL2ES2) { "OpenGL does not conform to GL2ES2 profile." }
 			GLESDelegate(glimpse.jogl.gles.GLES(drawable.gl.gL2ES2))
 			gles.init()
+			runActions()
 		}
 
 		override fun reshape(drawable: GLAutoDrawable?, x: Int, y: Int, width: Int, height: Int) {
@@ -93,12 +105,19 @@ class GlimpseFrame(title: String = "",  width: Int = 640, height: Int = 480, fps
 		}
 
 		override fun display(drawable: GLAutoDrawable?) {
+			runActions()
 			gles.display()
 		}
 
 		override fun dispose(drawable: GLAutoDrawable?) {
 			gles.dispose()
 			Disposables.disposeAll()
+		}
+
+		private fun runActions() {
+			while (!actions.isEmpty()) {
+				actions.poll().invoke(gles)
+			}
 		}
 	}
 }
