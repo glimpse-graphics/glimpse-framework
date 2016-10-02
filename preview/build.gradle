@@ -10,7 +10,24 @@ properties.store(propertiesFile.newWriter(), "$description v.$version")
 
 apply plugin: 'application'
 
-mainClassName = 'glimpse.preview.GlimpsePreviewKt'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: "edu.sc.seis.launch4j"
+
+def mainClass = 'glimpse.preview.GlimpsePreviewKt'
+
+mainClassName = mainClass
+
+launch4j {
+	outfile = 'GlimpsePreview.exe'
+	mainClassName = mainClass
+	version = "${project.version}".split("-")[0]
+	copyright = 'Glimpse Framework'
+	companyName = 'Glimpse Framework'
+	description = project.description
+	productName = project.description
+	copyConfigurable = project.tasks.shadowJar.outputs.files
+	jar = "lib/${project.tasks.shadowJar.archiveName}"
+}
 
 dependencies {
 	compile project(":glimpse-framework-api")
