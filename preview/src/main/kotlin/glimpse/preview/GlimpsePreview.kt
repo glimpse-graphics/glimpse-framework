@@ -9,15 +9,14 @@ import glimpse.gles.BlendFactor
 import glimpse.gles.DepthTestFunction
 import glimpse.io.resource
 import glimpse.jogl.*
+import glimpse.jogl.io.openOBJFile
+import glimpse.jogl.io.openImageFile
 import glimpse.lights.Light
 import glimpse.materials.Material
 import glimpse.materials.Plastic
 import glimpse.materials.Textured
 import glimpse.models.*
-import glimpse.textures.Texture
-import glimpse.textures.TextureMagnificationFilter
-import glimpse.textures.TextureMinificationFilter
-import glimpse.textures.readTexture
+import glimpse.textures.*
 import java.util.*
 
 fun main(args: Array<String>) {
@@ -50,10 +49,7 @@ fun main(args: Array<String>) {
 
 	var material: Material = plasticMaterial
 
-	var lights = listOf<Light>(
-			Light.DirectionLight(Vector(0f, 0f, -1f), Color.RED),
-			Light.DirectionLight(Vector(-1f, 1f, 0f), Color.GREEN),
-			Light.DirectionLight(Vector(-1f, -1f, 0f), Color.BLUE))
+	var lights = listOf<Light>(Light.DirectionLight(Vector(-1f, 0f, 0f), Color.WHITE))
 
 	glimpseFrame("Glimpse Framework Preview") {
 		menuBar {
@@ -73,6 +69,13 @@ fun main(args: Array<String>) {
 						model = transform(cube())
 					}
 				}
+				menuItem("Load OBJ…") {
+					onClick {
+						openOBJFile { objFile ->
+							model = transform(objFile.loadObjMesh().firstOrNull() ?: mesh {})
+						}
+					}
+				}
 			}
 			menu("Material") {
 				menuItem("Plastic") {
@@ -87,6 +90,11 @@ fun main(args: Array<String>) {
 				}
 			}
 			menu("Lights") {
+				menuItem("Single white") {
+					onClick {
+						lights = listOf(Light.DirectionLight(Vector(-1f, 0f, 0f), Color.WHITE))
+					}
+				}
 				menuItem("Direction light") {
 					onClick {
 						lights = listOf(
@@ -109,6 +117,19 @@ fun main(args: Array<String>) {
 								Light.Spotlight(Vector(5f, 23.5.degrees, Angle.RIGHT).toPoint(), Point.ORIGIN, 20.degrees, 100f, Color.RED),
 								Light.Spotlight(Point(5f, -5f, 5f), Point.ORIGIN, 10.degrees, 100f, Color.GREEN),
 								Light.Spotlight(Point(5f, 5f, -5f), Point.ORIGIN, 180.degrees, 100f, Color.BLUE))
+					}
+				}
+			}
+			menu("Textures") {
+				Textured.TextureType.values().forEach { textureType ->
+					menuItem("${textureType.name.toLowerCase().capitalize()}…") {
+						onClick {
+							openImageFile { textureFile ->
+								runInGLESContext {
+									textures[textureType] = textureFile.inputStream().readTexture { textureFile.name with mipmap }
+								}
+							}
+						}
 					}
 				}
 			}
