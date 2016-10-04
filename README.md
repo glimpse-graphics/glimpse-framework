@@ -28,4 +28,4 @@
 
 ## Examples
 
-See our [examples wiki page](https://github.com/GlimpseFramework/glimpse-framework/wiki/Examples).
+See our [examples page](http://glimpseframework.org/examples/).
