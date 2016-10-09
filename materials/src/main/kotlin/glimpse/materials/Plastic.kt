@@ -2,6 +2,7 @@ package glimpse.materials
 
 import glimpse.Color
 import glimpse.cameras.Camera
+import glimpse.gles.delegates.DisposableLazyDelegate
 import glimpse.io.resource
 import glimpse.lights.Light
 import glimpse.models.Model
@@ -38,7 +39,7 @@ class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Co
 
 internal object PlasticShaderHelper : ShaderHelper() {
 
-	override val program: Program by lazy {
+	override val program: Program by DisposableLazyDelegate {
 		shaderProgram {
 			vertexShader {
 				PlasticShaderHelper.resource("Plastic_vertex.glsl").lines.joinToString(separator = "\n") { it }
