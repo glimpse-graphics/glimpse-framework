@@ -23,8 +23,8 @@
 * cameras
 * lights
 * animations – planned
-* Blender OBJ file support
-* **Android support** – planned
+* Blender OBJ files support
+* **[Android support](https://github.com/GlimpseFramework/glimpse-framework-android)**
 
 ## Examples
 
