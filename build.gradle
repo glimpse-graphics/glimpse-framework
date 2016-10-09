@@ -41,6 +41,22 @@ subprojects {
 		jcenter()
 	}
 
+	test {
+		testLogging {
+			events "passed", "skipped", "failed"
+			showExceptions true
+			exceptionFormat "full"
+			showCauses true
+			showStackTraces true
+
+			afterSuite { desc, result ->
+				def output = "results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+				def repeatLength = output.length()
+				println('\n' + ('-' * repeatLength) + '\n' + desc.name + '\n' + output + '\n' + ('-' * repeatLength))
+			}
+		}
+	}
+
 	jacocoTestReport {
 		reports {
 			xml.enabled = true
