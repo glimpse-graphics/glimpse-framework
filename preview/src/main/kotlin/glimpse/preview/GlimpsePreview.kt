@@ -137,7 +137,7 @@ fun main(args: Array<String>) {
 						onClick {
 							openImageFile { textureFile ->
 								runInGLESContext {
-									textures[textureType] = textureFile.inputStream().readTexture { textureFile.name with mipmap }
+									textures[textureType] = textureFile.inputStream().loadTexture { textureFile.name with mipmap }
 								}
 							}
 						}
@@ -155,9 +155,9 @@ fun main(args: Array<String>) {
 			isCullFace = false
 			textureMagnificationFilter = TextureMagnificationFilter.LINEAR
 			textureMinificationFilter = TextureMinificationFilter.LINEAR_MIPMAP_LINEAR
-			textures[Textured.TextureType.AMBIENT] = Context.resource("ambient.png").readTexture { withMipmap() }
-			textures[Textured.TextureType.SPECULAR] = Context.resource("specular.png").readTexture { withMipmap() }
-			textures[Textured.TextureType.DIFFUSE] = Context.resource("diffuse.png").readTexture { withMipmap() }
+			textures[Textured.TextureType.AMBIENT] = Context.resource("ambient.png").loadTexture { withMipmap() }
+			textures[Textured.TextureType.SPECULAR] = Context.resource("specular.png").loadTexture { withMipmap() }
+			textures[Textured.TextureType.DIFFUSE] = Context.resource("diffuse.png").loadTexture { withMipmap() }
 		}
 		onResize { v ->
 			viewport = v

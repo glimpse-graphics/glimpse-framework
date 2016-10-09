@@ -34,7 +34,7 @@ class TextureBuilderSpec : GlimpseSpec() {
 		"Texture builder function for input stream" should {
 			"create a texture with mipmap" {
 				val glesMock = glesMock()
-				createInputStreamMock().readTexture {
+				createInputStreamMock().loadTexture {
 					name = "mipmapped.png" with mipmap
 				}
 				verify(glesMock).generateTexture()
@@ -43,7 +43,7 @@ class TextureBuilderSpec : GlimpseSpec() {
 			}
 			"create a texture without mipmap" {
 				val glesMock = glesMock()
-				createInputStreamMock().readTexture {
+				createInputStreamMock().loadTexture {
 					name = "linear.png" without mipmap
 				}
 				verify(glesMock).generateTexture()
@@ -52,7 +52,7 @@ class TextureBuilderSpec : GlimpseSpec() {
 			}
 			"create a texture object" {
 				val glesMock = glesMock()
-				val texture = createInputStreamMock().readTexture {
+				val texture = createInputStreamMock().loadTexture {
 					name = "linear.png" without mipmap
 				}
 				texture.deleted shouldBe false
@@ -64,7 +64,7 @@ class TextureBuilderSpec : GlimpseSpec() {
 		"Texture builder function for resource" should {
 			"create a texture" {
 				val glesMock = glesMock()
-				resource("empty_file.png").readTexture()
+				resource("empty_file.png").loadTexture()
 				verify(glesMock).generateTexture()
 				verify(glesMock).bindTexture2D(TextureHandle(1))
 				verify(glesMock).textureImage2D(any(), eq("empty_file.png"), any())
