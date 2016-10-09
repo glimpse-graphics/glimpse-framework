@@ -90,7 +90,7 @@ class ObjMeshBuilderSpec : GlimpseSpec() {
 
 	}
 
-	private fun loadObjTriangle() = resource("triangle.obj").loadObjMesh()
-	private fun loadObjTriangleNoTextures() = resource("triangle_no_textures.obj").loadObjMesh()
-	private fun loadObjTwoTriangles() = resource("two_triangles.obj").loadObjMesh()
+	private fun loadObjTriangle() = resource("triangle.obj").loadObjMeshes()
+	private fun loadObjTriangleNoTextures() = resource("triangle_no_textures.obj").loadObjMeshes()
+	private fun loadObjTwoTriangles() = resource("two_triangles.obj").loadObjMeshes()
 }

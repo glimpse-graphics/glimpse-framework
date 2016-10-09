@@ -65,7 +65,7 @@ object mipmap
 /**
  * Builds texture initialized with an [init] function.
  */
-fun InputStream.readTexture(init: TextureBuilder.() -> Unit = {}): Texture {
+fun InputStream.loadTexture(init: TextureBuilder.() -> Unit = {}): Texture {
 	val builder = TextureBuilder()
 	builder.init()
 	val texture = builder.build(this)
@@ -76,8 +76,8 @@ fun InputStream.readTexture(init: TextureBuilder.() -> Unit = {}): Texture {
 /**
  * Builds texture initialized with an [init] function.
  */
-fun Resource.readTexture(init: TextureBuilder.() -> Unit = {}): Texture =
-		inputStream.readTexture {
-			name = this@readTexture.name
+fun Resource.loadTexture(init: TextureBuilder.() -> Unit = {}): Texture =
+		inputStream.loadTexture {
+			name = this@loadTexture.name
 			init()
 		}
