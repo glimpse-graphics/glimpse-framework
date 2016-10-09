@@ -83,7 +83,7 @@ fun main(args: Array<String>) {
 				menuItem("Load OBJ…") {
 					onClick {
 						openOBJFile { objFile ->
-							model = transform(objFile.loadObjMesh().firstOrNull() ?: mesh {})
+							model = transform(objFile.loadObjMeshes().firstOrNull() ?: mesh {})
 						}
 					}
 				}

@@ -90,19 +90,19 @@ internal class ObjMeshBuilder(lines: List<String>) {
 /**
  * Builds three-dimensional meshes from OBJ lines.
  */
-fun List<String>.loadObjMesh(): List<Mesh> = ObjMeshBuilder(this).build()
+fun List<String>.loadObjMeshes(): List<Mesh> = ObjMeshBuilder(this).build()
 
 /**
  * Builds three-dimensional meshes from OBJ [InputStream].
  */
-fun InputStream.loadObjMesh(): List<Mesh> = reader().readLines().loadObjMesh()
+fun InputStream.loadObjMeshes(): List<Mesh> = reader().readLines().loadObjMeshes()
 
 /**
  * Builds three-dimensional meshes from OBJ [File].
  */
-fun File.loadObjMesh(): List<Mesh> = readLines().loadObjMesh()
+fun File.loadObjMeshes(): List<Mesh> = readLines().loadObjMeshes()
 
 /**
  * Builds three-dimensional meshes from OBJ file [Resource].
  */
-fun Resource.loadObjMesh(): List<Mesh> = lines.loadObjMesh()
+fun Resource.loadObjMeshes(): List<Mesh> = lines.loadObjMeshes()
