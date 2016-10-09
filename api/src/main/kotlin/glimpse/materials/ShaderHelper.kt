@@ -8,6 +8,7 @@ import glimpse.gles.*
 import glimpse.gles.delegates.GLESDelegate
 import glimpse.models.Mesh
 import glimpse.shaders.Program
+import glimpse.shaders.ProgramHandle
 import glimpse.textures.Texture
 import java.nio.FloatBuffer
 
@@ -24,19 +25,19 @@ abstract class ShaderHelper : Disposable {
 	/**
 	 * Shader program.
 	 */
-	protected abstract val program: Program
+	protected abstract val program: Program?
 
 	/**
 	 * Location of a shader attribute with the given name.
 	 */
 	protected val String.attributeLocation: AttributeLocation
-		get() = gles.getAttributeLocation(program.handle, this)
+		get() = gles.getAttributeLocation(program?.handle ?: ProgramHandle(0), this)
 
 	/**
 	 * Location of a shader uniform with the given name.
 	 */
 	protected val String.uniformLocation: UniformLocation
-		get() = gles.getUniformLocation(program.handle, this)
+		get() = gles.getUniformLocation(program?.handle ?: ProgramHandle(0), this)
 
 	/**
 	 * Name of a shader attribute containing vertex position.
@@ -57,7 +58,7 @@ abstract class ShaderHelper : Disposable {
 	 * Tells GLES implementation to use this program.
 	 */
 	fun use() {
-		program.use()
+		program?.use()
 	}
 
 	/**
@@ -156,6 +157,6 @@ abstract class ShaderHelper : Disposable {
 	 * Disposes shader helper.
 	 */
 	override fun dispose() {
-		program.delete()
+		program?.delete()
 	}
 }

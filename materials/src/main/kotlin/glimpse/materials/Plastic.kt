@@ -39,7 +39,7 @@ class Plastic(val diffuse: Color, val ambient: Color = diffuse, val specular: Co
 
 internal object PlasticShaderHelper : ShaderHelper() {
 
-	override val program: Program by DisposableLazyDelegate {
+	override val program: Program? by DisposableLazyDelegate {
 		shaderProgram {
 			vertexShader {
 				PlasticShaderHelper.resource("Plastic_vertex.glsl").lines.joinToString(separator = "\n") { it }

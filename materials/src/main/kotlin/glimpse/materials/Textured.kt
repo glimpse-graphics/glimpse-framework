@@ -45,7 +45,7 @@ class Textured(val shininess: Float = 100f, val texture: (TextureType) -> Textur
 
 internal object TexturedShaderHelper : ShaderHelper() {
 
-	override val program: Program by DisposableLazyDelegate {
+	override val program: Program? by DisposableLazyDelegate {
 		shaderProgram {
 			vertexShader {
 				TexturedShaderHelper.resource("Textured_vertex.glsl").lines.joinToString(separator = "\n") { it }
