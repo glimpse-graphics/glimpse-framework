@@ -6,16 +6,26 @@ First of all, new contributors are always welcome in Glimpse Framework.
 
 ## Issues
 
+Please do not use [labels](https://github.com/GlimpseFramework/glimpse-framework/labels) other than:
+* android—for issues related to Android implementation
+* bug
+* feature
+* refactoring
+
 ### Bugs
 
 If you have found a bug, don't hesitate to report it—even if you're not sure if it's a real bug.
 False alarms are better than hidden bugs.
+
+[Label](https://github.com/GlimpseFramework/glimpse-framework/labels) the issue as a **bug**.
 
 ### Feature Requests
 
 If you'd like to see a new feature in Glimpse Framework,
 just create a [new issue](https://github.com/GlimpseFramework/glimpse-framework/issues).
 Each request will be taken under consideration.
+
+[Label](https://github.com/GlimpseFramework/glimpse-framework/labels) the issue as a **feature**.
 
 ## Source Code
 
