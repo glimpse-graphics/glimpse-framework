@@ -39,7 +39,7 @@ fun main(args: Array<String>) {
 
 	val camera = camera {
 		targeted {
-			position { Vector(5f, 60.degrees, 0.degrees).toPoint() }
+			position { Vector(5f, 75.degrees, 0.degrees).toPoint() }
 		}
 		perspective {
 			fov { 45.degrees }
@@ -51,7 +51,6 @@ fun main(args: Array<String>) {
 	fun transform(mesh: Mesh): Model = mesh.transform {
 		val time = (Date().time / 50L) % 360L
 		rotateZ(time.degrees)
-		rotateX(-23.5.degrees)
 	}
 
 	var model = transform(sphere(16))
