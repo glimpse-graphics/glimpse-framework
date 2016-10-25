@@ -4,6 +4,8 @@ import glimpse.Point
 import glimpse.TextureCoordinates
 import glimpse.Vector
 import glimpse.io.Resource
+import java.io.File
+import java.io.InputStream
 
 internal class ObjMeshBuilder(lines: List<String>) {
 
@@ -86,6 +88,21 @@ internal class ObjMeshBuilder(lines: List<String>) {
 }
 
 /**
+ * Builds three-dimensional meshes from OBJ lines.
+ */
+fun List<String>.loadObjMeshes(): List<Mesh> = ObjMeshBuilder(this).build()
+
+/**
+ * Builds three-dimensional meshes from OBJ [InputStream].
+ */
+fun InputStream.loadObjMeshes(): List<Mesh> = reader().readLines().loadObjMeshes()
+
+/**
+ * Builds three-dimensional meshes from OBJ [File].
+ */
+fun File.loadObjMeshes(): List<Mesh> = readLines().loadObjMeshes()
+
+/**
  * Builds three-dimensional meshes from OBJ file [Resource].
  */
-fun Resource.loadObjMesh(): List<Mesh> = ObjMeshBuilder(this.lines).build()
+fun Resource.loadObjMeshes(): List<Mesh> = lines.loadObjMeshes()

@@ -21,6 +21,8 @@ interface Disposable {
  */
 object Disposables {
 
+	internal var isDisposing = false
+
 	private val disposables = mutableSetOf<Disposable>()
 
 	/**
@@ -34,7 +36,9 @@ object Disposables {
 	 * Disposes all registered objects.
 	 */
 	fun disposeAll() {
+		isDisposing = true
 		disposables.forEach { it.dispose() }
 		disposables.clear()
+		isDisposing = false
 	}
 }

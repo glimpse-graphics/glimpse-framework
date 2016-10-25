@@ -1,8 +1,33 @@
 description = 'Glimpse Framework Preview'
 
-apply plugin: 'application'
+task(generateResources) << {
+	def propertiesFile = new File("$buildDir/resources/main/app.properties")
+	propertiesFile.parentFile.mkdirs()
+	propertiesFile.createNewFile()
+	def properties = new Properties()
+	properties.setProperty("APP_NAME", project.description)
+	properties.setProperty("APP_VERSION", project.version)
+	properties.store(propertiesFile.newWriter(), "${project.description} v.${project.version}")
+}
 
-mainClassName = 'glimpse.preview.GlimpsePreviewKt'
+processResources.dependsOn generateResources
+
+apply plugin: 'application'
+apply plugin: 'edu.sc.seis.launch4j'
+
+def mainClass = 'glimpse.preview.GlimpsePreviewKt'
+
+mainClassName = mainClass
+
+launch4j {
+	outfile = 'GlimpsePreview.exe'
+	mainClassName = mainClass
+	version = "${project.version}".split("-")[0]
+	copyright = 'Glimpse Framework'
+	companyName = 'Glimpse Framework'
+	description = project.description
+	productName = project.description
+}
 
 dependencies {
 	compile project(":glimpse-framework-api")

@@ -7,18 +7,31 @@ import glimpse.cameras.perspective
 import glimpse.cameras.targeted
 import glimpse.gles.BlendFactor
 import glimpse.gles.DepthTestFunction
+import glimpse.io.properties
 import glimpse.io.resource
 import glimpse.jogl.*
+import glimpse.jogl.io.openImageFile
+import glimpse.jogl.io.openOBJFile
 import glimpse.lights.Light
+import glimpse.lights.directionLight
+import glimpse.lights.pointLight
+import glimpse.lights.spotlight
 import glimpse.materials.Material
 import glimpse.materials.Plastic
 import glimpse.materials.Textured
 import glimpse.models.*
-import glimpse.textures.Texture
-import glimpse.textures.TextureMagnificationFilter
-import glimpse.textures.TextureMinificationFilter
-import glimpse.textures.readTexture
+import glimpse.textures.*
 import java.util.*
+
+object Context {
+
+	val appName = "APP_NAME"
+	val appVersion = "APP_VERSION"
+
+	val properties = Context.properties("/app.properties")
+
+	val title = "${properties[appName]} v.${properties[appVersion]}"
+}
 
 fun main(args: Array<String>) {
 
@@ -26,7 +39,7 @@ fun main(args: Array<String>) {
 
 	val camera = camera {
 		targeted {
-			position { Vector(5f, 60.degrees, 0.degrees).toPoint() }
+			position { Vector(5f, 75.degrees, 0.degrees).toPoint() }
 		}
 		perspective {
 			fov { 45.degrees }
@@ -38,7 +51,6 @@ fun main(args: Array<String>) {
 	fun transform(mesh: Mesh): Model = mesh.transform {
 		val time = (Date().time / 50L) % 360L
 		rotateZ(time.degrees)
-		rotateX(-23.5.degrees)
 	}
 
 	var model = transform(sphere(16))
@@ -51,11 +63,11 @@ fun main(args: Array<String>) {
 	var material: Material = plasticMaterial
 
 	var lights = listOf<Light>(
-			Light.DirectionLight(Vector(0f, 0f, -1f), Color.RED),
-			Light.DirectionLight(Vector(-1f, 1f, 0f), Color.GREEN),
-			Light.DirectionLight(Vector(-1f, -1f, 0f), Color.BLUE))
+			directionLight {
+				direction { Vector(-1f, 0f, 0f) }
+			})
 
-	glimpseFrame("Glimpse Framework Preview") {
+	glimpseFrame(Context.title) {
 		menuBar {
 			menu("Mesh") {
 				menuItem("Sphere") {
@@ -73,6 +85,13 @@ fun main(args: Array<String>) {
 						model = transform(cube())
 					}
 				}
+				menuItem("Load OBJ…") {
+					onClick {
+						openOBJFile { objFile ->
+							model = transform(objFile.loadObjMeshes().firstOrNull() ?: mesh {})
+						}
+					}
+				}
 			}
 			menu("Material") {
 				menuItem("Plastic") {
@@ -87,28 +106,88 @@ fun main(args: Array<String>) {
 				}
 			}
 			menu("Lights") {
+				menuItem("Single white") {
+					onClick {
+						lights = listOf(
+								directionLight{
+									direction { Vector(-1f, 0f, 0f) }
+								})
+					}
+				}
 				menuItem("Direction light") {
 					onClick {
 						lights = listOf(
-								Light.DirectionLight(Vector(0f, 0f, -1f), Color.RED),
-								Light.DirectionLight(Vector(-1f, 1f, 0f), Color.GREEN),
-								Light.DirectionLight(Vector(-1f, -1f, 0f), Color.BLUE))
+								directionLight{
+									direction { Vector(0f, 0f, -1f) }
+									color { Color.RED }
+								},
+								directionLight{
+									direction { Vector(-1f, 1f, 0f) }
+									color { Color.GREEN }
+								},
+								directionLight{
+									direction { Vector(-1f, -1f, 0f) }
+									color { Color.BLUE }
+								})
 					}
 				}
 				menuItem("Point light") {
 					onClick {
 						lights = listOf(
-								Light.PointLight(Point(0f, 0f, 6f), 20f, Color.MAGENTA),
-								Light.PointLight(Point(12f, -12f, 0f), 20f, Color.YELLOW),
-								Light.PointLight(Point(2f, 2f, 0f), 20f, Color.CYAN))
+								pointLight{
+									position { Point(0f, 0f, 6f) }
+									distance { 20f }
+									color { Color.MAGENTA }
+								},
+								pointLight{
+									position { Point(12f, -12f, 0f) }
+									distance { 20f }
+									color { Color.YELLOW }
+								},
+								pointLight{
+									position { Point(2f, 2f, 0f) }
+									distance { 20f }
+									color { Color.CYAN }
+								})
 					}
 				}
 				menuItem("Spotlight") {
 					onClick {
 						lights = listOf(
-								Light.Spotlight(Vector(5f, 23.5.degrees, Angle.RIGHT).toPoint(), Point.ORIGIN, 20.degrees, 100f, Color.RED),
-								Light.Spotlight(Point(5f, -5f, 5f), Point.ORIGIN, 10.degrees, 100f, Color.GREEN),
-								Light.Spotlight(Point(5f, 5f, -5f), Point.ORIGIN, 180.degrees, 100f, Color.BLUE))
+								spotlight{
+									position { Vector(5f, 23.5.degrees, Angle.RIGHT).toPoint() }
+									target { Point.ORIGIN }
+									angle { 20.degrees }
+									distance { 100f }
+									color { Color.RED }
+								},
+								spotlight{
+									position { Point(5f, -5f, 5f) }
+									target { Point.ORIGIN }
+									angle { 10.degrees }
+									distance { 100f }
+									color { Color.GREEN }
+								},
+								spotlight{
+									position { Point(5f, 5f, -5f) }
+									target { Point.ORIGIN }
+									angle { 180.degrees }
+									distance { 100f }
+									color { Color.BLUE }
+								})
+					}
+				}
+			}
+			menu("Textures") {
+				Textured.TextureType.values().forEach { textureType ->
+					menuItem("${textureType.name.toLowerCase().capitalize()}…") {
+						onClick {
+							openImageFile { textureFile ->
+								runInGLESContext {
+									textures[textureType] = textureFile.inputStream().loadTexture { textureFile.name with mipmap }
+								}
+							}
+						}
 					}
 				}
 			}
@@ -123,9 +202,9 @@ fun main(args: Array<String>) {
 			isCullFace = false
 			textureMagnificationFilter = TextureMagnificationFilter.LINEAR
 			textureMinificationFilter = TextureMinificationFilter.LINEAR_MIPMAP_LINEAR
-			textures[Textured.TextureType.AMBIENT] = Context.resource("ambient.png").readTexture { withMipmap() }
-			textures[Textured.TextureType.SPECULAR] = Context.resource("specular.png").readTexture { withMipmap() }
-			textures[Textured.TextureType.DIFFUSE] = Context.resource("diffuse.png").readTexture { withMipmap() }
+			textures[Textured.TextureType.AMBIENT] = Context.resource("ambient.png").loadTexture { withMipmap() }
+			textures[Textured.TextureType.SPECULAR] = Context.resource("specular.png").loadTexture { withMipmap() }
+			textures[Textured.TextureType.DIFFUSE] = Context.resource("diffuse.png").loadTexture { withMipmap() }
 		}
 		onResize { v ->
 			viewport = v
@@ -140,5 +219,3 @@ fun main(args: Array<String>) {
 		}
 	}
 }
-
-object Context

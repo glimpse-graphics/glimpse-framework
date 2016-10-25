@@ -1,5 +1,27 @@
 # GlimpseFramework Release Notes
 
+## Version 0.4
+
+* **Release date:** Oct 25, 2016
+* **Git tag:** glimpse-framework-0.4
+
+### New features
+
+* Issue #38 – properties of lights are lambdas.
+* Issue #39 – it is now possible to dispose and reinitialize materials.
+* Issue #40 – added `loadObjMeshes` extension method to `List<String>`, `InputStream`, and `File`.
+* Loading properties from resource file.
+* JOGL implementation: File choosers for OBJ files and textures.
+* JOGL implementation: Added actions running in GLES context.
+
+### Other changes
+
+* Issue #44 – refactoring (changed API):
+  * `readTexture` renamed to `loadTexture`,
+  * `loadObjMesh` renamed to `loadObjMeshes`.
+* Improved tests logging in build.
+* Launch4j configuration for preview application.
+
 ## Version 0.3
 
 * **Release date:** Sep 25, 2016
