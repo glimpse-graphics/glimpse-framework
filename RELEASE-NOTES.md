@@ -7,16 +7,16 @@
 
 ### New features
 
-* Issue #38 – properties of lights are lambdas.
-* Issue #39 – it is now possible to dispose and reinitialize materials.
-* Issue #40 – added `loadObjMeshes` extension method to `List<String>`, `InputStream`, and `File`.
+* Issue #38 – Properties of lights are lambdas.
+* Issue #39 – It is now possible to dispose and reinitialize materials.
+* Issue #40 – Added `loadObjMeshes` extension method to `List<String>`, `InputStream`, and `File`.
 * Loading properties from resource file.
 * JOGL implementation: File choosers for OBJ files and textures.
 * JOGL implementation: Added actions running in GLES context.
 
 ### Other changes
 
-* Issue #44 – refactoring (changed API):
+* Issue #44 – Refactoring (changed API):
   * `readTexture` renamed to `loadTexture`,
   * `loadObjMesh` renamed to `loadObjMeshes`.
 * Improved tests logging in build.
